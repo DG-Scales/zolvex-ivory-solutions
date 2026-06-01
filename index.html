@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ZOLVEX — Ivory Solutions</title>
+<meta name="description" content="ZOLVEX — premium ivory solutions." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --fg:#f5f1e8;
+    --accent:#c9a96e;
+    --muted:#8a8579;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Inter',system-ui,sans-serif;
+    font-weight:300;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:2rem;
+    text-align:center;
+    background-image:
+      radial-gradient(ellipse at top, rgba(201,169,110,0.08), transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(201,169,110,0.05), transparent 60%);
+  }
+  main{max-width:640px}
+  .logo{
+    font-family:'Cinzel',serif;
+    font-weight:700;
+    font-size:clamp(3rem,10vw,6rem);
+    letter-spacing:0.25em;
+    color:var(--fg);
+    margin-bottom:1.5rem;
+    text-shadow:0 0 40px rgba(201,169,110,0.15);
+  }
+  .tagline{
+    font-size:0.875rem;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:3rem;
+  }
+  .divider{
+    width:60px;
+    height:1px;
+    background:var(--accent);
+    margin:0 auto 3rem;
+    opacity:0.5;
+  }
+  p{
+    color:var(--muted);
+    font-size:1rem;
+    line-height:1.7;
+    margin-bottom:2.5rem;
+  }
+  .footer{
+    margin-top:4rem;
+    font-size:0.75rem;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--muted);
+    opacity:0.6;
+  }
+</style>
+</head>
+<body>
+  <main>
+    <h1 class="logo">ZOLVEX</h1>
+    <div class="tagline">Ivory Solutions</div>
+    <div class="divider"></div>
+    <p>Crafting refined experiences. Our full storefront is launching soon.</p>
+    <div class="footer">&copy; 2026 Zolvex</div>
+  </main>
+</body>
+</html>
