@@ -4,17 +4,17 @@ import { PageShell } from "@/components/PageShell";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Our Story — Zolvex" },
-      { name: "description", content: "Born from frustration with throwaway culture, Zolvex finds products built to last and worth owning." },
-      { property: "og:title", content: "Our Story — Zolvex" },
-      { property: "og:description", content: "Fewer things. Better things. Built to last." },
+      { title: "About — Zolvex" },
+      { name: "description", content: "Zolvex curates considered objects that quietly solve the friction of everyday life." },
+      { property: "og:title", content: "About — Zolvex" },
+      { property: "og:description", content: "Where problems meet solutions." },
     ],
   }),
   component: () => (
-    <PageShell eyebrow="Our Story" title="Fewer things. Better things." lead="Zolvex started with one question: why is it so hard to find products that actually work?">
-      <p>Tired of gadgets that break in six months and brands that prioritize hype over substance, we set out to build something different. A store where every single item has been tested, debated, and proven worthy of a spot in your life.</p>
-      <p>We don't chase trends. We hunt for timeless design, honest materials, and engineering that respects your time. If a product can't justify its existence, it never makes it to the shelf.</p>
-      <p>Today, Zolvex is a small team of makers, testers, and problem-solvers scattered across the globe. We ship worldwide, write every product description ourselves, and treat every customer like a neighbor.</p>
+    <PageShell eyebrow="About" title="Designed to solve, not to sell." lead="Zolvex began with a simple belief — that the best products quietly answer a problem you didn't know how to name.">
+      <p>We curate objects with intent. Each piece is chosen for its craft, its utility, and the way it fits into a life well-lived. No noise. No filler. Just considered solutions to the friction of the everyday.</p>
+      <p>Our standards are simple: it must be made well, it must earn its place, and it must outlast the trend cycle. If it doesn't, it doesn't belong here.</p>
+      <p>We're a small team based wherever good things are being made. We ship worldwide and answer every email personally.</p>
     </PageShell>
   ),
 });
