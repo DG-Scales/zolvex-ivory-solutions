@@ -13,7 +13,7 @@ export function Logo({ size = "md", showTagline = false }: { size?: "sm" | "md" 
   };
   return (
     <div className="flex flex-col items-start leading-none select-none">
-      <span className={`font-display ${sizes[size]} text-foreground`}>ZOLVEX</span>
+      <span className={`font-logo ${sizes[size]} text-foreground`}>ZOLVEX</span>
       {showTagline && (
         <span className={`mt-2 uppercase text-muted-foreground ${taglineSizes[size]}`}>
           Premium problem solving
