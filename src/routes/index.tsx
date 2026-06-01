@@ -5,6 +5,8 @@ import { ProductGrid } from "@/components/ProductGrid";
 import { useCartSync } from "@/hooks/useCartSync";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { Logo } from "@/components/Logo";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,20 +29,16 @@ function Index() {
 
       {/* Hero */}
       <section className="relative border-b">
-        <div className="mx-auto max-w-7xl px-6 pt-24 pb-32 md:pt-32 md:pb-40">
-          <div className="max-w-4xl fade-up">
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-8">
-              Zolvex — Est. 2026
-            </p>
-            <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-[0.95] tracking-tight">
-              Where problems
-              <br />
-              meet <em className="italic">solutions.</em>
+        <div className="mx-auto max-w-5xl px-6 pt-20 pb-24 md:pt-28 md:pb-32 text-center">
+          <div className="fade-up flex flex-col items-center">
+            <Logo size="xl" showTagline />
+            <h1 className="mt-14 font-display text-5xl sm:text-6xl md:text-7xl leading-[1.02] tracking-tight max-w-3xl">
+              Where problems meet <em className="italic">solutions.</em>
             </h1>
-            <p className="mt-10 max-w-xl text-lg text-muted-foreground leading-relaxed">
+            <p className="mt-8 max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed">
               A curated catalog of considered objects — designed to remove friction from everyday life. No clutter. No compromise.
             </p>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-7">
                 <a href="#shop">
                   Shop the collection <ArrowRight className="ml-2 w-4 h-4" />
@@ -52,6 +50,7 @@ function Index() {
             </div>
           </div>
         </div>
+
 
         {/* Marquee */}
         <div className="border-t border-b py-5 overflow-hidden bg-foreground text-background">
