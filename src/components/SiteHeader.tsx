@@ -1,19 +1,21 @@
 import { Link } from "@tanstack/react-router";
 import { CartDrawer } from "./CartDrawer";
+import { Logo } from "./Logo";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="font-display text-2xl tracking-tight">Zolvex</span>
-        </Link>
-        <nav className="hidden md:flex items-center gap-8 text-sm">
-          <a href="/#shop" className="hover:opacity-60 transition-opacity">Shop</a>
-          <a href="/#about" className="hover:opacity-60 transition-opacity">About</a>
-          <a href="/#contact" className="hover:opacity-60 transition-opacity">Contact</a>
+    <header className="sticky top-0 z-40 border-b border-border/40 bg-background/85 backdrop-blur-md">
+      <div className="mx-auto max-w-7xl px-6 h-20 grid grid-cols-3 items-center">
+        <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+          <a href="/#shop" className="hover:text-foreground transition-colors">Shop</a>
+          <a href="/#about" className="hover:text-foreground transition-colors">About</a>
+          <a href="/#contact" className="hover:text-foreground transition-colors">Contact</a>
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="md:hidden" />
+        <Link to="/" className="flex justify-center">
+          <Logo size="md" />
+        </Link>
+        <div className="flex items-center justify-end gap-2">
           <CartDrawer />
         </div>
       </div>

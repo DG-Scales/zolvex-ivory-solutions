@@ -1,27 +1,19 @@
+import { Logo } from "./Logo";
+
 export function SiteFooter() {
   return (
     <footer className="border-t border-border/60 mt-32">
-      <div className="mx-auto max-w-7xl px-6 py-16 grid gap-12 md:grid-cols-4">
-        <div className="md:col-span-2">
-          <div className="font-display text-3xl">Zolvex</div>
-          <p className="mt-3 text-sm text-muted-foreground max-w-sm italic font-display text-lg">
-            Where problems meet solutions.
-          </p>
-        </div>
-        <div>
-          <h4 className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Shop</h4>
-          <ul className="space-y-2 text-sm">
-            <li><a href="/#shop" className="hover:opacity-60">All Products</a></li>
-            <li><a href="/#shop" className="hover:opacity-60">New Arrivals</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Company</h4>
-          <ul className="space-y-2 text-sm">
-            <li><a href="/#about" className="hover:opacity-60">About</a></li>
-            <li><a href="/#contact" className="hover:opacity-60">Contact</a></li>
-          </ul>
-        </div>
+      <div className="mx-auto max-w-7xl px-6 py-20 flex flex-col items-center text-center">
+        <Logo size="lg" showTagline />
+        <p className="mt-8 text-sm text-muted-foreground max-w-md italic font-display text-lg">
+          Where problems meet solutions.
+        </p>
+        <nav className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+          <a href="/#shop" className="hover:text-foreground">Shop</a>
+          <a href="/#about" className="hover:text-foreground">About</a>
+          <a href="/#contact" className="hover:text-foreground">Contact</a>
+          <a href="/privacy" className="hover:text-foreground">Privacy</a>
+        </nav>
       </div>
       <div className="border-t border-border/60">
         <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col md:flex-row justify-between text-xs text-muted-foreground gap-2">
