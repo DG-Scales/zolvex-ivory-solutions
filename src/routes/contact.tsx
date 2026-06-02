@@ -25,7 +25,7 @@ function ContactPage() {
         <h1 className="font-display text-5xl md:text-6xl mb-6">Get in touch.</h1>
         <p className="text-lg text-muted-foreground mb-12">
           Questions, custom requests, or a product idea you wish existed — we read every message.
-          Email us at <a href="mailto:hello@zolvex.com" className="text-foreground underline underline-offset-4">hello@zolvex.com</a>.
+          Email us at <a href="mailto:zolvex.business@gmail.com" className="text-foreground underline underline-offset-4">zolvex.business@gmail.com</a>.
         </p>
 
         <form
