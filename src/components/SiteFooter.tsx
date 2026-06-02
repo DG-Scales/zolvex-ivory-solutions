@@ -27,6 +27,7 @@ export function SiteFooter() {
             <li><Link to="/contact" className="hover:text-foreground">Contact</Link></li>
             <li><Link to="/privacy" className="hover:text-foreground">Privacy</Link></li>
             <li><Link to="/terms" className="hover:text-foreground">Terms</Link></li>
+            <li><a href="mailto:zolvex.business@gmail.com" className="hover:text-foreground">zolvex.business@gmail.com</a></li>
           </ul>
         </div>
       </div>
