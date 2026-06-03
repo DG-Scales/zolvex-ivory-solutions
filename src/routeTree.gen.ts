@@ -9,20 +9,35 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WholesaleRouteImport } from './routes/wholesale'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SustainabilityRouteImport } from './routes/sustainability'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ShippingRouteImport } from './routes/shipping'
 import { Route as ReturnsRouteImport } from './routes/returns'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as JournalRouteImport } from './routes/journal'
+import { Route as GiftCardsRouteImport } from './routes/gift-cards'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as CraftsmanshipRouteImport } from './routes/craftsmanship'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductHandleRouteImport } from './routes/product.$handle'
 
+const WholesaleRoute = WholesaleRouteImport.update({
+  id: '/wholesale',
+  path: '/wholesale',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SustainabilityRoute = SustainabilityRouteImport.update({
+  id: '/sustainability',
+  path: '/sustainability',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShopRoute = ShopRouteImport.update({
@@ -45,9 +60,24 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiftCardsRoute = GiftCardsRouteImport.update({
+  id: '/gift-cards',
+  path: '/gift-cards',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CraftsmanshipRoute = CraftsmanshipRouteImport.update({
+  id: '/craftsmanship',
+  path: '/craftsmanship',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -75,24 +105,34 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/craftsmanship': typeof CraftsmanshipRoute
   '/faq': typeof FaqRoute
+  '/gift-cards': typeof GiftCardsRoute
+  '/journal': typeof JournalRoute
   '/privacy': typeof PrivacyRoute
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sustainability': typeof SustainabilityRoute
   '/terms': typeof TermsRoute
+  '/wholesale': typeof WholesaleRoute
   '/product/$handle': typeof ProductHandleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/craftsmanship': typeof CraftsmanshipRoute
   '/faq': typeof FaqRoute
+  '/gift-cards': typeof GiftCardsRoute
+  '/journal': typeof JournalRoute
   '/privacy': typeof PrivacyRoute
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sustainability': typeof SustainabilityRoute
   '/terms': typeof TermsRoute
+  '/wholesale': typeof WholesaleRoute
   '/product/$handle': typeof ProductHandleRoute
 }
 export interface FileRoutesById {
@@ -100,12 +140,17 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/craftsmanship': typeof CraftsmanshipRoute
   '/faq': typeof FaqRoute
+  '/gift-cards': typeof GiftCardsRoute
+  '/journal': typeof JournalRoute
   '/privacy': typeof PrivacyRoute
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sustainability': typeof SustainabilityRoute
   '/terms': typeof TermsRoute
+  '/wholesale': typeof WholesaleRoute
   '/product/$handle': typeof ProductHandleRoute
 }
 export interface FileRouteTypes {
@@ -114,36 +159,51 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/craftsmanship'
     | '/faq'
+    | '/gift-cards'
+    | '/journal'
     | '/privacy'
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/sustainability'
     | '/terms'
+    | '/wholesale'
     | '/product/$handle'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/contact'
+    | '/craftsmanship'
     | '/faq'
+    | '/gift-cards'
+    | '/journal'
     | '/privacy'
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/sustainability'
     | '/terms'
+    | '/wholesale'
     | '/product/$handle'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/contact'
+    | '/craftsmanship'
     | '/faq'
+    | '/gift-cards'
+    | '/journal'
     | '/privacy'
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/sustainability'
     | '/terms'
+    | '/wholesale'
     | '/product/$handle'
   fileRoutesById: FileRoutesById
 }
@@ -151,22 +211,41 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  CraftsmanshipRoute: typeof CraftsmanshipRoute
   FaqRoute: typeof FaqRoute
+  GiftCardsRoute: typeof GiftCardsRoute
+  JournalRoute: typeof JournalRoute
   PrivacyRoute: typeof PrivacyRoute
   ReturnsRoute: typeof ReturnsRoute
   ShippingRoute: typeof ShippingRoute
   ShopRoute: typeof ShopRoute
+  SustainabilityRoute: typeof SustainabilityRoute
   TermsRoute: typeof TermsRoute
+  WholesaleRoute: typeof WholesaleRoute
   ProductHandleRoute: typeof ProductHandleRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wholesale': {
+      id: '/wholesale'
+      path: '/wholesale'
+      fullPath: '/wholesale'
+      preLoaderRoute: typeof WholesaleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sustainability': {
+      id: '/sustainability'
+      path: '/sustainability'
+      fullPath: '/sustainability'
+      preLoaderRoute: typeof SustainabilityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shop': {
@@ -197,11 +276,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gift-cards': {
+      id: '/gift-cards'
+      path: '/gift-cards'
+      fullPath: '/gift-cards'
+      preLoaderRoute: typeof GiftCardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/faq': {
       id: '/faq'
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/craftsmanship': {
+      id: '/craftsmanship'
+      path: '/craftsmanship'
+      fullPath: '/craftsmanship'
+      preLoaderRoute: typeof CraftsmanshipRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -239,12 +339,17 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  CraftsmanshipRoute: CraftsmanshipRoute,
   FaqRoute: FaqRoute,
+  GiftCardsRoute: GiftCardsRoute,
+  JournalRoute: JournalRoute,
   PrivacyRoute: PrivacyRoute,
   ReturnsRoute: ReturnsRoute,
   ShippingRoute: ShippingRoute,
   ShopRoute: ShopRoute,
+  SustainabilityRoute: SustainabilityRoute,
   TermsRoute: TermsRoute,
+  WholesaleRoute: WholesaleRoute,
   ProductHandleRoute: ProductHandleRoute,
 }
 export const routeTree = rootRouteImport
