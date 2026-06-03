@@ -9,9 +9,6 @@ export function SiteHeader() {
         <Link to="/" className="flex items-center">
           <Logo size="md" />
         </Link>
-        <a href="mailto:zolvex.business@gmail.com" className="hidden md:block text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors">
-          zolvex.business@gmail.com
-        </a>
         <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-muted-foreground">
           <Link to="/shop" className="hover:text-foreground transition-colors">Shop</Link>
           <Link to="/about" className="hover:text-foreground transition-colors">About</Link>
