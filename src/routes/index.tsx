@@ -52,21 +52,6 @@ function Index() {
         </div>
 
 
-        {/* Marquee */}
-        <div className="border-t border-b py-5 overflow-hidden bg-foreground text-background">
-          <div className="flex marquee whitespace-nowrap">
-            {Array.from({ length: 2 }).map((_, i) => (
-              <div key={i} className="flex items-center gap-12 px-6 font-display text-2xl shrink-0">
-                {Array.from({ length: 8 }).map((_, j) => (
-                  <span key={j} className="flex items-center gap-12">
-                    Where problems meet solutions
-                    <span className="opacity-50">✦</span>
-                  </span>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* Shop */}
