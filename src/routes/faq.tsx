@@ -2,22 +2,24 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 
 const faqs = [
-  { q: "When will my order ship?", a: "Most orders leave within 1–2 business days. You'll receive a tracking link by email." },
-  { q: "Do you ship internationally?", a: "Yes — worldwide. International orders take 7–14 business days." },
-  { q: "What's your return policy?", a: "30 days from delivery on any unused item in original packaging." },
-  { q: "Can I change or cancel my order?", a: "Email hello@zolvex.com within 12 hours of placing it and we'll do our best." },
-  { q: "Do you offer wholesale?", a: "We work with a small number of retail partners. Reach out at wholesale@zolvex.com." },
+  { q: "When will my order ship?", a: "In-stock fixtures leave within 2–4 business days. Made-to-order and custom-finish pieces ship within the lead time noted on each product page." },
+  { q: "Do you ship internationally?", a: "Yes — worldwide. International orders take 7–21 business days depending on destination and fixture size." },
+  { q: "Are your fixtures wired for my country?", a: "We supply UL (US/Canada), CE (EU/UK), and SAA (AU/NZ) compliant wiring. Select your region at checkout and we'll ship the correct variant." },
+  { q: "Do bulbs come included?", a: "Most fixtures ship with high-CRI LED bulbs included. Where they don't, recommended bulb specs are listed on the product page." },
+  { q: "What's your return policy?", a: "30 days from delivery on any uninstalled fixture in original packaging. Custom and made-to-order pieces are final sale." },
+  { q: "Can I change or cancel my order?", a: "Email zolvex.business@gmail.com within 24 hours of placing your order and we'll do our best." },
+  { q: "Do you offer trade pricing?", a: "Yes — we work with designers, architects, and hospitality. See our Wholesale page or email zolvex.business@gmail.com." },
 ];
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
       { title: "FAQ — Zolvex" },
-      { name: "description", content: "Answers to common questions about ordering, shipping, returns, and the Zolvex brand." },
+      { name: "description", content: "Answers on ordering, shipping, wiring standards, bulbs, and returns for Zolvex lighting." },
     ],
   }),
   component: () => (
-    <PageShell eyebrow="Support" title="Frequently asked" lead="Quick answers. If yours isn't here, email hello@zolvex.com.">
+    <PageShell eyebrow="Support" title="Frequently asked" lead="Quick answers. If yours isn't here, email zolvex.business@gmail.com.">
       {faqs.map((f) => (
         <section key={f.q} className="border-b border-border pb-6">
           <h2 className="font-display text-2xl mb-2">{f.q}</h2>
