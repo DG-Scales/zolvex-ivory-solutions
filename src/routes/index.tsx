@@ -6,6 +6,9 @@ import { useCartSync } from "@/hooks/useCartSync";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { CategoryGrid } from "@/components/CategoryGrid";
+
+
 
 
 export const Route = createFileRoute("/")({
@@ -33,7 +36,7 @@ function Index() {
           <div className="fade-up flex flex-col items-center">
             <Logo size="xl" showTagline />
             <h1 className="mt-14 font-display text-5xl sm:text-6xl md:text-7xl leading-[1.02] tracking-tight max-w-3xl">
-              Light, <em className="italic">considered.</em>
+              Illuminate the <em className="italic">everyday.</em>
             </h1>
             <p className="mt-8 max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed">
               Premium designer lighting for interior and exterior spaces — chandeliers, pendants, wall sconces, and architectural fixtures. Quietly made, made to last.
@@ -52,6 +55,20 @@ function Index() {
         </div>
 
 
+      </section>
+
+      {/* Categories */}
+      <section id="categories" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
+        <div className="flex items-end justify-between mb-12 gap-6 flex-wrap">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Shop by category</p>
+            <h2 className="font-display text-4xl md:text-5xl">Find your fixture</h2>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-xs">
+            Tap a category to explore the pieces that belong there.
+          </p>
+        </div>
+        <CategoryGrid />
       </section>
 
       {/* Shop */}
