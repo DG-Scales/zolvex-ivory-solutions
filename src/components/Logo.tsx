@@ -16,7 +16,7 @@ export function Logo({ size = "md", showTagline = false }: { size?: "sm" | "md" 
       <span className={`font-logo ${sizes[size]} text-foreground`}>ZOLVEX</span>
       {showTagline && (
         <span className={`mt-2 uppercase text-muted-foreground ${taglineSizes[size]} text-center`}>
-          Premium problem solving
+          Premium lighting, considered
         </span>
       )}
     </div>

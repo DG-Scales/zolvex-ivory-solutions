@@ -8,7 +8,7 @@ export function SiteFooter() {
         <div className="md:col-span-5">
           <Logo size="md" showTagline />
           <p className="mt-8 text-sm text-muted-foreground max-w-xs leading-relaxed">
-            Zolvex — curated solutions for everyday problems. Considered objects, made to last.
+            Zolvex — premium designer lighting for considered interiors and exteriors. Chandeliers, pendants, wall lights and more.
           </p>
         </div>
 

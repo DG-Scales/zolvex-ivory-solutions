@@ -5,7 +5,7 @@ export const Route = createFileRoute("/gift-cards")({
   head: () => ({
     meta: [
       { title: "Gift Cards — Zolvex" },
-      { name: "description", content: "Digital gift cards for the Zolvex shop. Delivered by email, redeemable on anything we carry." },
+      { name: "description", content: "Digital Zolvex gift cards — redeemable against any fixture in the collection." },
       { property: "og:title", content: "Gift Cards — Zolvex" },
       { property: "og:description", content: "A considered gift, without the guesswork." },
     ],
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/gift-cards")({
     <PageShell
       eyebrow="Gift Cards"
       title="A considered gift, without the guesswork."
-      lead="Digital Zolvex gift cards are delivered by email and redeemable against anything in the shop."
+      lead="Digital Zolvex gift cards are delivered by email and redeemable against any fixture in the collection."
     >
       <section>
         <h2 className="font-display text-3xl mb-3">How it works</h2>
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/gift-cards")({
       </section>
       <section>
         <h2 className="font-display text-3xl mb-3">Available denominations</h2>
-        <p>£25 · £50 · £100 · £250 · £500</p>
+        <p>$100 · $250 · $500 · $1,000 · $2,500</p>
       </section>
       <section>
         <h2 className="font-display text-3xl mb-3">Need a custom amount?</h2>

@@ -8,9 +8,9 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — Zolvex" },
-      { name: "description", content: "Get in touch with the Zolvex team. We answer every message personally." },
+      { name: "description", content: "Get in touch with the Zolvex lighting team. We answer every message personally." },
       { property: "og:title", content: "Contact — Zolvex" },
-      { property: "og:description", content: "Get in touch with the Zolvex team." },
+      { property: "og:description", content: "Specification help, custom finishes, or trade enquiries." },
     ],
   }),
   component: ContactPage,
@@ -24,7 +24,7 @@ function ContactPage() {
         <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">Contact</p>
         <h1 className="font-display text-5xl md:text-6xl mb-6">Get in touch.</h1>
         <p className="text-lg text-muted-foreground mb-12">
-          Questions, custom requests, or a product idea you wish existed — we read every message.
+          Specification questions, custom finishes, bespoke chandeliers, or a fixture you wish existed — we read every message.
           Email us at <a href="mailto:zolvex.business@gmail.com" className="text-foreground underline underline-offset-4">zolvex.business@gmail.com</a>.
         </p>
 
