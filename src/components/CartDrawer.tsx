@@ -100,7 +100,7 @@ export const CartDrawer = () => {
                 </div>
                 <p className="text-xs text-muted-foreground">Shipping & taxes calculated at checkout.</p>
                 <Button onClick={handleCheckout} className="w-full rounded-full" size="lg" disabled={items.length === 0 || isLoading || isSyncing}>
-                  {isLoading || isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <><ExternalLink className="w-4 h-4 mr-2" />Checkout</>}
+                  {isLoading || isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Lock className="w-4 h-4 mr-2" />Checkout</>}
                 </Button>
               </div>
             </>
