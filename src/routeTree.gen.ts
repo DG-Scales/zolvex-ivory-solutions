@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WholesaleRouteImport } from './routes/wholesale'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SustainabilityRouteImport } from './routes/sustainability'
+import { Route as StoryRouteImport } from './routes/story'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ShippingRouteImport } from './routes/shipping'
 import { Route as ReturnsRouteImport } from './routes/returns'
@@ -41,6 +42,11 @@ const TermsRoute = TermsRouteImport.update({
 const SustainabilityRoute = SustainabilityRouteImport.update({
   id: '/sustainability',
   path: '/sustainability',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoryRoute = StoryRouteImport.update({
+  id: '/story',
+  path: '/story',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShopRoute = ShopRouteImport.update({
@@ -132,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/story': typeof StoryRoute
   '/sustainability': typeof SustainabilityRoute
   '/terms': typeof TermsRoute
   '/wholesale': typeof WholesaleRoute
@@ -152,6 +159,7 @@ export interface FileRoutesByTo {
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/story': typeof StoryRoute
   '/sustainability': typeof SustainabilityRoute
   '/terms': typeof TermsRoute
   '/wholesale': typeof WholesaleRoute
@@ -173,6 +181,7 @@ export interface FileRoutesById {
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/story': typeof StoryRoute
   '/sustainability': typeof SustainabilityRoute
   '/terms': typeof TermsRoute
   '/wholesale': typeof WholesaleRoute
@@ -195,6 +204,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/story'
     | '/sustainability'
     | '/terms'
     | '/wholesale'
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/story'
     | '/sustainability'
     | '/terms'
     | '/wholesale'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/story'
     | '/sustainability'
     | '/terms'
     | '/wholesale'
@@ -256,6 +268,7 @@ export interface RootRouteChildren {
   ReturnsRoute: typeof ReturnsRoute
   ShippingRoute: typeof ShippingRoute
   ShopRoute: typeof ShopRoute
+  StoryRoute: typeof StoryRoute
   SustainabilityRoute: typeof SustainabilityRoute
   TermsRoute: typeof TermsRoute
   WholesaleRoute: typeof WholesaleRoute
@@ -285,6 +298,13 @@ declare module '@tanstack/react-router' {
       path: '/sustainability'
       fullPath: '/sustainability'
       preLoaderRoute: typeof SustainabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/story': {
+      id: '/story'
+      path: '/story'
+      fullPath: '/story'
+      preLoaderRoute: typeof StoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shop': {
@@ -408,6 +428,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReturnsRoute: ReturnsRoute,
   ShippingRoute: ShippingRoute,
   ShopRoute: ShopRoute,
+  StoryRoute: StoryRoute,
   SustainabilityRoute: SustainabilityRoute,
   TermsRoute: TermsRoute,
   WholesaleRoute: WholesaleRoute,
@@ -418,3 +439,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
