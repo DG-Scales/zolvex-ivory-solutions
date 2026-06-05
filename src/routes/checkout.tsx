@@ -50,7 +50,7 @@ function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <PageShell>
+      <Shell>
         <section className="container max-w-2xl mx-auto px-6 py-24 text-center">
           <h1 className="font-display text-4xl md:text-5xl mb-4">Your bag is empty</h1>
           <p className="text-muted-foreground mb-8">
@@ -60,12 +60,12 @@ function CheckoutPage() {
             <Link to="/shop">Continue shopping</Link>
           </Button>
         </section>
-      </PageShell>
+      </Shell>
     );
   }
 
   return (
-    <PageShell>
+    <Shell>
       <section className="container max-w-6xl mx-auto px-6 py-12 md:py-16">
         <button
           onClick={() => navigate({ to: "/shop" })}
@@ -216,6 +216,6 @@ function CheckoutPage() {
           </aside>
         </div>
       </section>
-    </PageShell>
+    </Shell>
   );
 }
