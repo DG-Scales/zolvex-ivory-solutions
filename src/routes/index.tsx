@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ProductGrid } from "@/components/ProductGrid";
@@ -39,7 +39,7 @@ function Index() {
               Illuminate the <em className="italic">everyday.</em>
             </h1>
             <p className="mt-8 max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed">
-              Premium designer lighting for interior and exterior spaces — chandeliers, pendants, wall sconces, and architectural fixtures. Quietly made, made to last.
+              Premium designer lighting for interior and exterior spaces — chandeliers, pendants, wall sconces, and architectural fixtures. Crafted with care, built to endure.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-7">
@@ -48,7 +48,7 @@ function Index() {
                 </a>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full px-7">
-                <a href="#about">Our story</a>
+                <Link to="/story">Our story</Link>
               </Button>
             </div>
           </div>
