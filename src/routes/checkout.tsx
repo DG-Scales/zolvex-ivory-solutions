@@ -1,10 +1,21 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useCartStore } from "@/stores/cartStore";
-import { PageShell } from "@/components/PageShell";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Minus, Plus, Trash2, Lock, ShieldCheck, Truck, ArrowLeft, Loader2 } from "lucide-react";
 import { useEffect } from "react";
+
+function Shell({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
+      <SiteHeader />
+      <main className="flex-1">{children}</main>
+      <SiteFooter />
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
