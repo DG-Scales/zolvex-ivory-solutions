@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -55,7 +55,12 @@ export const CartDrawer = () => {
                 <div className="space-y-5">
                   {items.map((item) => (
                     <div key={item.variantId} className="flex gap-4 pb-5 border-b last:border-b-0">
-                      <div className="w-20 h-20 bg-muted rounded-md overflow-hidden flex-shrink-0">
+                      <Link
+                        to="/product/$handle"
+                        params={{ handle: item.product.node.handle }}
+                        onClick={() => setIsOpen(false)}
+                        className="w-20 h-20 bg-muted rounded-md overflow-hidden flex-shrink-0 hover:opacity-80 transition-opacity"
+                      >
                         {item.product.node.images?.edges?.[0]?.node && (
                           <img
                             src={item.product.node.images.edges[0].node.url}
@@ -63,9 +68,16 @@ export const CartDrawer = () => {
                             className="w-full h-full object-cover"
                           />
                         )}
-                      </div>
+                      </Link>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-medium truncate">{item.product.node.title}</h4>
+                        <Link
+                          to="/product/$handle"
+                          params={{ handle: item.product.node.handle }}
+                          onClick={() => setIsOpen(false)}
+                          className="font-medium truncate block hover:underline underline-offset-4"
+                        >
+                          {item.product.node.title}
+                        </Link>
                         <p className="text-xs text-muted-foreground mt-0.5">
                           {item.selectedOptions.map((option) => option.value).join(" • ")}
                         </p>
