@@ -2,9 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 
 const faqs = [
-  { q: "When will my order ship?", a: "In-stock fixtures leave within 2–4 business days. Made-to-order and custom-finish pieces ship within the lead time noted on each product page." },
-  { q: "Do you ship internationally?", a: "Yes — worldwide. International orders take 7–21 business days depending on destination and fixture size." },
-  { q: "Are your fixtures wired for my country?", a: "We supply UL (US/Canada), CE (EU/UK), and SAA (AU/NZ) compliant wiring. Select your region at checkout and we'll ship the correct variant." },
+  { q: "When will my order ship?", a: "In-stock fixtures leave within 1–4 business days. Made-to-order and custom-finish pieces ship within the lead time noted on each product page." },
+  { q: "Do you ship internationally?", a: "Yes — worldwide. International orders take 7–25 business days depending on destination and fixture size." },
   { q: "Do bulbs come included?", a: "Most fixtures ship with high-CRI LED bulbs included. Where they don't, recommended bulb specs are listed on the product page." },
   { q: "What's your return policy?", a: "30 days from delivery on any uninstalled fixture in original packaging. Custom and made-to-order pieces are final sale." },
   { q: "Can I change or cancel my order?", a: "Email zolvex.business@gmail.com within 24 hours of placing your order and we'll do our best." },
