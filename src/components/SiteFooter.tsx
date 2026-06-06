@@ -27,9 +27,9 @@ export function SiteFooter() {
           <h4 className="font-display text-lg mb-5 text-foreground">Company</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
             <li><Link to="/about" className="hover:text-foreground transition-colors">About</Link></li>
+            <li><Link to="/story" className="hover:text-foreground transition-colors">Our Story</Link></li>
             <li><Link to="/craftsmanship" className="hover:text-foreground transition-colors">Craftsmanship</Link></li>
             <li><Link to="/sustainability" className="hover:text-foreground transition-colors">Sustainability</Link></li>
-            <li><Link to="/journal" className="hover:text-foreground transition-colors">Journal</Link></li>
             <li><Link to="/wholesale" className="hover:text-foreground transition-colors">Wholesale</Link></li>
             <li><Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link></li>
             <li><Link to="/privacy" className="hover:text-foreground transition-colors">Privacy</Link></li>
