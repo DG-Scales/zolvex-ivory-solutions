@@ -17,7 +17,6 @@ import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ShippingRouteImport } from './routes/shipping'
 import { Route as ReturnsRouteImport } from './routes/returns'
 import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as GiftCardsRouteImport } from './routes/gift-cards'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as CraftsmanshipRouteImport } from './routes/craftsmanship'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -66,11 +65,6 @@ const ReturnsRoute = ReturnsRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GiftCardsRoute = GiftCardsRouteImport.update({
-  id: '/gift-cards',
-  path: '/gift-cards',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -126,7 +120,6 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/craftsmanship': typeof CraftsmanshipRoute
   '/faq': typeof FaqRoute
-  '/gift-cards': typeof GiftCardsRoute
   '/privacy': typeof PrivacyRoute
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
@@ -146,7 +139,6 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/craftsmanship': typeof CraftsmanshipRoute
   '/faq': typeof FaqRoute
-  '/gift-cards': typeof GiftCardsRoute
   '/privacy': typeof PrivacyRoute
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
@@ -167,7 +159,6 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/craftsmanship': typeof CraftsmanshipRoute
   '/faq': typeof FaqRoute
-  '/gift-cards': typeof GiftCardsRoute
   '/privacy': typeof PrivacyRoute
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
@@ -189,7 +180,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/craftsmanship'
     | '/faq'
-    | '/gift-cards'
     | '/privacy'
     | '/returns'
     | '/shipping'
@@ -209,7 +199,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/craftsmanship'
     | '/faq'
-    | '/gift-cards'
     | '/privacy'
     | '/returns'
     | '/shipping'
@@ -229,7 +218,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/craftsmanship'
     | '/faq'
-    | '/gift-cards'
     | '/privacy'
     | '/returns'
     | '/shipping'
@@ -250,7 +238,6 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CraftsmanshipRoute: typeof CraftsmanshipRoute
   FaqRoute: typeof FaqRoute
-  GiftCardsRoute: typeof GiftCardsRoute
   PrivacyRoute: typeof PrivacyRoute
   ReturnsRoute: typeof ReturnsRoute
   ShippingRoute: typeof ShippingRoute
@@ -320,13 +307,6 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gift-cards': {
-      id: '/gift-cards'
-      path: '/gift-cards'
-      fullPath: '/gift-cards'
-      preLoaderRoute: typeof GiftCardsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -402,7 +382,6 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CraftsmanshipRoute: CraftsmanshipRoute,
   FaqRoute: FaqRoute,
-  GiftCardsRoute: GiftCardsRoute,
   PrivacyRoute: PrivacyRoute,
   ReturnsRoute: ReturnsRoute,
   ShippingRoute: ShippingRoute,
