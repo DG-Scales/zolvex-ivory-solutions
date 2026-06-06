@@ -14,7 +14,7 @@ export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
       { title: "FAQ — Zolvex" },
-      { name: "description", content: "Answers on ordering, shipping, wiring standards, bulbs, and returns for Zolvex lighting." },
+      { name: "description", content: "Answers on ordering, shipping, bulbs, and returns for Zolvex lighting." },
     ],
   }),
   component: () => (

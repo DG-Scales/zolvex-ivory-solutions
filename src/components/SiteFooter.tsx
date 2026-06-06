@@ -16,7 +16,6 @@ export function SiteFooter() {
           <h4 className="font-display text-lg mb-5 text-foreground">Shop</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
             <li><Link to="/shop" className="hover:text-foreground transition-colors">All Products</Link></li>
-            <li><Link to="/gift-cards" className="hover:text-foreground transition-colors">Gift Cards</Link></li>
             <li><Link to="/shipping" className="hover:text-foreground transition-colors">Shipping</Link></li>
             <li><Link to="/returns" className="hover:text-foreground transition-colors">Returns</Link></li>
             <li><Link to="/faq" className="hover:text-foreground transition-colors">FAQ</Link></li>
