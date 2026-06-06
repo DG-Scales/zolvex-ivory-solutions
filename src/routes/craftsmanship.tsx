@@ -7,7 +7,7 @@ export const Route = createFileRoute("/craftsmanship")({
       { title: "Craftsmanship — Zolvex" },
       { name: "description", content: "Materials, makers, and the standards behind every Zolvex lighting fixture." },
       { property: "og:title", content: "Craftsmanship — Zolvex" },
-      { property: "og:description", content: "Hand-blown glass, solid brass, and quiet wiring." },
+      { property: "og:description", content: "Honest materials, considered design, and the quality of light." },
     ],
   }),
   component: () => (
@@ -18,11 +18,11 @@ export const Route = createFileRoute("/craftsmanship")({
     >
       <section>
         <h2 className="font-display text-3xl mb-3">Materials</h2>
-        <p>Hand-blown glass, solid brass, brushed steel, hand-spun aluminium, marble, and natural stone. No painted plastic dressed up as metal. No printed glass pretending to be hand-formed.</p>
+        <p>Solid brass, brushed steel, hand-spun aluminium, art glass, marble, and natural stone. No painted plastic dressed up as metal. No printed glass pretending to be hand-formed.</p>
       </section>
       <section>
-        <h2 className="font-display text-3xl mb-3">Makers</h2>
-        <p>We work with small glasshouses, metal workshops, and family-run studios. We know the people who make our chandeliers and sconces, and where we can, we tell you their names.</p>
+        <h2 className="font-display text-3xl mb-3">Partners</h2>
+        <p>We work with a small group of trusted studios and workshops. Every piece in the collection is vetted before it ever reaches a customer — fit, finish, wiring, and the way it carries light.</p>
       </section>
       <section>
         <h2 className="font-display text-3xl mb-3">Light</h2>
