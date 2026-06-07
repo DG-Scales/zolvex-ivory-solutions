@@ -62,14 +62,11 @@ export function SearchDialog() {
                     setQ("");
                     navigate({ to: "/categories/$slug", params: { slug: cat.slug } });
                   }}
-                  className="flex items-center gap-3 rounded-md p-2 text-left hover:bg-muted transition-colors"
+                  className="flex items-center gap-3 rounded-md p-3 text-left hover:bg-muted transition-colors"
                 >
-                  <img
-                    src={cat.image}
-                    alt=""
-                    className="h-12 w-12 rounded object-cover"
-                    loading="lazy"
-                  />
+                  <div className="flex h-12 w-12 items-center justify-center rounded bg-muted text-[10px] uppercase tracking-widest text-muted-foreground">
+                    {cat.name.slice(0, 2)}
+                  </div>
                   <div>
                     <p className="text-sm font-medium">{cat.name}</p>
                     <p className="text-xs text-muted-foreground line-clamp-1">
