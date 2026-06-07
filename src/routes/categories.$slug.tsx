@@ -19,7 +19,6 @@ export const Route = createFileRoute("/categories/$slug")({
           { name: "description", content: loaderData.category.description },
           { property: "og:title", content: `${loaderData.category.name} — Zolvex` },
           { property: "og:description", content: loaderData.category.description },
-          { property: "og:image", content: loaderData.category.image },
         ]
       : [],
   }),
@@ -49,15 +48,7 @@ function CategoryPage() {
     <div className="min-h-screen flex flex-col bg-background">
       <SiteHeader />
 
-      <section className="relative border-b">
-        <div className="absolute inset-0">
-          <img
-            src={category.image}
-            alt=""
-            className="h-full w-full object-cover opacity-40"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
-        </div>
+      <section className="relative border-b bg-muted/30">
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <Link to="/categories" className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-muted-foreground hover:text-foreground mb-6">
             <ArrowLeft className="h-3 w-3" /> All categories
@@ -68,7 +59,7 @@ function CategoryPage() {
       </section>
 
       <main className="flex-1 mx-auto max-w-7xl px-6 py-16 md:py-24 w-full">
-        <ProductGrid filter={category.keywords} />
+        <ProductGrid category={category} />
 
         <div className="mt-24 border-t pt-12">
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">Explore more</p>
