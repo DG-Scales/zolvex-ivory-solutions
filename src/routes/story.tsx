@@ -60,7 +60,7 @@ const values = [
   {
     icon: Compass,
     title: "Considered design",
-    body: "A small, curated catalog. Every piece earns its place. No filler, no trend chasing.",
+    body: "A curated catalog built to last. Every piece earns its place. No filler, no trend chasing.",
   },
   {
     icon: Sparkles,
@@ -88,7 +88,7 @@ const timeline = [
   {
     year: "Ahead",
     title: "Small, intentional, and built to last",
-    body: "We plan to stay small on purpose. A handful of new pieces each year, retired ones that no longer fit, and a relationship with every customer we ship to.",
+    body: "Built to last in every sense. A handful of new pieces each year, retired ones that no longer fit, and a relationship with every customer we ship to.",
   },
 ];
 
@@ -117,7 +117,7 @@ function StoryPage() {
                 To bring quiet, considered lighting into the rooms, façades, and gardens of people who care how a space feels.
               </p>
               <p className="text-muted-foreground leading-relaxed text-lg">
-                We curate premium designer lighting from a small group of trusted studios — chandeliers, pendants, wall sconces, table and floor lamps, and exterior fixtures. Every piece is selected for the quality of its materials, the integrity of its design, and the light it gives.
+                We curate premium designer lighting from trusted studios and workshops — chandeliers, pendants, wall sconces, table and floor lamps, and exterior fixtures. Every piece is selected for the quality of its materials, the integrity of its design, and the light it gives.
               </p>
             </div>
           </div>
@@ -175,7 +175,7 @@ function StoryPage() {
               Every piece is judged against the same quiet standards. It has to be made well. It has to earn its place — no filler, no novelty, nothing chasing a trend. And the light it gives has to feel right. Warm, considered, true to the room.
             </p>
             <p>
-              If a fixture fails any one of these, it doesn't belong here. That's why the catalog stays small on purpose. We'd rather carry forty pieces we believe in than four hundred we don't.
+              If a fixture fails any one of these, it doesn't belong here. The catalog is built to last — forty pieces we believe in, not four hundred we don't.
             </p>
           </div>
         </section>
