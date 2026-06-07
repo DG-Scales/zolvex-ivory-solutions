@@ -2,16 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/lib/shopify";
 import { ProductCard } from "./ProductCard";
 import { Loader2 } from "lucide-react";
+import type { Category } from "@/lib/categories";
+import { matchesCategory } from "@/lib/categories";
 
 interface ProductGridProps {
-  /** Filter by case-insensitive substring of title/description. */
-  filter?: string[];
+  /** Filter by a category definition (smart include + exclude matching). */
+  category?: Category;
+  /** Optional hard cap on visible products. */
+  limit?: number;
 }
 
-export function ProductGrid({ filter }: ProductGridProps = {}) {
+export function ProductGrid({ category, limit }: ProductGridProps = {}) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["products"],
-    queryFn: () => fetchProducts(24),
+    queryFn: () => fetchProducts(120),
   });
 
   if (isLoading) {
@@ -23,19 +27,17 @@ export function ProductGrid({ filter }: ProductGridProps = {}) {
   }
 
   const products = data ?? [];
-  const filtered = filter && filter.length
-    ? products.filter((p) => {
-        const hay = (p.node.title + " " + p.node.description).toLowerCase();
-        return filter.some((k) => hay.includes(k.toLowerCase()));
-      })
+  let filtered = category
+    ? products.filter((p) => matchesCategory(category, p.node.title, p.node.description))
     : products;
+  if (limit) filtered = filtered.slice(0, limit);
 
   if (error || filtered.length === 0) {
     return (
       <div className="text-center py-24 border border-dashed rounded-lg">
         <p className="font-display text-2xl mb-2">No products found</p>
         <p className="text-sm text-muted-foreground max-w-md mx-auto">
-          {filter && filter.length
+          {category
             ? "Nothing in this category yet — check back soon."
             : "Tell me what product you'd like to add and at what price, and I'll create it in your Shopify store."}
         </p>
