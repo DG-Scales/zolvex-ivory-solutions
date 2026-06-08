@@ -51,10 +51,11 @@ export function AccountMenu({ overlay = false }: { overlay?: boolean }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className={buttonClass} aria-label="Account menu">
-        <div className="w-5 h-5 rounded-full bg-current text-background flex items-center justify-center text-[10px] font-medium">
-          <span className={overlay ? "text-foreground" : "text-background"}>{initials}</span>
+        <div className="w-5 h-5 rounded-full bg-foreground text-background flex items-center justify-center text-[10px] font-medium">
+          {initials}
         </div>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
