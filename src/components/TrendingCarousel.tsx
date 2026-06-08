@@ -1,0 +1,102 @@
+import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProducts } from "@/lib/shopify";
+import { getCategory } from "@/lib/categories";
+import { ArrowRight } from "lucide-react";
+
+/**
+ * Cinematic trending carousel — horizontal snap-scroll, hover reveals
+ * white title overlay.
+ */
+export function TrendingCarousel() {
+  const cat = getCategory("trending");
+  const handles = cat?.productHandles ?? [];
+
+  const { data } = useQuery({
+    queryKey: ["products"],
+    queryFn: () => fetchProducts(120),
+  });
+
+  const products = (data ?? []).filter((p) => handles.includes(p.node.handle));
+  // preserve curated order
+  const ordered = handles
+    .map((h) => products.find((p) => p.node.handle === h))
+    .filter(Boolean) as typeof products;
+
+  return (
+    <section className="relative border-y border-black/10 bg-black text-background overflow-hidden">
+      <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_15%_25%,rgba(245,241,232,0.18),transparent_55%),radial-gradient(circle_at_85%_75%,rgba(245,241,232,0.12),transparent_60%)] pointer-events-none" />
+
+      <div className="relative mx-auto max-w-7xl px-6 pt-20 md:pt-28 pb-6">
+        <div className="flex items-end justify-between gap-6 flex-wrap mb-10">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.5em] text-background/60 mb-4">
+              Editor's edit · Season 01
+            </p>
+            <h2 className="font-display text-4xl md:text-6xl leading-[1.02]">
+              Trending <span className="italic font-light">Right Now.</span>
+            </h2>
+            <p className="mt-4 max-w-md text-background/65 text-sm md:text-base">
+              Swipe through the most-coveted pieces of the season — marble,
+              crystal and full-spectrum statement lighting.
+            </p>
+          </div>
+          <Link
+            to="/categories/$slug"
+            params={{ slug: "trending" }}
+            className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] border-b border-background/40 pb-1 hover:border-background transition-colors"
+          >
+            View All Trending <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+      </div>
+
+      <div className="relative pb-24 md:pb-32">
+        <div className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x snap-mandatory scrollbar-hide">
+          {ordered.map((p) => {
+            const img = p.node.images.edges[0]?.node.url;
+            const price = p.node.priceRange.minVariantPrice.amount;
+            return (
+              <Link
+                key={p.node.id}
+                to="/product/$handle"
+                params={{ handle: p.node.handle }}
+                className="group relative shrink-0 snap-start block overflow-hidden rounded-sm bg-neutral-900 w-[78vw] sm:w-[58vw] md:w-[420px] aspect-[4/5]"
+              >
+                {img && (
+                  <img
+                    src={img}
+                    alt={p.node.title}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-all duration-[900ms] ease-out group-hover:scale-110 group-hover:brightness-90"
+                  />
+                )}
+                {/* gradient base */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
+
+                {/* always-visible price chip */}
+                <div className="absolute top-4 left-4 text-[10px] uppercase tracking-[0.3em] text-background/90 bg-black/55 backdrop-blur px-3 py-1.5">
+                  ${parseFloat(price).toFixed(0)}
+                </div>
+
+                {/* hover title overlay (white) */}
+                <div className="absolute inset-x-0 bottom-0 p-6 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-white/70 mb-2">
+                    Trending
+                  </p>
+                  <h3 className="font-display text-white text-2xl md:text-3xl leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
+                    {p.node.title}
+                  </h3>
+                  <span className="mt-3 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white">
+                    View piece <ArrowRight className="w-3 h-3" />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+          <div className="shrink-0 w-6" aria-hidden />
+        </div>
+      </div>
+    </section>
+  );
+}

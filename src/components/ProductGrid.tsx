@@ -3,6 +3,7 @@ import { fetchProducts, fetchCollectionProducts } from "@/lib/shopify";
 import { ProductCard } from "./ProductCard";
 import { Loader2 } from "lucide-react";
 import type { Category } from "@/lib/categories";
+import { matchesCategory } from "@/lib/categories";
 
 interface ProductGridProps {
   category?: Category;
@@ -20,7 +21,7 @@ export function ProductGrid({ category, limit, variant = "default" }: ProductGri
       : ["products"],
     queryFn: () =>
       useCollection
-        ? fetchCollectionProducts(category!.collectionHandle!, 50)
+        ? fetchCollectionProducts(category!.collectionHandle!, 60)
         : fetchProducts(120),
   });
 
@@ -35,11 +36,14 @@ export function ProductGrid({ category, limit, variant = "default" }: ProductGri
   const products = data ?? [];
   let filtered = products;
   if (useCurated) {
-    const set = new Set(category!.productHandles);
     const map = new Map(products.map((p) => [p.node.handle, p]));
     filtered = category!.productHandles!
       .map((h) => map.get(h))
-      .filter((p): p is (typeof products)[number] => !!p && set.has(p.node.handle));
+      .filter((p): p is (typeof products)[number] => !!p);
+  } else if (category && !useCollection) {
+    filtered = products.filter((p) =>
+      matchesCategory(category, p.node.title, p.node.description),
+    );
   }
   if (limit) filtered = filtered.slice(0, limit);
 
