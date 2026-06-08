@@ -97,14 +97,41 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   return data;
 }
 
+// Matches CJK Unified Ideographs (Chinese characters) in alt text or URLs
+const CJK_REGEX = /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/;
+
+function hasChinese(str: string | null | undefined): boolean {
+  if (!str) return false;
+  try {
+    return CJK_REGEX.test(decodeURIComponent(str));
+  } catch {
+    return CJK_REGEX.test(str);
+  }
+}
+
+function stripChineseImages(product: ShopifyProduct["node"] | null | undefined) {
+  if (!product?.images?.edges) return product;
+  const filtered = product.images.edges.filter(
+    (e) => !hasChinese(e.node.altText) && !hasChinese(e.node.url),
+  );
+  // Keep at least one image so cards don't break entirely
+  product.images.edges = filtered.length > 0 ? filtered : product.images.edges.slice(0, 1);
+  return product;
+}
+
+function stripChineseFromEdges(edges: ShopifyProduct[]): ShopifyProduct[] {
+  for (const edge of edges) stripChineseImages(edge.node);
+  return edges;
+}
+
 export async function fetchProducts(first = 24): Promise<ShopifyProduct[]> {
   const data = await storefrontApiRequest(PRODUCTS_QUERY, { first });
-  return data?.data?.products?.edges ?? [];
+  return stripChineseFromEdges(data?.data?.products?.edges ?? []);
 }
 
 export async function fetchProductByHandle(handle: string): Promise<ShopifyProduct["node"] | null> {
   const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
-  return data?.data?.product ?? null;
+  return stripChineseImages(data?.data?.product ?? null) ?? null;
 }
 
 const COLLECTION_PRODUCTS_QUERY = `
@@ -120,5 +147,5 @@ const COLLECTION_PRODUCTS_QUERY = `
 
 export async function fetchCollectionProducts(handle: string, first = 50): Promise<ShopifyProduct[]> {
   const data = await storefrontApiRequest(COLLECTION_PRODUCTS_QUERY, { handle, first });
-  return data?.data?.collection?.products?.edges ?? [];
+  return stripChineseFromEdges(data?.data?.collection?.products?.edges ?? []);
 }
