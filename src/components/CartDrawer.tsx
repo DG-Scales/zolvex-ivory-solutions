@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ShoppingBag, Minus, Plus, Trash2, Lock, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
+import { formatVariantTitle } from "@/lib/variantTitle";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -79,7 +80,7 @@ export const CartDrawer = () => {
                           {item.product.node.title}
                         </Link>
                         <p className="text-xs text-muted-foreground mt-0.5">
-                          {item.selectedOptions.map((option) => option.value).join(" • ")}
+                          {formatVariantTitle({ title: item.variantTitle, selectedOptions: item.selectedOptions })}
                         </p>
                         <p className="font-medium mt-2">
                           {item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}

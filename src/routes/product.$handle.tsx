@@ -8,6 +8,7 @@ import { Loader2, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
+import { formatVariantTitle } from "@/lib/variantTitle";
 
 export const Route = createFileRoute("/product/$handle")({
   component: ProductPage,
@@ -121,7 +122,7 @@ function ProductPage() {
                             onClick={() => setVariantIndex(i)}
                             className={`px-4 py-2 text-sm border rounded-full transition-colors ${i === variantIndex ? "bg-foreground text-background border-foreground" : "hover:border-foreground"}`}
                           >
-                            {v.node.title}
+                            {formatVariantTitle(v.node) || `Option ${i + 1}`}
                           </button>
                         ))}
                       </div>
