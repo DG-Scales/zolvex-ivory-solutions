@@ -15,7 +15,7 @@ export const Route = createFileRoute("/about")({
       <p>We curate premium designer lighting with intent. Chandeliers, pendants, wall sconces, floor lamps, and exterior fixtures — each piece chosen for the quality of its craft, the honesty of its materials, and the light it casts in a real room.</p>
       <p>Lighting is the first thing your eye finds and the last thing it leaves. It sets the temperature of a space long before the furniture does. That belief shapes every decision we make — from the studios we partner with to the pieces we choose to carry, and the ones we quietly turn away.</p>
       <h2>What we stand for</h2>
-      <p>Built to last. We favor solid brass, hand-blown glass, machined steel, and finishes that age with grace. Nothing disposable, nothing hollow. If a fixture won't still feel right in twenty years, it doesn't make the catalog.</p>
+      <p>Built to last. We favor solid brass, hand-blown glass, machined steel, and finishes that age with grace. Nothing disposable, nothing hollow.</p>
       <p>Designed with intent. Every piece earns its place. We look for proportion, restraint, and a point of view — work from independent designers and established ateliers who treat lighting as architecture, not decoration.</p>
       <p>Light that feels right. Specs matter, but the room is the final test. We weigh color temperature, throw, glare, and dimming behavior because the way light lands on a wall, a table, or a face is the whole point.</p>
       <h2>How we work</h2>
