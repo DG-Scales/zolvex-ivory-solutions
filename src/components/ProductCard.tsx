@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Loader2, ChevronLeft, ChevronRight, Headphones, Truck, ShieldCheck } from "lucide-react";
 import { useState, useRef } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import type { ShopifyProduct } from "@/lib/shopify";
@@ -141,7 +141,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
           </>
         )}
 
-        <div className="absolute inset-x-3 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="absolute inset-x-3 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity space-y-2">
           <Button
             onClick={handleAddToCart}
             disabled={isLoading || !selectedVariant}
@@ -154,6 +154,16 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
           >
             {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Add To Bag"}
           </Button>
+          <div className={`flex items-center justify-center gap-2 text-[10px] uppercase tracking-wider ${isFeatured ? "text-white" : "text-white"}`}>
+            <span className="flex items-center gap-1"><Headphones className="w-3 h-3" /> 24/7 Support</span>
+            <span className="w-px h-3 bg-current opacity-30" />
+            <span className="flex items-center gap-1"><Truck className="w-3 h-3" /> Free Shipping</span>
+            <span className="w-px h-3 bg-current opacity-30" />
+            <span className="flex items-center gap-1"><ShieldCheck className="w-3 h-3" /> Secure</span>
+          </div>
+          <div className={`text-center text-[10px] uppercase tracking-wider py-1.5 px-2 rounded ${isFeatured ? "bg-[#F5F1E8] text-black" : "bg-primary text-primary-foreground"}`}>
+            Summer Promo — Code SMRDLZ20 for 20% off
+          </div>
         </div>
       </div>
       <div className="flex flex-col gap-1.5">
