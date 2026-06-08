@@ -50,6 +50,7 @@ export const PRODUCT_FRAGMENT = `
           price { amount currencyCode }
           availableForSale
           selectedOptions { name value }
+          image { url altText }
         }
       }
     }
