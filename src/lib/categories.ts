@@ -50,7 +50,7 @@ export const categories: Category[] = [
     tagline: "Chandeliers · Pendants · Droplights",
     group: "Collection",
     cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151137_31852eb4-f3d8-4d71-bbd7-0044efd2a2f6.png?v=1780845271",
+      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151648_436d7c08-fe63-41ed-8cb9-bf61e85f70fc.png?v=1780845496",
     keywords: ["chandelier", "pendant", "droplight", "hanging"],
     exclude: ["outdoor", "exterior", "waterproof", "wall light", "wall lamp", "sconce", "vanity", "mirror front", "step light", "solar"],
   },
