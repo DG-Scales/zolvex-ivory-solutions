@@ -50,7 +50,6 @@ function ProductPage() {
             const images = product.images.edges;
             const variant = product.variants.edges[variantIndex]?.node;
             const { prose, specs } = parseDescription(product.description);
-            const galleryRef = useRef<HTMLDivElement>(null);
 
             const scrollToIndex = (i: number) => {
               const el = galleryRef.current;
@@ -60,9 +59,6 @@ function ProductPage() {
               el.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
             };
 
-            useEffect(() => {
-              scrollToIndex(imageIndex);
-            }, [imageIndex]);
 
             return (
               <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
