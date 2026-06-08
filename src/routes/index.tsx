@@ -6,6 +6,7 @@ import { useCartSync } from "@/hooks/useCartSync";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { CategoryGrid } from "@/components/CategoryGrid";
+import { TrendingCarousel } from "@/components/TrendingCarousel";
 import heroImage from "@/assets/hero-room.jpg";
 
 export const Route = createFileRoute("/")({
@@ -65,42 +66,8 @@ function Index() {
       </section>
 
       {/* Trending highlight */}
-      <section className="relative border-t border-black/10 bg-black text-background overflow-hidden">
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_30%_20%,rgba(245,241,232,0.25),transparent_55%),radial-gradient(circle_at_75%_80%,rgba(245,241,232,0.18),transparent_60%)]" />
-        <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.4em] text-background/60 mb-4">Editor's edit</p>
-            <h2 className="font-display text-4xl md:text-6xl leading-[1.05]">
-              Trending<br/>
-              <span className="italic font-light">Right Now.</span>
-            </h2>
-            <p className="mt-6 max-w-md text-background/70">
-              The most-coveted pieces of the season — sculptural marble pendants, full-spectrum chandeliers and luxury statement fixtures, hand-picked by the studio.
-            </p>
-            <Link
-              to="/categories/$slug"
-              params={{ slug: "trending" }}
-              className="inline-flex items-center gap-2 mt-8 text-xs uppercase tracking-[0.25em] border-b border-background/40 pb-1 hover:border-background"
-            >
-              Explore Trending <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-          <Link
-            to="/categories/$slug"
-            params={{ slug: "trending" }}
-            className="group relative block aspect-[4/5] overflow-hidden rounded-sm"
-          >
-            <img
-              src="https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151137_31852eb4-f3d8-4d71-bbd7-0044efd2a2f6.png?v=1780845271"
-              alt="Trending — Spanish marble chandelier"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-background">
-              <span className="text-[10px] uppercase tracking-[0.3em] bg-black/60 backdrop-blur px-3 py-1.5">Luxury · From $349</span>
-            </div>
-          </Link>
-        </div>
-      </section>
+      <TrendingCarousel />
+
 
 
       {/* Featured Fixtures */}
