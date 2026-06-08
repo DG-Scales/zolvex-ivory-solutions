@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { CategoryGrid } from "@/components/CategoryGrid";
 import { TrendingCarousel } from "@/components/TrendingCarousel";
-import { getCategory } from "@/lib/categories";
+import { MakersPick } from "@/components/MakersPick";
 import heroImage from "@/assets/hero-room.jpg";
 
 export const Route = createFileRoute("/")({
@@ -22,36 +22,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-function TrendingCard() {
-  const cat = getCategory("trending");
-  if (!cat) return null;
-  return (
-    <Link
-      to="/categories/$slug"
-      params={{ slug: cat.slug }}
-      className="group relative block overflow-hidden rounded-xl bg-muted aspect-[21/9] md:aspect-[21/8]"
-    >
-      <img
-        src={cat.cover}
-        alt={cat.name}
-        loading="eager"
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 text-background">
-        {cat.tagline && (
-          <p className="mb-2 text-[10px] md:text-xs uppercase tracking-[0.25em] opacity-80">
-            {cat.tagline}
-          </p>
-        )}
-        <h3 className="font-display text-2xl md:text-4xl leading-tight">{cat.name}</h3>
-        <p className="mt-2 text-xs md:text-sm uppercase tracking-[0.2em] opacity-80">
-          Shop {cat.name} →
-        </p>
-      </div>
-    </Link>
-  );
-}
 
 function Index() {
   useCartSync();
@@ -85,10 +55,16 @@ function Index() {
         </div>
       </section>
 
-      {/* Trending */}
-      <section id="trending" className="mx-auto max-w-7xl px-6 pt-24 md:pt-32 w-full">
-        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">Featured</p>
-        <TrendingCard />
+      {/* Maker's Pick */}
+      <section id="makers-pick" className="mx-auto max-w-7xl px-6 pt-24 md:pt-32 w-full">
+        <div className="mb-10">
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Maker's Pick</p>
+          <h2 className="font-display text-3xl md:text-4xl">The finest pieces, hand-selected</h2>
+          <p className="mt-3 max-w-xl text-muted-foreground">
+            Our top three most premium fixtures — chosen for presence, craft, and the statement they make in any room.
+          </p>
+        </div>
+        <MakersPick />
       </section>
 
       {/* Collections */}
