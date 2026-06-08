@@ -160,6 +160,8 @@ export function TrendingCarousel() {
                 key={p.node.id}
                 to="/product/$handle"
                 params={{ handle: p.node.handle }}
+                data-card
+                draggable={false}
                 className="group relative shrink-0 snap-start block overflow-hidden rounded-sm bg-neutral-900 w-[78vw] sm:w-[58vw] md:w-[420px] aspect-[4/5]"
               >
                 {img && (
@@ -167,7 +169,8 @@ export function TrendingCarousel() {
                     src={img}
                     alt={p.node.title}
                     loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover transition-all duration-[900ms] ease-out group-hover:scale-110 group-hover:brightness-90"
+                    draggable={false}
+                    className="absolute inset-0 h-full w-full object-cover transition-all duration-[900ms] ease-out group-hover:scale-110 group-hover:brightness-90 pointer-events-none"
                   />
                 )}
                 {/* gradient base */}
