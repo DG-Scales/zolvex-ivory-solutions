@@ -55,42 +55,84 @@ export function SearchDialog({ overlay = false }: { overlay?: boolean } = {}) {
             </div>
           </form>
           <div className="max-h-[50vh] overflow-y-auto p-3">
-            <p className="px-2 py-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              Categories
-            </p>
-            <div className="grid grid-cols-2 gap-2">
-              {filtered.map((cat) => (
-                <button
-                  key={cat.slug}
-                  onClick={() => {
-                    setOpen(false);
-                    setQ("");
-                    navigate({ to: "/categories/$slug", params: { slug: cat.slug } });
-                  }}
-                  className="flex items-center gap-3 rounded-md p-3 text-left hover:bg-muted transition-colors"
-                >
-                  <div className="h-12 w-12 shrink-0 overflow-hidden rounded bg-muted">
-                    <img
-                      src={cat.cover}
-                      alt={cat.name}
-                      loading="lazy"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">{cat.name}</p>
-                    <p className="text-xs text-muted-foreground line-clamp-1">
-                      {cat.description}
+            {(() => {
+              const trending = filtered.find((c) => c.slug === "trending");
+              const others = filtered.filter((c) => c.slug !== "trending");
+              return (
+                <>
+                  {trending && (
+                    <>
+                      <p className="px-2 py-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                        Trending
+                      </p>
+                      <button
+                        onClick={() => {
+                          setOpen(false);
+                          setQ("");
+                          navigate({ to: "/categories/$slug", params: { slug: trending.slug } });
+                        }}
+                        className="flex w-full items-center gap-3 rounded-md p-3 text-left hover:bg-muted transition-colors mb-2"
+                      >
+                        <div className="h-14 w-14 shrink-0 overflow-hidden rounded bg-muted">
+                          <img
+                            src={trending.cover}
+                            alt={trending.name}
+                            loading="lazy"
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium">{trending.name}</p>
+                          <p className="text-xs text-muted-foreground line-clamp-1">
+                            {trending.description}
+                          </p>
+                        </div>
+                      </button>
+                    </>
+                  )}
+                  {others.length > 0 && (
+                    <>
+                      <p className="px-2 py-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                        Collections
+                      </p>
+                      <div className="grid grid-cols-2 gap-2">
+                        {others.map((cat) => (
+                          <button
+                            key={cat.slug}
+                            onClick={() => {
+                              setOpen(false);
+                              setQ("");
+                              navigate({ to: "/categories/$slug", params: { slug: cat.slug } });
+                            }}
+                            className="flex items-center gap-3 rounded-md p-3 text-left hover:bg-muted transition-colors"
+                          >
+                            <div className="h-12 w-12 shrink-0 overflow-hidden rounded bg-muted">
+                              <img
+                                src={cat.cover}
+                                alt={cat.name}
+                                loading="lazy"
+                                className="h-full w-full object-cover"
+                              />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium">{cat.name}</p>
+                              <p className="text-xs text-muted-foreground line-clamp-1">
+                                {cat.description}
+                              </p>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                  {filtered.length === 0 && (
+                    <p className="px-2 py-6 text-center text-sm text-muted-foreground">
+                      No matches.
                     </p>
-                  </div>
-                </button>
-              ))}
-              {filtered.length === 0 && (
-                <p className="col-span-2 px-2 py-6 text-center text-sm text-muted-foreground">
-                  No matches.
-                </p>
-              )}
-            </div>
+                  )}
+                </>
+              );
+            })()}
           </div>
         </DialogContent>
       </Dialog>
