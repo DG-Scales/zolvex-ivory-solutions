@@ -13,6 +13,10 @@ export interface Category {
   keywords?: string[];
   /** Keywords that disqualify a product even if it matches keywords. */
   exclude?: string[];
+  /** Product handles to force-include in this category. */
+  includeHandles?: string[];
+  /** Product handles to force-exclude from this category. */
+  excludeHandles?: string[];
   cover: string;
   tagline?: string;
 }
