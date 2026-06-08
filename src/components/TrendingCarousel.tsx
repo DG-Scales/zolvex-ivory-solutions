@@ -115,18 +115,43 @@ export function TrendingCarousel() {
               crystal and full-spectrum statement lighting.
             </p>
           </div>
-          <Link
-            to="/categories/$slug"
-            params={{ slug: "trending" }}
-            className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] border-b border-background/40 pb-1 hover:border-background transition-colors"
-          >
-            View All Trending <ArrowRight className="w-3 h-3" />
-          </Link>
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-2 mr-2">
+              <button
+                type="button"
+                onClick={() => scrollByCards(-1)}
+                disabled={!canPrev}
+                aria-label="Previous"
+                className="w-10 h-10 rounded-full border border-background/30 flex items-center justify-center hover:bg-background hover:text-black transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-background"
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollByCards(1)}
+                disabled={!canNext}
+                aria-label="Next"
+                className="w-10 h-10 rounded-full border border-background/30 flex items-center justify-center hover:bg-background hover:text-black transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-background"
+              >
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+            <Link
+              to="/categories/$slug"
+              params={{ slug: "trending" }}
+              className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] border-b border-background/40 pb-1 hover:border-background transition-colors"
+            >
+              View All Trending <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
         </div>
       </div>
 
       <div className="relative pb-24 md:pb-32">
-        <div className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x snap-mandatory scrollbar-hide">
+        <div
+          ref={scrollerRef}
+          className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x snap-mandatory scrollbar-hide cursor-grab active:cursor-grabbing select-none [touch-action:pan-y]"
+        >
           {ordered.map((p) => {
             const img = p.node.images.edges[0]?.node.url;
             const price = p.node.priceRange.minVariantPrice.amount;
