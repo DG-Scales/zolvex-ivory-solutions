@@ -8,6 +8,7 @@ import { ArrowRight } from "lucide-react";
 import { CategoryGrid } from "@/components/CategoryGrid";
 import { TrendingCarousel } from "@/components/TrendingCarousel";
 import { MakersPick } from "@/components/MakersPick";
+import { LiveVideos } from "@/components/LiveVideos";
 import heroImage from "@/assets/hero-room.jpg";
 
 export const Route = createFileRoute("/")({
@@ -81,6 +82,11 @@ function Index() {
 
       {/* Trending highlight */}
       <TrendingCarousel />
+
+      {/* Live product videos */}
+      <LiveVideos />
+
+
 
 
 
