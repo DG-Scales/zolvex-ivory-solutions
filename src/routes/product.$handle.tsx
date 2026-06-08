@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
 import { formatVariantTitle } from "@/lib/variantTitle";
+import { parseDescription } from "@/lib/parseSpecs";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/product/$handle")({
@@ -48,6 +49,7 @@ function ProductPage() {
             const images = product.images.edges;
             const mainImage = images[imageIndex]?.node;
             const variant = product.variants.edges[variantIndex]?.node;
+            const { prose, specs } = parseDescription(product.description);
             return (
               <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
                 <div>
@@ -101,6 +103,20 @@ function ProductPage() {
                       ))}
                     </div>
                   )}
+
+                  {specs.length > 0 && (
+                    <div className="mt-8 border border-border rounded-md p-6 bg-muted/30">
+                      <h2 className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">Specifications</h2>
+                      <ul className="space-y-2 text-sm">
+                        {specs.map((s, i) => (
+                          <li key={i} className="flex gap-2">
+                            <span className="text-muted-foreground">•</span>
+                            <span><span className="font-medium text-foreground">{s.label}:</span> <span className="text-muted-foreground">{s.value}</span></span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
                 <div className="md:py-8">
@@ -125,7 +141,7 @@ function ProductPage() {
                     <span>{variant?.price.currencyCode} {parseFloat(variant?.price.amount || "0").toFixed(2)}</span>
                   </p>
                   <div className="prose prose-sm text-muted-foreground mb-10 whitespace-pre-line leading-relaxed">
-                    {product.description || "A considered solution. More details coming soon."}
+                    {prose || "A considered solution. More details coming soon."}
                   </div>
 
                   {product.variants.edges.length > 1 && (
