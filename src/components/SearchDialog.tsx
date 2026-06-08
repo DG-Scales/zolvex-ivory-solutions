@@ -11,7 +11,7 @@ export function SearchDialog({ overlay = false }: { overlay?: boolean } = {}) {
 
   const filtered = q
     ? categories.filter((c) =>
-        (c.name + " " + c.keywords.join(" ")).toLowerCase().includes(q.toLowerCase()),
+        (c.name + " " + (c.keywords ?? []).join(" ")).toLowerCase().includes(q.toLowerCase()),
       )
     : categories;
 
