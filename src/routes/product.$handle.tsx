@@ -103,6 +103,20 @@ function ProductPage() {
                       ))}
                     </div>
                   )}
+
+                  {specs.length > 0 && (
+                    <div className="mt-8 border border-border rounded-md p-6 bg-muted/30">
+                      <h2 className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">Specifications</h2>
+                      <ul className="space-y-2 text-sm">
+                        {specs.map((s, i) => (
+                          <li key={i} className="flex gap-2">
+                            <span className="text-muted-foreground">•</span>
+                            <span><span className="font-medium text-foreground">{s.label}:</span> <span className="text-muted-foreground">{s.value}</span></span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
                 <div className="md:py-8">
