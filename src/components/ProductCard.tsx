@@ -65,12 +65,12 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
           </Button>
         </div>
       </div>
-      <div className="flex justify-between items-start gap-3">
+      <div className="flex flex-col gap-1.5">
         <h3
           className={
             isFeatured
-              ? "text-sm font-medium leading-tight uppercase tracking-[0.08em] text-black group-hover:opacity-60 transition-opacity"
-              : "text-sm font-medium leading-tight group-hover:opacity-60 transition-opacity"
+              ? "text-sm font-medium leading-snug text-black group-hover:opacity-60 transition-opacity"
+              : "text-sm font-medium leading-snug group-hover:opacity-60 transition-opacity"
           }
         >
           {node.title}
@@ -78,8 +78,8 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
         <p
           className={
             isFeatured
-              ? "text-sm font-medium whitespace-nowrap flex items-baseline gap-2 text-black"
-              : "text-sm font-medium whitespace-nowrap flex items-baseline gap-2"
+              ? "text-sm font-medium flex items-baseline gap-2 text-black"
+              : "text-sm font-medium flex items-baseline gap-2"
           }
         >
           <span className={isFeatured ? "line-through opacity-50" : "text-foreground line-through opacity-70"}>
