@@ -54,16 +54,22 @@ function Index() {
         </div>
       </section>
 
+      {/* Trending */}
+      <section id="trending" className="mx-auto max-w-7xl px-6 pt-24 md:pt-32 w-full">
+        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">Featured</p>
+        <TrendingCard />
+      </section>
+
       {/* Collections */}
       <section id="categories" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
-        <div className="text-center mb-14">
+        <div className="mb-10">
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Shop the collections</p>
-          <h2 className="font-display text-4xl md:text-5xl">Four edits. One language of light.</h2>
-          <p className="mt-4 max-w-xl mx-auto text-muted-foreground">
+          <h2 className="font-display text-3xl md:text-4xl">Curated collections</h2>
+          <p className="mt-3 max-w-xl text-muted-foreground">
             From statement chandeliers to architectural exteriors — every collection is curated for craft, material honesty and the quality of light it casts.
           </p>
         </div>
-        <CategoryGrid columns={4} />
+        <CategoryGrid columns={3} excludeSlugs={["trending"]} />
       </section>
 
       {/* Trending highlight */}
