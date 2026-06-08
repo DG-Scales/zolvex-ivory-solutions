@@ -52,33 +52,56 @@ function Index() {
         </div>
       </section>
 
-      {/* Start by fixture type */}
+      {/* Collections */}
       <section id="categories" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
         <div className="text-center mb-14">
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Find your fixture</p>
-          <h2 className="font-display text-4xl md:text-5xl">Start with the shape of the light.</h2>
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Shop the collections</p>
+          <h2 className="font-display text-4xl md:text-5xl">Four edits. One language of light.</h2>
           <p className="mt-4 max-w-xl mx-auto text-muted-foreground">
-            Sculptural ceiling pieces, low pendants, soft wall washes, and weather-built exteriors — sorted by what they do, not how they look.
+            From statement chandeliers to architectural exteriors — every collection is curated for craft, material honesty and the quality of light it casts.
           </p>
         </div>
-        <CategoryGrid group="Type" />
+        <CategoryGrid columns={4} />
       </section>
 
-      {/* By room */}
-      <section className="border-t bg-muted/30">
-        <div className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
-          <div className="flex items-end justify-between mb-12 gap-6 flex-wrap">
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Room by room</p>
-              <h2 className="font-display text-4xl md:text-5xl">A fixture for every corner</h2>
-            </div>
-            <Link to="/categories" className="text-xs uppercase tracking-[0.2em] hover:opacity-60">
-              See every category →
+      {/* Trending highlight */}
+      <section className="relative border-t border-black/10 bg-black text-background overflow-hidden">
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_30%_20%,rgba(245,241,232,0.25),transparent_55%),radial-gradient(circle_at_75%_80%,rgba(245,241,232,0.18),transparent_60%)]" />
+        <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.4em] text-background/60 mb-4">Editor's edit</p>
+            <h2 className="font-display text-4xl md:text-6xl leading-[1.05]">
+              Trending<br/>
+              <span className="italic font-light">Right Now.</span>
+            </h2>
+            <p className="mt-6 max-w-md text-background/70">
+              The most-coveted pieces of the season — sculptural marble pendants, full-spectrum chandeliers and luxury statement fixtures, hand-picked by the studio.
+            </p>
+            <Link
+              to="/categories/$slug"
+              params={{ slug: "trending" }}
+              className="inline-flex items-center gap-2 mt-8 text-xs uppercase tracking-[0.25em] border-b border-background/40 pb-1 hover:border-background"
+            >
+              Explore Trending <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
-          <CategoryGrid group="Room" columns={4} />
+          <Link
+            to="/categories/$slug"
+            params={{ slug: "trending" }}
+            className="group relative block aspect-[4/5] overflow-hidden rounded-sm"
+          >
+            <img
+              src="https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151137_31852eb4-f3d8-4d71-bbd7-0044efd2a2f6.png?v=1780845271"
+              alt="Trending — Spanish marble chandelier"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-background">
+              <span className="text-[10px] uppercase tracking-[0.3em] bg-black/60 backdrop-blur px-3 py-1.5">Luxury · From $349</span>
+            </div>
+          </Link>
         </div>
       </section>
+
 
       {/* Featured Fixtures */}
       <section id="shop" className="border-t border-black/10 bg-[#F5F1E8] text-black">
