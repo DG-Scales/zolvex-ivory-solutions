@@ -126,14 +126,14 @@ function Index() {
           <p className="max-w-md mx-auto opacity-70 mb-10">
             New fixtures, limited collections, and quiet stories on light — sent only when there's something worth saying.
           </p>
-          <form className="flex max-w-md mx-auto gap-2" onSubmit={(e) => e.preventDefault()}>
+          <form className="flex flex-col sm:flex-row max-w-md mx-auto gap-2" onSubmit={(e) => e.preventDefault()}>
             <input
               type="email"
               required
               placeholder="your@email.com"
-              className="flex-1 px-5 py-3 rounded-full bg-transparent border border-background/30 placeholder:text-background/40 focus:outline-none focus:border-background"
+              className="flex-1 min-w-0 px-5 py-3 rounded-full bg-transparent border border-background/30 placeholder:text-background/40 focus:outline-none focus:border-background"
             />
-            <Button type="submit" variant="secondary" className="rounded-full px-6">
+            <Button type="submit" variant="secondary" className="rounded-full px-6 shrink-0">
               Subscribe
             </Button>
           </form>

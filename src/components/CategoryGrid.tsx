@@ -33,14 +33,14 @@ export function CategoryGrid({
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 p-5 text-background">
+          <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5 text-background">
             {cat.tagline && (
-              <p className="mb-2 text-[10px] uppercase tracking-[0.25em] opacity-80">
+              <p className="mb-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.25em] opacity-80 line-clamp-1">
                 {cat.tagline}
               </p>
             )}
-            <h3 className="font-display text-2xl leading-tight">{cat.name}</h3>
-            <p className="mt-1 text-xs uppercase tracking-[0.2em] opacity-80">
+            <h3 className="font-display text-base sm:text-xl md:text-2xl leading-tight">{cat.name}</h3>
+            <p className="mt-1 text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] opacity-80 line-clamp-1">
               Shop {cat.name} →
             </p>
           </div>
