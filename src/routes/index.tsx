@@ -35,18 +35,18 @@ function Index() {
         <div className="absolute inset-0 bg-black/30" />
         <SiteHeader overlay />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 text-background">
-          <p className="font-display italic text-lg md:text-xl opacity-95">Elegance Through The Ages</p>
+          <p className="font-display italic text-lg md:text-xl opacity-95">A quieter kind of brilliance</p>
           <h1 className="mt-4 font-display uppercase tracking-[0.06em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] max-w-5xl">
-            Light Your Style, Layer Your Story
+            Fixtures Made for the Rooms You Live In
           </h1>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg" className="rounded-full px-7">
               <Link to="/shop">
-                Shop the collection <ArrowRight className="ml-2 w-4 h-4" />
+                Browse the catalog <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="rounded-full px-7 bg-transparent text-background border-background/60 hover:bg-background hover:text-foreground">
-              <Link to="/story">Our story</Link>
+              <Link to="/story">How Zolvex began</Link>
             </Button>
           </div>
         </div>
