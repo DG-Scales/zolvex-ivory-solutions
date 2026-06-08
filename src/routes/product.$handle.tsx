@@ -10,6 +10,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
 import { formatVariantTitle } from "@/lib/variantTitle";
 import { toast } from "sonner";
+import { ProductReviews } from "@/components/ProductReviews";
 
 export const Route = createFileRoute("/product/$handle")({
   component: ProductPage,
@@ -190,6 +191,7 @@ function ProductPage() {
             );
           })()
         )}
+        {!isLoading && product && <ProductReviews handle={handle} />}
       </main>
       <SiteFooter />
     </div>
