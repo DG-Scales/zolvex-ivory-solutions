@@ -81,7 +81,7 @@ function Index() {
             </p>
             <div className="mt-6 mx-auto h-px w-16 bg-black/70" />
           </div>
-          <ProductGrid limit={8} variant="featured" />
+          <ProductGrid limit={8} variant="featured" showFilters={false} />
           <div className="text-center mt-14">
             <Button asChild size="lg" className="rounded-none px-8 bg-black text-[#F5F1E8] hover:bg-black/85">
               <Link to="/shop">
