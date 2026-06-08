@@ -2,8 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/lib/shopify";
 import { getCategory } from "@/lib/categories";
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import { ArrowRight, ArrowLeft, Share2 } from "lucide-react";
 import { useRef, useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 /**
  * Cinematic trending carousel — horizontal snap-scroll with drag-to-swipe
@@ -187,6 +188,23 @@ export function TrendingCarousel() {
                 <div className="absolute top-4 left-4 text-[10px] uppercase tracking-[0.3em] text-background/90 bg-black/55 backdrop-blur px-3 py-1.5">
                   ${parseFloat(price).toFixed(0)}
                 </div>
+
+                {/* share chip */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const url = `${window.location.origin}/product/${p.node.handle}`;
+                    navigator.clipboard.writeText(url).then(() => {
+                      toast.success("Link copied to clipboard");
+                    });
+                  }}
+                  aria-label="Share product"
+                  className="absolute top-4 right-4 text-background/90 bg-black/55 backdrop-blur p-2 rounded-full hover:bg-black/70 transition-colors"
+                >
+                  <Share2 className="w-3.5 h-3.5" />
+                </button>
 
                 {/* hover title overlay (white) */}
                 <div className="absolute inset-x-0 bottom-0 p-6 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
