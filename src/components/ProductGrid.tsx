@@ -5,6 +5,13 @@ import { fetchProducts, fetchCollectionProducts } from "@/lib/shopify";
 import { ProductCard } from "./ProductCard";
 import { Loader2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { categories as ALL_CATEGORIES, type Category, matchesCategory } from "@/lib/categories";
 
 interface ProductGridProps {
@@ -13,6 +20,14 @@ interface ProductGridProps {
   variant?: "default" | "featured";
   showFilters?: boolean;
 }
+
+type SortOption = "newest" | "price-asc" | "price-desc";
+
+const SORT_LABELS: Record<SortOption, string> = {
+  newest: "Newest",
+  "price-asc": "Price: Low to High",
+  "price-desc": "Price: High to Low",
+};
 
 export function ProductGrid({ category, limit, variant = "default", showFilters = true }: ProductGridProps = {}) {
   const useCollection = !!category?.collectionHandle;
@@ -45,24 +60,42 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
     return products;
   }, [data, category, useCollection, useCurated]);
 
-  // Price bounds
-  const [minBound, maxBound] = useMemo(() => {
-    if (!scoped.length) return [0, 1000];
-    const prices = scoped.map((p) => parseFloat(p.node.priceRange.minVariantPrice.amount));
-    const lo = Math.floor(Math.min(...prices));
-    const hi = Math.ceil(Math.max(...prices));
-    return [lo, hi === lo ? lo + 1 : hi];
-  }, [scoped]);
-
-  const [range, setRange] = useState<[number, number] | null>(null);
-  const [min, max] = range ?? [minBound, maxBound];
+  const [range, setRange] = useState<[number, number]>([0, 5000]);
+  const [min, max] = range;
   const currency = scoped[0]?.node.priceRange.minVariantPrice.currencyCode ?? "USD";
+
+  const [sort, setSort] = useState<SortOption>("newest");
 
   let filtered = scoped.filter((p) => {
     const amt = parseFloat(p.node.priceRange.minVariantPrice.amount);
     return amt >= min && amt <= max;
   });
-  if (limit) filtered = filtered.slice(0, limit);
+
+  const sorted = useMemo(() => {
+    const arr = [...filtered];
+    if (sort === "price-asc") {
+      arr.sort(
+        (a, b) =>
+          parseFloat(a.node.priceRange.minVariantPrice.amount) -
+          parseFloat(b.node.priceRange.minVariantPrice.amount),
+      );
+    } else if (sort === "price-desc") {
+      arr.sort(
+        (a, b) =>
+          parseFloat(b.node.priceRange.minVariantPrice.amount) -
+          parseFloat(a.node.priceRange.minVariantPrice.amount),
+      );
+    } else if (sort === "newest") {
+      arr.sort(
+        (a, b) =>
+          new Date(b.node.createdAt).getTime() -
+          new Date(a.node.createdAt).getTime(),
+      );
+    }
+    return arr;
+  }, [filtered, sort]);
+
+  const display = limit ? sorted.slice(0, limit) : sorted;
 
   if (isLoading) {
     return (
@@ -77,7 +110,7 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
   return (
     <div>
       {showFilters && scoped.length > 0 && (
-        <div className="mb-10 border-y border-border/60 py-5 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
+        <div className="mb-10 border-y border-border/60 py-5 flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-10">
           <div className="flex-1 min-w-0 lg:max-w-md">
             <div className="flex items-center justify-between mb-3">
               <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Price</p>
@@ -86,13 +119,29 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
               </p>
             </div>
             <Slider
-              min={minBound}
-              max={maxBound}
-              step={Math.max(1, Math.floor((maxBound - minBound) / 100))}
+              min={0}
+              max={5000}
+              step={50}
               value={[min, max]}
               onValueChange={(v) => setRange([v[0], v[1]] as [number, number])}
               minStepsBetweenThumbs={1}
             />
+          </div>
+
+          <div className="min-w-0 lg:w-52">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-3">Sort</p>
+            <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
+              <SelectTrigger className="h-9 text-xs uppercase tracking-[0.15em]">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                {(Object.keys(SORT_LABELS) as SortOption[]).map((key) => (
+                  <SelectItem key={key} value={key} className="text-xs">
+                    {SORT_LABELS[key]}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {!category && (
@@ -115,7 +164,7 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
         </div>
       )}
 
-      {error || filtered.length === 0 ? (
+      {error || display.length === 0 ? (
         <div className="text-center py-24 border border-dashed rounded-lg">
           <p className="font-display text-2xl mb-2">No products found</p>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
@@ -128,7 +177,7 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
-          {filtered.map((product) => (
+          {display.map((product) => (
             <ProductCard key={product.node.id} product={product} variant={variant} />
           ))}
         </div>
