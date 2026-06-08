@@ -5,6 +5,7 @@ import { fetchProducts, fetchCollectionProducts } from "@/lib/shopify";
 import { ProductCard } from "./ProductCard";
 import { Loader2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -61,8 +62,14 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
     return products;
   }, [data, category, useCollection, useCurated]);
 
-  const [range, setRange] = useState<[number, number]>([0, 5000]);
+  const PRICE_MIN = 0;
+  const PRICE_MAX = 5000;
+  const [draftRange, setDraftRange] = useState<[number, number]>([PRICE_MIN, PRICE_MAX]);
+  const [range, setRange] = useState<[number, number]>([PRICE_MIN, PRICE_MAX]);
   const [min, max] = range;
+  const [draftMin, draftMax] = draftRange;
+  const isDirty = draftMin !== min || draftMax !== max;
+  const isDefault = min === PRICE_MIN && max === PRICE_MAX;
   const currency = scoped[0]?.node.priceRange.minVariantPrice.currencyCode ?? "USD";
 
   const [sort, setSort] = useState<SortOption>("featured");
@@ -141,17 +148,42 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
             <div className="flex items-center justify-between mb-3">
               <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Price</p>
               <p className="text-xs tabular-nums text-foreground">
-                {currency} {min} — {currency} {max}
+                {currency} {draftMin} — {currency} {draftMax}
               </p>
             </div>
             <Slider
-              min={0}
-              max={5000}
+              min={PRICE_MIN}
+              max={PRICE_MAX}
               step={50}
-              value={[min, max]}
-              onValueChange={(v) => setRange([v[0], v[1]] as [number, number])}
+              value={[draftMin, draftMax]}
+              onValueChange={(v) => setDraftRange([v[0], v[1]] as [number, number])}
               minStepsBetweenThumbs={1}
             />
+            <div className="mt-4 flex items-center gap-2">
+              <Button
+                type="button"
+                size="sm"
+                variant="default"
+                className="h-8 px-4 text-[11px] uppercase tracking-[0.2em] rounded-full"
+                onClick={() => setRange(draftRange)}
+                disabled={!isDirty}
+              >
+                Apply
+              </Button>
+              <Button
+                type="button"
+                size="sm"
+                variant="ghost"
+                className="h-8 px-4 text-[11px] uppercase tracking-[0.2em] rounded-full"
+                onClick={() => {
+                  setDraftRange([PRICE_MIN, PRICE_MAX]);
+                  setRange([PRICE_MIN, PRICE_MAX]);
+                }}
+                disabled={isDefault && !isDirty}
+              >
+                Reset
+              </Button>
+            </div>
           </div>
 
           <div className="min-w-0 lg:w-52">
