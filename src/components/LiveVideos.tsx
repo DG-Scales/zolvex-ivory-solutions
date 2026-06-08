@@ -1,9 +1,11 @@
 import liveVideo1 from "@/assets/live-video-1.mp4.asset.json";
+import liveVideo2 from "@/assets/live-video-2.mp4.asset.json";
+import liveVideo3 from "@/assets/live-video-3.mp4.asset.json";
 
-const videos: Array<{ url?: string; label: string }> = [
-  { url: liveVideo1.url, label: "Featured fixture" },
-  { label: "Coming soon" },
-  { label: "Coming soon" },
+const videos = [
+  { url: liveVideo1.url },
+  { url: liveVideo2.url },
+  { url: liveVideo3.url },
 ];
 
 export function LiveVideos() {
@@ -28,20 +30,14 @@ export function LiveVideos() {
               key={i}
               className="relative aspect-[9/16] overflow-hidden rounded-md bg-muted"
             >
-              {v.url ? (
-                <video
-                  src={v.url}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center text-xs uppercase tracking-[0.25em] text-muted-foreground">
-                  {v.label}
-                </div>
-              )}
+              <video
+                src={v.url}
+                className="absolute inset-0 h-full w-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
             </div>
           ))}
         </div>
