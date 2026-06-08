@@ -47,35 +47,49 @@ function ProductPage() {
         ) : (
           (() => {
             const images = product.images.edges;
-            const mainImage = images[imageIndex]?.node;
             const variant = product.variants.edges[variantIndex]?.node;
             const { prose, specs } = parseDescription(product.description);
+            const galleryRef = useRef<HTMLDivElement>(null);
+
+            const scrollToIndex = (i: number) => {
+              const el = galleryRef.current;
+              if (!el) return;
+              const target = el.children[i] as HTMLElement;
+              if (!target) return;
+              el.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
+            };
+
+            useEffect(() => {
+              scrollToIndex(imageIndex);
+            }, [imageIndex]);
+
             return (
               <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
                 <div>
                   <div
-                    className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative"
-                    onTouchStart={(e) => {
-                      (e.currentTarget as HTMLDivElement).dataset.x = String(e.touches[0].clientX);
-                    }}
-                    onTouchEnd={(e) => {
-                      const start = Number((e.currentTarget as HTMLDivElement).dataset.x || 0);
-                      const dx = e.changedTouches[0].clientX - start;
-                      if (Math.abs(dx) > 40 && images.length > 1) {
-                        setImageIndex((i) =>
-                          dx < 0 ? (i + 1) % images.length : (i - 1 + images.length) % images.length,
-                        );
-                      }
-                    }}
+                    ref={galleryRef}
+                    className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative flex snap-x snap-mandatory overflow-x-auto scrollbar-hide scroll-smooth"
                   >
-                    {mainImage && <img src={mainImage.url} alt={mainImage.altText || product.title} className="w-full h-full object-cover" />}
+                    {images.map((img, i) => (
+                      <div
+                        key={i}
+                        className="w-full h-full shrink-0 snap-center relative"
+                      >
+                        <img
+                          src={img.node.url}
+                          alt={img.node.altText || product.title}
+                          className="w-full h-full object-cover"
+                          draggable={false}
+                        />
+                      </div>
+                    ))}
                     {images.length > 1 && (
                       <>
                         <button
                           type="button"
                           onClick={() => setImageIndex((i) => (i - 1 + images.length) % images.length)}
                           aria-label="Previous image"
-                          className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm z-10"
                         >
                           <ChevronLeft className="h-5 w-5" />
                         </button>
@@ -83,7 +97,7 @@ function ProductPage() {
                           type="button"
                           onClick={() => setImageIndex((i) => (i + 1) % images.length)}
                           aria-label="Next image"
-                          className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm z-10"
                         >
                           <ChevronRight className="h-5 w-5" />
                         </button>
@@ -96,9 +110,9 @@ function ProductPage() {
                         <button
                           key={i}
                           onClick={() => setImageIndex(i)}
-                          className={`aspect-square overflow-hidden rounded ${i === imageIndex ? "ring-2 ring-foreground" : "opacity-60"}`}
+                          className={`aspect-square overflow-hidden rounded transition-opacity duration-300 ${i === imageIndex ? "ring-2 ring-foreground opacity-100" : "opacity-60 hover:opacity-100"}`}
                         >
-                          <img src={img.node.url} alt="" className="w-full h-full object-cover" />
+                          <img src={img.node.url} alt="" className="w-full h-full object-cover" draggable={false} />
                         </button>
                       ))}
                     </div>
