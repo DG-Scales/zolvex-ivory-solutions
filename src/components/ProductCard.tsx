@@ -4,7 +4,12 @@ import { Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import type { ShopifyProduct } from "@/lib/shopify";
 
-export function ProductCard({ product }: { product: ShopifyProduct }) {
+interface ProductCardProps {
+  product: ShopifyProduct;
+  variant?: "default" | "featured";
+}
+
+export function ProductCard({ product, variant = "default" }: ProductCardProps) {
   const addItem = useCartStore((s) => s.addItem);
   const isLoading = useCartStore((s) => s.isLoading);
   const node = product.node;
@@ -25,9 +30,17 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
     });
   };
 
+  const isFeatured = variant === "featured";
+
   return (
     <Link to="/product/$handle" params={{ handle: node.handle }} className="group block">
-      <div className="aspect-[4/5] overflow-hidden bg-muted rounded-md mb-4 relative">
+      <div
+        className={
+          isFeatured
+            ? "aspect-[4/5] overflow-hidden bg-[#F5F1E8] border border-black/80 rounded-none mb-4 relative"
+            : "aspect-[4/5] overflow-hidden bg-muted rounded-md mb-4 relative"
+        }
+      >
         {image ? (
           <img
             src={image.url}
@@ -41,17 +54,37 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
           <Button
             onClick={handleAddToCart}
             disabled={isLoading || !selectedVariant}
-            className="w-full rounded-full"
+            className={
+              isFeatured
+                ? "w-full rounded-none bg-black text-[#F5F1E8] hover:bg-black/85"
+                : "w-full rounded-full"
+            }
             size="sm"
           >
-            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Add to bag"}
+            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Add To Bag"}
           </Button>
         </div>
       </div>
       <div className="flex justify-between items-start gap-3">
-        <h3 className="text-sm font-medium leading-tight group-hover:opacity-60 transition-opacity">{node.title}</h3>
-        <p className="text-sm font-medium whitespace-nowrap flex items-baseline gap-2">
-          <span className="text-foreground line-through opacity-70">{price.currencyCode} {(parseFloat(price.amount) * 1.1).toFixed(2)}</span>
+        <h3
+          className={
+            isFeatured
+              ? "text-sm font-medium leading-tight uppercase tracking-[0.08em] text-black group-hover:opacity-60 transition-opacity"
+              : "text-sm font-medium leading-tight group-hover:opacity-60 transition-opacity"
+          }
+        >
+          {node.title}
+        </h3>
+        <p
+          className={
+            isFeatured
+              ? "text-sm font-medium whitespace-nowrap flex items-baseline gap-2 text-black"
+              : "text-sm font-medium whitespace-nowrap flex items-baseline gap-2"
+          }
+        >
+          <span className={isFeatured ? "line-through opacity-50" : "text-foreground line-through opacity-70"}>
+            {price.currencyCode} {(parseFloat(price.amount) * 1.1).toFixed(2)}
+          </span>
           <span>{price.currencyCode} {parseFloat(price.amount).toFixed(2)}</span>
         </p>
       </div>

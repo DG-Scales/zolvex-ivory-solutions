@@ -10,9 +10,11 @@ interface ProductGridProps {
   category?: Category;
   /** Optional hard cap on visible products. */
   limit?: number;
+  /** Visual variant. "featured" uses an ivory + black themed card style. */
+  variant?: "default" | "featured";
 }
 
-export function ProductGrid({ category, limit }: ProductGridProps = {}) {
+export function ProductGrid({ category, limit, variant = "default" }: ProductGridProps = {}) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["products"],
     queryFn: () => fetchProducts(120),
@@ -48,7 +50,7 @@ export function ProductGrid({ category, limit }: ProductGridProps = {}) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
       {filtered.map((product) => (
-        <ProductCard key={product.node.id} product={product} />
+        <ProductCard key={product.node.id} product={product} variant={variant} />
       ))}
     </div>
   );

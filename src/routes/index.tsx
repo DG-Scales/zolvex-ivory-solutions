@@ -80,24 +80,28 @@ function Index() {
         </div>
       </section>
 
-      {/* Top Picks */}
-      <section id="shop" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
-        <div className="text-center mb-14">
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">What we're loving</p>
-          <h2 className="font-display text-4xl md:text-5xl">Pieces worth a second look</h2>
-          <p className="mt-4 max-w-xl mx-auto text-muted-foreground">
-            A short list of fixtures the studio keeps returning to — quietly distinctive, easy to live with.
-          </p>
-        </div>
-        <ProductGrid limit={8} />
-        <div className="text-center mt-14">
-          <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-            <Link to="/shop">
-              See the full catalog <ArrowRight className="ml-2 w-4 h-4" />
-            </Link>
-          </Button>
+      {/* Featured Fixtures */}
+      <section id="shop" className="border-t border-black/10 bg-[#F5F1E8] text-black">
+        <div className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
+          <div className="text-center mb-14">
+            <p className="text-xs uppercase tracking-[0.3em] text-black/60 mb-3">Featured Fixtures</p>
+            <h2 className="font-display text-4xl md:text-5xl uppercase tracking-[0.04em]">A Curated Edit In Ivory & Black</h2>
+            <p className="mt-4 max-w-xl mx-auto text-black/65">
+              A Short List Of Fixtures The Studio Keeps Returning To — Quietly Distinctive, Easy To Live With.
+            </p>
+            <div className="mt-6 mx-auto h-px w-16 bg-black/70" />
+          </div>
+          <ProductGrid limit={8} variant="featured" />
+          <div className="text-center mt-14">
+            <Button asChild size="lg" className="rounded-none px-8 bg-black text-[#F5F1E8] hover:bg-black/85">
+              <Link to="/shop">
+                See The Full Catalog <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
+
 
       {/* About */}
       <section id="about" className="border-t">
