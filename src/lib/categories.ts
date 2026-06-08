@@ -64,6 +64,7 @@ export const categories: Category[] = [
       "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/e621d34d-91ed-497b-9977-2b263fa468b7_trans.jpg?v=1780588428",
     keywords: ["wall light", "wall lamp", "sconce", "wall sconce", "wall-light"],
     exclude: ["outdoor", "exterior", "waterproof", "courtyard", "garden", "ip65", "ip55", "vanity", "mirror front", "solar"],
+    includeHandles: ["led-vanity-mirror-wall-light-7-sizes-from-40-120cm"],
   },
   {
     slug: "ceiling-flush",
@@ -85,6 +86,7 @@ export const categories: Category[] = [
     cover:
       "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_160646_0af5bb1a-b894-4d54-b913-4f29d0025aa3.png?v=1780762692",
     keywords: ["vanity", "mirror front", "mirror cabinet", "mirror wall light", "bathroom mirror", "bathroom"],
+    excludeHandles: ["led-vanity-mirror-wall-light-7-sizes-from-40-120cm"],
   },
   {
     slug: "exterior-wall",
