@@ -55,10 +55,16 @@ function Index() {
         </div>
       </section>
 
-      {/* Trending */}
-      <section id="trending" className="mx-auto max-w-7xl px-6 pt-24 md:pt-32 w-full">
-        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">Featured</p>
-        <TrendingCard />
+      {/* Maker's Pick */}
+      <section id="makers-pick" className="mx-auto max-w-7xl px-6 pt-24 md:pt-32 w-full">
+        <div className="mb-10">
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Maker's Pick</p>
+          <h2 className="font-display text-3xl md:text-4xl">The finest pieces, hand-selected</h2>
+          <p className="mt-3 max-w-xl text-muted-foreground">
+            Our top three most premium fixtures — chosen for presence, craft, and the statement they make in any room.
+          </p>
+        </div>
+        <MakersPick />
       </section>
 
       {/* Collections */}
