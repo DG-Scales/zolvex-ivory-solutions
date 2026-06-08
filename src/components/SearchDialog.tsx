@@ -95,12 +95,23 @@ export function SearchDialog({ overlay = false }: { overlay?: boolean } = {}) {
   const productSuggestions = useMemo(() => {
     if (!q.trim()) return [] as ShopifyProduct[];
     return products
-      .map((p) => ({ p, score: fuzzyScore(p.node.title, q) }))
+      .map((p) => {
+        const titleScore = fuzzyScore(p.node.title, q);
+        const handleScore = fuzzyScore(p.node.handle.replace(/-/g, " "), q);
+        const descScore = fuzzyScore((p.node.description ?? "").slice(0, 200), q);
+        const score = Math.min(
+          titleScore,
+          handleScore + 1,
+          descScore === Infinity ? Infinity : descScore + 4,
+        );
+        return { p, score };
+      })
       .filter((x) => x.score !== Infinity)
       .sort((a, b) => a.score - b.score)
-      .slice(0, 6)
+      .slice(0, 12)
       .map((x) => x.p);
   }, [products, q]);
+
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
