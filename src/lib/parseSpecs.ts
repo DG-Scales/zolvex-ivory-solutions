@@ -52,6 +52,18 @@ export function parseDescription(description: string | null | undefined): Parsed
     if (value) pairs.push({ label: cur.label, value });
   }
 
+  // Fix-up: when a value ends with a unit letter glued to the next key (e.g.
+  // "220V" + "Voltage"), the regex captures "VVoltage". Detect labels that
+  // start with two consecutive capitals and push the orphan letter back onto
+  // the previous value.
+  for (let i = 1; i < pairs.length; i++) {
+    const lbl = pairs[i].label;
+    if (lbl.length >= 2 && /[A-Z]/.test(lbl[0]) && /[A-Z]/.test(lbl[1])) {
+      pairs[i - 1].value = (pairs[i - 1].value + lbl[0]).trim();
+      pairs[i].label = lbl.slice(1);
+    }
+  }
+
   if (pairs.length === 0) return { prose: text, specs: [] };
   return { prose, specs: pairs };
 }
