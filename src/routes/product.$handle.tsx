@@ -54,7 +54,6 @@ function ProductPage() {
               <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
                 <div>
                   <div
-                  <div
                     className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative"
                     onTouchStart={(e) => {
                       (e.currentTarget as HTMLDivElement).dataset.x = String(e.touches[0].clientX);
