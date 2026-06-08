@@ -7,9 +7,9 @@ export const Route = createFileRoute("/categories/")({
   head: () => ({
     meta: [
       { title: "Categories — Zolvex" },
-      { name: "description", content: "Browse Zolvex lighting by category — chandeliers, pendants, wall sconces, floor and table lamps, interior and exterior fixtures." },
+      { name: "description", content: "Browse Zolvex lighting by type or by room — chandeliers, pendants, wall sconces, flush mounts, and exterior fixtures." },
       { property: "og:title", content: "Categories — Zolvex" },
-      { property: "og:description", content: "Shop premium designer lighting by category." },
+      { property: "og:description", content: "Shop premium designer lighting by type or by room." },
     ],
   }),
   component: CategoriesIndex,
@@ -27,7 +27,16 @@ function CategoriesIndex() {
             Find the right fixture for the room — from sculptural chandeliers to architectural exterior lights.
           </p>
         </div>
-        <CategoryGrid />
+
+        <section className="mb-20">
+          <h2 className="font-display text-2xl mb-6">By type</h2>
+          <CategoryGrid group="Type" />
+        </section>
+
+        <section>
+          <h2 className="font-display text-2xl mb-6">By room</h2>
+          <CategoryGrid group="Room" />
+        </section>
       </main>
       <SiteFooter />
     </div>

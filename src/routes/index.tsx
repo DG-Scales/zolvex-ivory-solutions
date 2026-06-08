@@ -8,9 +8,6 @@ import { ArrowRight } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { CategoryGrid } from "@/components/CategoryGrid";
 
-
-
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -35,17 +32,18 @@ function Index() {
         <div className="mx-auto max-w-5xl px-6 pt-20 pb-24 md:pt-28 md:pb-32 text-center">
           <div className="fade-up flex flex-col items-center">
             <Logo size="xl" showTagline />
-            <h1 className="mt-14 font-display text-5xl sm:text-6xl md:text-7xl leading-[1.02] tracking-tight max-w-3xl">
-              Illuminate the <em className="italic">everyday.</em>
+            <p className="mt-12 text-xs uppercase tracking-[0.3em] text-muted-foreground">Elegance through the ages</p>
+            <h1 className="mt-4 font-display text-5xl sm:text-6xl md:text-7xl leading-[1.02] tracking-tight max-w-3xl">
+              Light your style, <em className="italic">layer</em> your story.
             </h1>
             <p className="mt-8 max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed">
               Premium designer lighting for interior and exterior spaces — chandeliers, pendants, wall sconces, and architectural fixtures. Crafted with care, built to endure.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-7">
-                <a href="#shop">
+                <Link to="/shop">
                   Shop the collection <ArrowRight className="ml-2 w-4 h-4" />
-                </a>
+                </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full px-7">
                 <Link to="/story">Our story</Link>
@@ -53,36 +51,53 @@ function Index() {
             </div>
           </div>
         </div>
-
-
       </section>
 
-      {/* Categories */}
+      {/* Begin Your Lighting Journey — by type */}
       <section id="categories" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
-        <div className="flex items-end justify-between mb-12 gap-6 flex-wrap">
-          <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Shop by category</p>
-            <h2 className="font-display text-4xl md:text-5xl">Find your fixture</h2>
-          </div>
-          <p className="text-sm text-muted-foreground max-w-xs">
-            Tap a category to explore the pieces that belong there.
+        <div className="text-center mb-14">
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Begin your lighting journey</p>
+          <h2 className="font-display text-4xl md:text-5xl">Explore, discover, illuminate.</h2>
+          <p className="mt-4 max-w-xl mx-auto text-muted-foreground">
+            Browse by fixture type — from sculptural chandeliers to architectural exterior lighting.
           </p>
         </div>
-        <CategoryGrid />
+        <CategoryGrid group="Type" />
       </section>
 
-      {/* Shop */}
-      <section id="shop" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
-        <div className="flex items-end justify-between mb-12 gap-6 flex-wrap">
-          <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">The collection</p>
-            <h2 className="font-display text-4xl md:text-5xl">Shop the lighting</h2>
+      {/* Shop by room */}
+      <section className="border-t bg-muted/30">
+        <div className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
+          <div className="flex items-end justify-between mb-12 gap-6 flex-wrap">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Shop by room</p>
+              <h2 className="font-display text-4xl md:text-5xl">Light for every space</h2>
+            </div>
+            <Link to="/categories" className="text-xs uppercase tracking-[0.2em] hover:opacity-60">
+              View all categories →
+            </Link>
           </div>
-          <p className="text-sm text-muted-foreground max-w-xs">
-            Chandeliers, pendants, wall, and exterior fixtures — each one chosen for the room it transforms.
+          <CategoryGrid group="Room" columns={4} />
+        </div>
+      </section>
+
+      {/* Top Picks — product grid */}
+      <section id="shop" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
+        <div className="text-center mb-14">
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Get in the season's spirit</p>
+          <h2 className="font-display text-4xl md:text-5xl">Top picks, right now</h2>
+          <p className="mt-4 max-w-xl mx-auto text-muted-foreground">
+            Must-have pieces for the moment — chosen from across the collection.
           </p>
         </div>
-        <ProductGrid />
+        <ProductGrid limit={8} />
+        <div className="text-center mt-14">
+          <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+            <Link to="/shop">
+              Shop everything <ArrowRight className="ml-2 w-4 h-4" />
+            </Link>
+          </Button>
+        </div>
       </section>
 
       {/* About */}
@@ -101,6 +116,11 @@ function Index() {
             <p>
               No noise. No filler. Just considered lighting, made to last.
             </p>
+            <div className="pt-4">
+              <Link to="/story" className="text-xs uppercase tracking-[0.2em] underline underline-offset-4 hover:opacity-60">
+                Read our story →
+              </Link>
+            </div>
           </div>
         </div>
       </section>
