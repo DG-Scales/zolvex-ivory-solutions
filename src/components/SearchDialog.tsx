@@ -69,8 +69,13 @@ export function SearchDialog({ overlay = false }: { overlay?: boolean } = {}) {
                   }}
                   className="flex items-center gap-3 rounded-md p-3 text-left hover:bg-muted transition-colors"
                 >
-                  <div className="flex h-12 w-12 items-center justify-center rounded bg-muted text-[10px] uppercase tracking-widest text-muted-foreground">
-                    {cat.name.slice(0, 2)}
+                  <div className="h-12 w-12 shrink-0 overflow-hidden rounded bg-muted">
+                    <img
+                      src={cat.cover}
+                      alt={cat.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
                   </div>
                   <div>
                     <p className="text-sm font-medium">{cat.name}</p>
