@@ -50,7 +50,7 @@ export const categories: Category[] = [
     tagline: "Chandeliers · Pendants · Droplights",
     group: "Collection",
     cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151137_31852eb4-f3d8-4d71-bbd7-0044efd2a2f6.png?v=1780845271",
+      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151648_436d7c08-fe63-41ed-8cb9-bf61e85f70fc.png?v=1780845496",
     keywords: ["chandelier", "pendant", "droplight", "hanging"],
     exclude: ["outdoor", "exterior", "waterproof", "wall light", "wall lamp", "sconce", "vanity", "mirror front", "step light", "solar"],
   },
@@ -73,7 +73,7 @@ export const categories: Category[] = [
     tagline: "Flush · Linear · Aisle",
     group: "Collection",
     cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_160943_51114745-93b8-44cd-9feb-c2fbd93ab484.png?v=1780762437",
+      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/5c3204d5-1342-4933-931e-09fe33f0fc65.jpg?v=1780527142",
     keywords: ["ceiling light", "ceiling lamp", "flush mount", "aisle ceiling", "ceiling spotlight", "track light"],
     exclude: ["pendant", "chandelier", "outdoor", "exterior", "wall", "vanity", "mirror"],
   },
@@ -84,7 +84,7 @@ export const categories: Category[] = [
     tagline: "Mirror · Vanity · Bathroom",
     group: "Collection",
     cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_160646_0af5bb1a-b894-4d54-b913-4f29d0025aa3.png?v=1780762692",
+      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_183408_19c3ac73-46ef-40a8-92d0-1e8d57594df2.png?v=1780857305",
     keywords: ["vanity", "mirror front", "mirror cabinet", "mirror wall light", "bathroom mirror", "bathroom"],
     excludeHandles: ["led-vanity-mirror-wall-light-7-sizes-from-40-120cm"],
   },
