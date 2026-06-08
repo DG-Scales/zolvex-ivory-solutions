@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useRef } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import type { ShopifyProduct } from "@/lib/shopify";
 
@@ -14,8 +15,11 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
   const isLoading = useCartStore((s) => s.isLoading);
   const node = product.node;
   const selectedVariant = node.variants.edges[0]?.node;
-  const image = node.images.edges[0]?.node;
+  const images = node.images.edges;
   const price = node.priceRange.minVariantPrice;
+
+  const [imgIndex, setImgIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -30,7 +34,37 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
     });
   };
 
+  const stop = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const next = (e: React.MouseEvent) => {
+    stop(e);
+    setImgIndex((i) => (i + 1) % images.length);
+  };
+
+  const prev = (e: React.MouseEvent) => {
+    stop(e);
+    setImgIndex((i) => (i - 1 + images.length) % images.length);
+  };
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40 && images.length > 1) {
+      setImgIndex((i) =>
+        dx < 0 ? (i + 1) % images.length : (i - 1 + images.length) % images.length,
+      );
+    }
+    touchStartX.current = null;
+  };
+
   const isFeatured = variant === "featured";
+  const image = images[imgIndex]?.node;
 
   return (
     <Link to="/product/$handle" params={{ handle: node.handle }} className="group block">
@@ -40,9 +74,12 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
             ? "aspect-[4/5] overflow-hidden bg-[#F5F1E8] border border-black/80 rounded-none mb-4 relative"
             : "aspect-[4/5] overflow-hidden bg-muted rounded-md mb-4 relative"
         }
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
         {image ? (
           <img
+            key={image.url}
             src={image.url}
             alt={image.altText || node.title}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -50,7 +87,46 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
         ) : (
           <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">No image</div>
         )}
-        <div className="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity">
+
+        {images.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="Previous image"
+              className="absolute left-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-background/85 text-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 md:opacity-0 transition-opacity hover:bg-background"
+              style={{ opacity: undefined }}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Next image"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-background/85 text-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={(e) => {
+                    stop(e);
+                    setImgIndex(i);
+                  }}
+                  aria-label={`Show image ${i + 1}`}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === imgIndex ? "w-4 bg-background" : "w-1.5 bg-background/60"
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
+        <div className="absolute inset-x-3 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity">
           <Button
             onClick={handleAddToCart}
             disabled={isLoading || !selectedVariant}
