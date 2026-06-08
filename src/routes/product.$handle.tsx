@@ -141,7 +141,7 @@ function ProductPage() {
                     <span>{variant?.price.currencyCode} {parseFloat(variant?.price.amount || "0").toFixed(2)}</span>
                   </p>
                   <div className="prose prose-sm text-muted-foreground mb-10 whitespace-pre-line leading-relaxed">
-                    {product.description || "A considered solution. More details coming soon."}
+                    {prose || "A considered solution. More details coming soon."}
                   </div>
 
                   {product.variants.edges.length > 1 && (
