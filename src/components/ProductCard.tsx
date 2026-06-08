@@ -50,8 +50,9 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
       </div>
       <div className="flex justify-between items-start gap-3">
         <h3 className="text-sm font-medium leading-tight group-hover:opacity-60 transition-opacity">{node.title}</h3>
-        <p className="text-sm font-medium whitespace-nowrap">
-          {price.currencyCode} {parseFloat(price.amount).toFixed(2)}
+        <p className="text-sm font-medium whitespace-nowrap flex items-baseline gap-2">
+          <span className="text-foreground line-through opacity-70">{price.currencyCode} {(parseFloat(price.amount) * 1.1).toFixed(2)}</span>
+          <span>{price.currencyCode} {parseFloat(price.amount).toFixed(2)}</span>
         </p>
       </div>
     </Link>
