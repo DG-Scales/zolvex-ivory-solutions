@@ -37,7 +37,7 @@ function Index() {
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 text-background">
           <p className="font-display text-lg md:text-xl opacity-95">The Light For Every Room</p>
           <h1 className="mt-4 font-display uppercase tracking-[0.06em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] max-w-5xl">
-            Fixtures Made for the Rooms You Live In
+            Designed to Illuminate Every Space
           </h1>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg" className="rounded-full px-7">
