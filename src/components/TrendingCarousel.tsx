@@ -2,11 +2,12 @@ import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/lib/shopify";
 import { getCategory } from "@/lib/categories";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
+import { useRef, useCallback, useEffect, useState } from "react";
 
 /**
- * Cinematic trending carousel — horizontal snap-scroll, hover reveals
- * white title overlay.
+ * Cinematic trending carousel — horizontal snap-scroll with drag-to-swipe
+ * and arrow controls.
  */
 export function TrendingCarousel() {
   const cat = getCategory("trending");
