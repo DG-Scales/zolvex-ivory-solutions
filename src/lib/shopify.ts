@@ -104,3 +104,19 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
   return data?.data?.product ?? null;
 }
+
+const COLLECTION_PRODUCTS_QUERY = `
+  ${PRODUCT_FRAGMENT}
+  query GetCollectionProducts($handle: String!, $first: Int!) {
+    collection(handle: $handle) {
+      products(first: $first) {
+        edges { node { ...ProductFields } }
+      }
+    }
+  }
+`;
+
+export async function fetchCollectionProducts(handle: string, first = 50): Promise<ShopifyProduct[]> {
+  const data = await storefrontApiRequest(COLLECTION_PRODUCTS_QUERY, { handle, first });
+  return data?.data?.collection?.products?.edges ?? [];
+}

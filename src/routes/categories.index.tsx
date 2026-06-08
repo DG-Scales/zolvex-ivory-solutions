@@ -21,21 +21,21 @@ function CategoriesIndex() {
       <SiteHeader />
       <main className="flex-1 mx-auto max-w-7xl px-6 py-20 md:py-24 w-full">
         <div className="mb-12">
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Shop by category</p>
-          <h1 className="font-display text-5xl md:text-6xl">Categories</h1>
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Shop by collection</p>
+          <h1 className="font-display text-5xl md:text-6xl">Collections</h1>
           <p className="mt-4 max-w-xl text-muted-foreground">
-            Find the right fixture for the room — from sculptural chandeliers to architectural exterior lights.
+            Curated lighting collections — from sculptural interior chandeliers to architectural exterior fixtures.
           </p>
         </div>
 
         <section className="mb-20">
-          <h2 className="font-display text-2xl mb-6">By type</h2>
-          <CategoryGrid group="Type" />
+          <h2 className="font-display text-2xl mb-6">Featured</h2>
+          <CategoryGrid group="Featured" columns={2} />
         </section>
 
         <section>
-          <h2 className="font-display text-2xl mb-6">By room</h2>
-          <CategoryGrid group="Room" />
+          <h2 className="font-display text-2xl mb-6">Collections</h2>
+          <CategoryGrid group="Collection" columns={3} />
         </section>
       </main>
       <SiteFooter />

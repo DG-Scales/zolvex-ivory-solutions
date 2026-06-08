@@ -1,23 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "@/lib/shopify";
+import { fetchProducts, fetchCollectionProducts } from "@/lib/shopify";
 import { ProductCard } from "./ProductCard";
 import { Loader2 } from "lucide-react";
 import type { Category } from "@/lib/categories";
-import { matchesCategory } from "@/lib/categories";
 
 interface ProductGridProps {
-  /** Filter by a category definition (smart include + exclude matching). */
   category?: Category;
-  /** Optional hard cap on visible products. */
   limit?: number;
-  /** Visual variant. "featured" uses an ivory + black themed card style. */
   variant?: "default" | "featured";
 }
 
 export function ProductGrid({ category, limit, variant = "default" }: ProductGridProps = {}) {
+  const useCollection = !!category?.collectionHandle;
+  const useCurated = !!category?.productHandles?.length;
+
   const { data, isLoading, error } = useQuery({
-    queryKey: ["products"],
-    queryFn: () => fetchProducts(120),
+    queryKey: useCollection
+      ? ["collection", category!.collectionHandle]
+      : ["products"],
+    queryFn: () =>
+      useCollection
+        ? fetchCollectionProducts(category!.collectionHandle!, 50)
+        : fetchProducts(120),
   });
 
   if (isLoading) {
@@ -29,9 +33,14 @@ export function ProductGrid({ category, limit, variant = "default" }: ProductGri
   }
 
   const products = data ?? [];
-  let filtered = category
-    ? products.filter((p) => matchesCategory(category, p.node.title, p.node.description))
-    : products;
+  let filtered = products;
+  if (useCurated) {
+    const set = new Set(category!.productHandles);
+    const map = new Map(products.map((p) => [p.node.handle, p]));
+    filtered = category!.productHandles!
+      .map((h) => map.get(h))
+      .filter((p): p is (typeof products)[number] => !!p && set.has(p.node.handle));
+  }
   if (limit) filtered = filtered.slice(0, limit);
 
   if (error || filtered.length === 0) {

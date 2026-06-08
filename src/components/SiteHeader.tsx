@@ -6,10 +6,9 @@ import { PromoBar } from "./PromoBar";
 import { AccountMenu } from "./AccountMenu";
 import { categoriesByGroup } from "@/lib/categories";
 
-
 export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
-  const types = categoriesByGroup("Type");
-  const rooms = categoriesByGroup("Room");
+  const collections = categoriesByGroup("Collection");
+  const featured = categoriesByGroup("Featured");
 
   const headerClass = overlay
     ? "bg-transparent text-background"
@@ -32,9 +31,9 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
               <Link to="/shop" className={`${linkBase} py-6`}>Shop</Link>
               <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all absolute left-1/2 top-full -translate-x-1/2 w-[640px] bg-background text-foreground border border-border/60 shadow-xl p-8 grid grid-cols-2 gap-8">
                 <div>
-                  <p className="text-[10px] tracking-[0.3em] text-muted-foreground mb-4">By type</p>
+                  <p className="text-[10px] tracking-[0.3em] text-muted-foreground mb-4">Featured</p>
                   <ul className="space-y-2">
-                    {types.map((c) => (
+                    {featured.map((c) => (
                       <li key={c.slug}>
                         <Link to="/categories/$slug" params={{ slug: c.slug }} className="text-sm normal-case tracking-normal text-foreground/80 hover:text-foreground transition-colors">
                           {c.name}
@@ -44,9 +43,9 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-[10px] tracking-[0.3em] text-muted-foreground mb-4">By room</p>
+                  <p className="text-[10px] tracking-[0.3em] text-muted-foreground mb-4">Collections</p>
                   <ul className="space-y-2">
-                    {rooms.map((c) => (
+                    {collections.map((c) => (
                       <li key={c.slug}>
                         <Link to="/categories/$slug" params={{ slug: c.slug }} className="text-sm normal-case tracking-normal text-foreground/80 hover:text-foreground transition-colors">
                           {c.name}
@@ -62,7 +61,8 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                 </div>
               </div>
             </div>
-            <Link to="/categories" className={linkBase}>Categories</Link>
+            <Link to="/categories" className={linkBase}>Collections</Link>
+            <Link to="/categories/$slug" params={{ slug: "trending" }} className={linkBase}>Trending</Link>
             <Link to="/about" className={linkBase}>About</Link>
             <Link to="/contact" className={linkBase}>Contact</Link>
           </nav>
@@ -71,8 +71,6 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
             <AccountMenu overlay={overlay} />
             <CartDrawer />
           </div>
-
-
         </div>
       </header>
     </div>
