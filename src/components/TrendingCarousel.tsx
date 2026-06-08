@@ -156,7 +156,7 @@ export function TrendingCarousel() {
       <div className="relative pb-24 md:pb-32">
         <div
           ref={scrollerRef}
-          className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x snap-mandatory scrollbar-hide cursor-grab active:cursor-grabbing select-none [touch-action:pan-y]"
+          className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x scrollbar-hide cursor-grab active:cursor-grabbing select-none [touch-action:pan-x] [-webkit-overflow-scrolling:touch] [scroll-behavior:smooth] [overscroll-behavior-x:contain]"
         >
           {ordered.map((p) => {
             const img = p.node.images.edges[0]?.node.url;
