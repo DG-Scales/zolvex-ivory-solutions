@@ -30,6 +30,14 @@ function ProductPage() {
   const galleryRef = useRef<HTMLDivElement>(null);
   const [imageIndex, setImageIndex] = useState(0);
 
+  useEffect(() => {
+    const el = galleryRef.current;
+    if (!el) return;
+    const target = el.children[imageIndex] as HTMLElement | undefined;
+    if (!target) return;
+    el.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
+  }, [imageIndex]);
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <SiteHeader />
