@@ -73,7 +73,7 @@ export const categories: Category[] = [
     tagline: "Flush · Linear · Aisle",
     group: "Collection",
     cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_160943_51114745-93b8-44cd-9feb-c2fbd93ab484.png?v=1780762437",
+      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/5c3204d5-1342-4933-931e-09fe33f0fc65.jpg?v=1780527142",
     keywords: ["ceiling light", "ceiling lamp", "flush mount", "aisle ceiling", "ceiling spotlight", "track light"],
     exclude: ["pendant", "chandelier", "outdoor", "exterior", "wall", "vanity", "mirror"],
   },
