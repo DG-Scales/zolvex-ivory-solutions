@@ -42,7 +42,7 @@ export function ProductGrid({ category, limit, variant = "default" }: ProductGri
       .filter((p): p is (typeof products)[number] => !!p);
   } else if (category && !useCollection) {
     filtered = products.filter((p) =>
-      matchesCategory(category, p.node.title, p.node.description),
+      matchesCategory(category, p.node.title, p.node.description, p.node.handle),
     );
   }
   if (limit) filtered = filtered.slice(0, limit);

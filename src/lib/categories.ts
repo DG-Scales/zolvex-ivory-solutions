@@ -13,6 +13,10 @@ export interface Category {
   keywords?: string[];
   /** Keywords that disqualify a product even if it matches keywords. */
   exclude?: string[];
+  /** Product handles to force-include in this category. */
+  includeHandles?: string[];
+  /** Product handles to force-exclude from this category. */
+  excludeHandles?: string[];
   cover: string;
   tagline?: string;
 }
@@ -60,6 +64,7 @@ export const categories: Category[] = [
       "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/e621d34d-91ed-497b-9977-2b263fa468b7_trans.jpg?v=1780588428",
     keywords: ["wall light", "wall lamp", "sconce", "wall sconce", "wall-light"],
     exclude: ["outdoor", "exterior", "waterproof", "courtyard", "garden", "ip65", "ip55", "vanity", "mirror front", "solar"],
+    includeHandles: ["led-vanity-mirror-wall-light-7-sizes-from-40-120cm"],
   },
   {
     slug: "ceiling-flush",
@@ -81,6 +86,7 @@ export const categories: Category[] = [
     cover:
       "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_160646_0af5bb1a-b894-4d54-b913-4f29d0025aa3.png?v=1780762692",
     keywords: ["vanity", "mirror front", "mirror cabinet", "mirror wall light", "bathroom mirror", "bathroom"],
+    excludeHandles: ["led-vanity-mirror-wall-light-7-sizes-from-40-120cm"],
   },
   {
     slug: "exterior-wall",
@@ -114,7 +120,9 @@ export function categoriesByGroup(group: CategoryGroup) {
   return categories.filter((c) => c.group === group);
 }
 
-export function matchesCategory(category: Category, title: string, description = "") {
+export function matchesCategory(category: Category, title: string, description = "", handle = "") {
+  if (handle && category.excludeHandles?.includes(handle)) return false;
+  if (handle && category.includeHandles?.includes(handle)) return true;
   const hay = (title + " " + description).toLowerCase();
   if (category.exclude?.some((k) => hay.includes(k.toLowerCase()))) return false;
   return (category.keywords ?? []).some((k) => hay.includes(k.toLowerCase()));
