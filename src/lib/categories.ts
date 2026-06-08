@@ -84,7 +84,7 @@ export const categories: Category[] = [
     tagline: "Mirror · Vanity · Bathroom",
     group: "Collection",
     cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_160646_0af5bb1a-b894-4d54-b913-4f29d0025aa3.png?v=1780762692",
+      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_183408_19c3ac73-46ef-40a8-92d0-1e8d57594df2.png?v=1780857305",
     keywords: ["vanity", "mirror front", "mirror cabinet", "mirror wall light", "bathroom mirror", "bathroom"],
     excludeHandles: ["led-vanity-mirror-wall-light-7-sizes-from-40-120cm"],
   },
