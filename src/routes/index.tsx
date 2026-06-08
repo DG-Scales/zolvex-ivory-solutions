@@ -52,48 +52,48 @@ function Index() {
         </div>
       </section>
 
-      {/* Begin Your Lighting Journey — by type */}
+      {/* Start by fixture type */}
       <section id="categories" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
         <div className="text-center mb-14">
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Begin your lighting journey</p>
-          <h2 className="font-display text-4xl md:text-5xl">Explore, discover, illuminate.</h2>
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Find your fixture</p>
+          <h2 className="font-display text-4xl md:text-5xl">Start with the shape of the light.</h2>
           <p className="mt-4 max-w-xl mx-auto text-muted-foreground">
-            Browse by fixture type — from sculptural chandeliers to architectural exterior lighting.
+            Sculptural ceiling pieces, low pendants, soft wall washes, and weather-built exteriors — sorted by what they do, not how they look.
           </p>
         </div>
         <CategoryGrid group="Type" />
       </section>
 
-      {/* Shop by room */}
+      {/* By room */}
       <section className="border-t bg-muted/30">
         <div className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
           <div className="flex items-end justify-between mb-12 gap-6 flex-wrap">
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Shop by room</p>
-              <h2 className="font-display text-4xl md:text-5xl">Light for every space</h2>
+              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Room by room</p>
+              <h2 className="font-display text-4xl md:text-5xl">A fixture for every corner</h2>
             </div>
             <Link to="/categories" className="text-xs uppercase tracking-[0.2em] hover:opacity-60">
-              View all categories →
+              See every category →
             </Link>
           </div>
           <CategoryGrid group="Room" columns={4} />
         </div>
       </section>
 
-      {/* Top Picks — product grid */}
+      {/* Top Picks */}
       <section id="shop" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
         <div className="text-center mb-14">
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Get in the season's spirit</p>
-          <h2 className="font-display text-4xl md:text-5xl">Top picks, right now</h2>
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">What we're loving</p>
+          <h2 className="font-display text-4xl md:text-5xl">Pieces worth a second look</h2>
           <p className="mt-4 max-w-xl mx-auto text-muted-foreground">
-            Must-have pieces for the moment — chosen from across the collection.
+            A short list of fixtures the studio keeps returning to — quietly distinctive, easy to live with.
           </p>
         </div>
         <ProductGrid limit={8} />
         <div className="text-center mt-14">
           <Button asChild variant="outline" size="lg" className="rounded-full px-8">
             <Link to="/shop">
-              Shop everything <ArrowRight className="ml-2 w-4 h-4" />
+              See the full catalog <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
           </Button>
         </div>
