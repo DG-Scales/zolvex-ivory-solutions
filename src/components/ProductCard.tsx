@@ -64,7 +64,6 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
   };
 
   const isFeatured = variant === "featured";
-  const image = images[imgIndex]?.node;
 
   return (
     <Link to="/product/$handle" params={{ handle: node.handle }} className="group block">
@@ -77,13 +76,29 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        {image ? (
-          <img
-            key={image.url}
-            src={image.url}
-            alt={image.altText || node.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
+        {images.length > 0 ? (
+          <div
+            className="flex h-full transition-transform duration-500 ease-out will-change-transform"
+            style={{
+              width: `${images.length * 100}%`,
+              transform: `translateX(-${imgIndex * (100 / images.length)}%)`,
+            }}
+          >
+            {images.map(({ node: img }, i) => (
+              <div
+                key={img.url + i}
+                className="h-full shrink-0 overflow-hidden"
+                style={{ width: `${100 / images.length}%` }}
+              >
+                <img
+                  src={img.url}
+                  alt={img.altText || node.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">No image</div>
         )}
