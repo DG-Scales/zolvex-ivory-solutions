@@ -35,7 +35,7 @@ function Index() {
         <div className="absolute inset-0 bg-black/30" />
         <SiteHeader overlay />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 text-background">
-          <p className="font-display italic text-lg md:text-xl opacity-95">A quieter kind of brilliance</p>
+          <p className="font-display italic text-lg md:text-xl opacity-95">The light for every room</p>
           <h1 className="mt-4 font-display uppercase tracking-[0.06em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] max-w-5xl">
             Fixtures Made for the Rooms You Live In
           </h1>
