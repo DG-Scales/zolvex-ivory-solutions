@@ -70,7 +70,11 @@ export function TrendingCarousel() {
       if (!isDown) return;
       const dx = e.clientX - startX;
       if (Math.abs(dx) > 4) moved = true;
-      el.scrollLeft = startScroll - dx;
+      // rAF-batched for smoother updates
+      const next = startScroll - dx;
+      requestAnimationFrame(() => {
+        el.scrollLeft = next;
+      });
     };
     const onUp = (e: PointerEvent) => {
       if (!isDown) return;
