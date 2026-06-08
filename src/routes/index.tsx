@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { CategoryGrid } from "@/components/CategoryGrid";
 import { TrendingCarousel } from "@/components/TrendingCarousel";
-import { getCategory } from "@/lib/categories";
+import { MakersPick } from "@/components/MakersPick";
 import heroImage from "@/assets/hero-room.jpg";
 
 export const Route = createFileRoute("/")({
