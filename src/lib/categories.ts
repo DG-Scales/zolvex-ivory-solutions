@@ -79,7 +79,7 @@ export const categories: Category[] = [
   },
   {
     slug: "bathroom-vanity",
-    name: "Bathroom & Vanity",
+    name: "Bathroom & Kitchen",
     description: "Vanity bars, mirror front lights and bathroom sconces in matte black, brushed nickel and copper finishes.",
     tagline: "Mirror · Vanity · Bathroom",
     group: "Collection",
