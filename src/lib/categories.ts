@@ -120,7 +120,9 @@ export function categoriesByGroup(group: CategoryGroup) {
   return categories.filter((c) => c.group === group);
 }
 
-export function matchesCategory(category: Category, title: string, description = "") {
+export function matchesCategory(category: Category, title: string, description = "", handle = "") {
+  if (handle && category.excludeHandles?.includes(handle)) return false;
+  if (handle && category.includeHandles?.includes(handle)) return true;
   const hay = (title + " " + description).toLowerCase();
   if (category.exclude?.some((k) => hay.includes(k.toLowerCase()))) return false;
   return (category.keywords ?? []).some((k) => hay.includes(k.toLowerCase()));
