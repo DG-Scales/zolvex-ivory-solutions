@@ -64,7 +64,6 @@ export function TrendingCarousel() {
       moved = false;
       startX = e.clientX;
       startScroll = el.scrollLeft;
-      el.setPointerCapture(e.pointerId);
     };
     const onMove = (e: PointerEvent) => {
       if (!isDown) return;
