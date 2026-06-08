@@ -191,6 +191,7 @@ function ProductPage() {
             );
           })()
         )}
+        {!isLoading && product && <ProductReviews handle={handle} />}
       </main>
       <SiteFooter />
     </div>
