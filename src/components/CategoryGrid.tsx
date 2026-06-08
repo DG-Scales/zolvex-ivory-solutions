@@ -1,18 +1,23 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { categories, matchesCategory } from "@/lib/categories";
+import { categories as ALL, matchesCategory, type CategoryGroup } from "@/lib/categories";
 import { fetchProducts } from "@/lib/shopify";
 
-export function CategoryGrid() {
+export function CategoryGrid({ group, columns = 4 }: { group?: CategoryGroup; columns?: 3 | 4 }) {
   const { data } = useQuery({
     queryKey: ["products"],
     queryFn: () => fetchProducts(120),
   });
   const products = data ?? [];
+  const list = group ? ALL.filter((c) => c.group === group) : ALL;
+
+  const gridCols = columns === 3
+    ? "grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"
+    : "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6";
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-      {categories.map((cat) => {
+    <div className={gridCols}>
+      {list.map((cat) => {
         const cover = products.find((p) =>
           matchesCategory(cat, p.node.title, p.node.description) &&
           p.node.images.edges[0]?.node?.url
