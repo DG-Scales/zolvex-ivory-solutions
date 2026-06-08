@@ -1,98 +1,75 @@
-export type CategoryGroup = "Type" | "Room" | "Style";
+export type CategoryGroup = "Collection" | "Featured";
 
 export interface Category {
   slug: string;
   name: string;
   description: string;
   group: CategoryGroup;
-  /** Keywords matched against product title + description (case-insensitive). */
+  /** Shopify collection handle to fetch products from. */
+  collectionHandle?: string;
+  /** Curated product handles (overrides collection). Used for Trending. */
+  productHandles?: string[];
+  /** Cover image (best product image from the collection). */
+  cover: string;
+  /** Optional short tagline shown under the name. */
+  tagline?: string;
+  /** Search keywords for the search dialog. */
   keywords: string[];
-  /** Keywords that disqualify a product even if it matches the include list. */
-  exclude?: string[];
 }
 
 export const categories: Category[] = [
-  // ---------- By Type ----------
   {
-    slug: "chandeliers",
-    name: "Chandeliers",
-    description: "Statement chandeliers — crystal, glass, rattan and sculpted metal pieces for dining rooms, foyers and living rooms.",
-    group: "Type",
-    keywords: ["chandelier"],
+    slug: "trending",
+    name: "Trending Now",
+    description: "The studio's most-coveted statement pieces — sculptural chandeliers, marble pendants and luxury fixtures defining the season.",
+    tagline: "Editor's edit · Luxury fixtures",
+    group: "Featured",
+    cover:
+      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151137_31852eb4-f3d8-4d71-bbd7-0044efd2a2f6.png?v=1780845271",
+    productHandles: [
+      "spanish-marble-restaurant-round-light-luxury-bar-aisle-light-designer-model-coffee-dining-table-chandelier",
+      "led-full-spectrum-modern-dining-room-chandelier-with-a-light-luxury-design",
+      "leafless-overhead-fan-light-square-intelligence",
+      "4inch-modern-crystal-pendant-light-3-pack-adjustable-hanging-ceiling-lamp-with-crystal-prism-design-for-dining-room-kitchen-island-and-living-room-golden-finish",
+      "modern-light-luxury-natural-marble-chandelier-for-villas",
+      "29-nickel-finish-vintage-crystal-vanity-light-elegant-5-light-bathroom-mirror-fixture-with-clear-glass-shades-no-bulbs",
+      "6-light-modern-farmhouse-black-chandelier-contemporary-dining-room-light-fixture-adjustable-height-hanging-industrial-pendant-lights-kitchen-island-clear-glass-shade",
+      "gold-pendant-light-fixtures-3-pack-modern-pendant-lighting-with-clear-striped-glass-shade-hanging-pendant-lights-kitchen-island-farmhouse-pendant-lighting-for-dining-room-bedroom-bathroom",
+    ],
+    keywords: ["trending", "luxury", "designer", "marble", "crystal", "premium"],
   },
   {
-    slug: "pendants",
-    name: "Pendant Lights",
-    description: "Pendants and droplights for kitchen islands, dining tables, bedsides and stairwells.",
-    group: "Type",
-    keywords: ["pendant", "droplight"],
-    exclude: ["chandelier"],
+    slug: "hanging-lights",
+    name: "Hanging Lights",
+    description: "Interior chandeliers, pendants and ceiling fixtures — sculptural pieces that anchor a room from above.",
+    tagline: "Chandeliers · Pendants · Ceiling",
+    group: "Collection",
+    collectionHandle: "zolvex-hanging-light-products",
+    cover:
+      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_161025_82861ac9-334c-4b42-8f06-dcfac81e5093.png?v=1780848728",
+    keywords: ["hanging", "chandelier", "pendant", "ceiling", "interior", "indoor"],
   },
   {
-    slug: "ceiling",
-    name: "Flush Mount & Ceiling",
-    description: "Flush-mount, linear and aisle ceiling fixtures for hallways, corridors and living spaces.",
-    group: "Type",
-    keywords: ["ceiling", "flush mount", "aisle", "hallway", "corridor"],
-    exclude: ["pendant", "chandelier", "outdoor", "exterior", "vanity", "mirror"],
+    slug: "exterior-wall",
+    name: "Exterior Wall Lights",
+    description: "Architectural wall-mounted fixtures built for façades, entrances and outdoor walls — weather-built and sculptural.",
+    tagline: "Façade · Entrance · Outdoor wall",
+    group: "Collection",
+    collectionHandle: "zolvex-exteroir-wall-lighting",
+    cover:
+      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_160935_81bf3f86-74a0-4610-8f29-eed76b6784d3.png?v=1780762438",
+    keywords: ["exterior", "outdoor", "wall", "facade", "entrance", "sconce"],
   },
   {
-    slug: "wall-sconces",
-    name: "Wall Sconces",
-    description: "Wall-mounted sconces and reading lights — minimalist, sculptural and crystal pieces for bedrooms, hallways and stairs.",
-    group: "Type",
-    keywords: ["wall light", "wall lamp", "sconce", "wall sconce"],
-    exclude: ["outdoor", "exterior", "vanity", "mirror", "bathroom"],
-  },
-  {
-    slug: "bathroom-vanity",
-    name: "Bathroom & Vanity",
-    description: "Vanity bars, mirror front lights and bathroom sconces in matte black, brushed nickel and copper finishes.",
-    group: "Type",
-    keywords: ["vanity", "mirror front", "mirror wall light", "bathroom"],
-  },
-  {
-    slug: "outdoor",
-    name: "Outdoor & Exterior",
-    description: "Waterproof outdoor wall lights, courtyard sconces and garden lamps engineered for facades, patios and entrances.",
-    group: "Type",
-    keywords: ["outdoor", "exterior", "courtyard", "garden", "waterproof", "ip65", "ip55", "patio"],
-  },
-  {
-    slug: "fans-and-specialty",
-    name: "Fans & Specialty",
-    description: "Bladeless ceiling fan lights, track spotlights, step lights and sensor-activated fixtures.",
-    group: "Type",
-    keywords: ["fan light", "track light", "step light", "sensor", "garage", "honeycomb"],
-  },
-  // ---------- By Room ----------
-  {
-    slug: "living-room",
-    name: "Living Room",
-    description: "Lighting to anchor your living room — chandeliers, sculptural pendants and ambient ceiling fixtures.",
-    group: "Room",
-    keywords: ["living room", "living-room", "lounge"],
-  },
-  {
-    slug: "dining-room",
-    name: "Dining Room",
-    description: "Pieces that frame the table — linear chandeliers, droplights and statement pendants for dining spaces.",
-    group: "Room",
-    keywords: ["dining", "dining room", "kitchen island", "island"],
-  },
-  {
-    slug: "bedroom",
-    name: "Bedroom",
-    description: "Calmer light for the bedroom — flush mounts, bedside sconces and softer pendants.",
-    group: "Room",
-    keywords: ["bedroom", "bedside"],
-  },
-  {
-    slug: "entryway",
-    name: "Entryway & Foyer",
-    description: "Tall, sculptural lighting to greet the room — foyer chandeliers and stairwell pendants.",
-    group: "Room",
-    keywords: ["foyer", "entryway", "stairwell", "staircase"],
+    slug: "walkway",
+    name: "Walkway Lighting",
+    description: "Path, garden and walkway fixtures — bollards, step lights and landscape pieces that guide the way home.",
+    tagline: "Paths · Gardens · Landscape",
+    group: "Collection",
+    collectionHandle: "zolvex-walkway-lighting",
+    cover:
+      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_162406_303088d7-7c33-49f5-86b5-410a39902255.jpg?v=1780763349",
+    keywords: ["walkway", "path", "garden", "landscape", "bollard", "outdoor"],
   },
 ];
 
@@ -104,9 +81,7 @@ export function categoriesByGroup(group: CategoryGroup) {
   return categories.filter((c) => c.group === group);
 }
 
-/** Tests whether a product (title + description) belongs in a category. */
 export function matchesCategory(category: Category, title: string, description = "") {
   const hay = (title + " " + description).toLowerCase();
-  if (category.exclude?.some((k) => hay.includes(k.toLowerCase()))) return false;
   return category.keywords.some((k) => hay.includes(k.toLowerCase()));
 }
