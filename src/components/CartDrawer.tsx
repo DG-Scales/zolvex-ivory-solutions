@@ -79,7 +79,7 @@ export const CartDrawer = () => {
                           {item.product.node.title}
                         </Link>
                         <p className="text-xs text-muted-foreground mt-0.5">
-                          {item.selectedOptions.map((option) => option.value).join(" • ")}
+                          {formatVariantTitle({ title: item.variantTitle, selectedOptions: item.selectedOptions })}
                         </p>
                         <p className="font-medium mt-2">
                           {item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}
