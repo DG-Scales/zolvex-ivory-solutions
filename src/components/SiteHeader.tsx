@@ -3,7 +3,9 @@ import { CartDrawer } from "./CartDrawer";
 import { Logo } from "./Logo";
 import { SearchDialog } from "./SearchDialog";
 import { PromoBar } from "./PromoBar";
+import { AccountMenu } from "./AccountMenu";
 import { categoriesByGroup } from "@/lib/categories";
+
 
 export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   const types = categoriesByGroup("Type");
@@ -66,8 +68,10 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
           </nav>
           <div className="flex items-center justify-end gap-1">
             <SearchDialog />
+            <AccountMenu overlay={overlay} />
             <CartDrawer />
           </div>
+
         </div>
       </header>
     </div>
