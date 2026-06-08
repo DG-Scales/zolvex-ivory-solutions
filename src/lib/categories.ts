@@ -61,7 +61,7 @@ export const categories: Category[] = [
     tagline: "Sconces · Reading · Staircase",
     group: "Collection",
     cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/e621d34d-91ed-497b-9977-2b263fa468b7_trans.jpg?v=1780588428",
+      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_155657_a296dce2-5a56-405f-85cc-177c94f26a60.png?v=1780761618",
     keywords: ["wall light", "wall lamp", "sconce", "wall sconce", "wall-light"],
     exclude: ["outdoor", "exterior", "waterproof", "courtyard", "garden", "ip65", "ip55", "vanity", "mirror front", "solar"],
     includeHandles: ["led-vanity-mirror-wall-light-7-sizes-from-40-120cm"],
