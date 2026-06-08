@@ -4,7 +4,7 @@ import { fetchProductByHandle } from "@/lib/shopify";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
-import { Loader2, ArrowLeft } from "lucide-react";
+import { Loader2, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
@@ -49,8 +49,42 @@ function ProductPage() {
             return (
               <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
                 <div>
-                  <div className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4">
+                  <div
+                    className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative"
+                    onTouchStart={(e) => {
+                      (e.currentTarget as HTMLDivElement).dataset.x = String(e.touches[0].clientX);
+                    }}
+                    onTouchEnd={(e) => {
+                      const start = Number((e.currentTarget as HTMLDivElement).dataset.x || 0);
+                      const dx = e.changedTouches[0].clientX - start;
+                      if (Math.abs(dx) > 40 && images.length > 1) {
+                        setImageIndex((i) =>
+                          dx < 0 ? (i + 1) % images.length : (i - 1 + images.length) % images.length,
+                        );
+                      }
+                    }}
+                  >
                     {mainImage && <img src={mainImage.url} alt={mainImage.altText || product.title} className="w-full h-full object-cover" />}
+                    {images.length > 1 && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => setImageIndex((i) => (i - 1 + images.length) % images.length)}
+                          aria-label="Previous image"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm"
+                        >
+                          <ChevronLeft className="h-5 w-5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setImageIndex((i) => (i + 1) % images.length)}
+                          aria-label="Next image"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm"
+                        >
+                          <ChevronRight className="h-5 w-5" />
+                        </button>
+                      </>
+                    )}
                   </div>
                   {images.length > 1 && (
                     <div className="grid grid-cols-5 gap-2">
