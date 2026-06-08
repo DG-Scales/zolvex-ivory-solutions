@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { categories } from "@/lib/categories";
 
-export function SearchDialog() {
+export function SearchDialog({ overlay = false }: { overlay?: boolean } = {}) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const navigate = useNavigate();
@@ -24,16 +24,21 @@ export function SearchDialog() {
     }
   }
 
+  const buttonClass = overlay
+    ? "inline-flex h-9 w-9 items-center justify-center rounded-full text-background hover:bg-background/10 transition-colors"
+    : "inline-flex h-9 w-9 items-center justify-center rounded-full text-background bg-foreground hover:bg-foreground/85 transition-colors";
+
   return (
     <>
       <button
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Search"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
+        className={buttonClass}
       >
         <Search className="h-4 w-4" />
       </button>
+
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-xl p-0 overflow-hidden">
           <DialogTitle className="sr-only">Search</DialogTitle>

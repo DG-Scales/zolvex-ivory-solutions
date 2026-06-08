@@ -67,10 +67,11 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
             <Link to="/contact" className={linkBase}>Contact</Link>
           </nav>
           <div className="flex items-center justify-end gap-1">
-            <SearchDialog />
+            <SearchDialog overlay={overlay} />
             <AccountMenu overlay={overlay} />
             <CartDrawer />
           </div>
+
 
         </div>
       </header>
