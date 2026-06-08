@@ -75,10 +75,11 @@ export function SearchDialog({ overlay = false }: { overlay?: boolean } = {}) {
 
   const { data: products = [] } = useQuery({
     queryKey: ["products", "search"],
-    queryFn: () => fetchProducts(100),
+    queryFn: () => fetchProducts(250),
     enabled: open,
     staleTime: 5 * 60 * 1000,
   });
+
 
   const filteredCategories = q
     ? categories
