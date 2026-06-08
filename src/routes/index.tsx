@@ -22,6 +22,37 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+function TrendingCard() {
+  const cat = getCategory("trending");
+  if (!cat) return null;
+  return (
+    <Link
+      to="/categories/$slug"
+      params={{ slug: cat.slug }}
+      className="group relative block overflow-hidden rounded-xl bg-muted aspect-[21/9] md:aspect-[21/8]"
+    >
+      <img
+        src={cat.cover}
+        alt={cat.name}
+        loading="eager"
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 text-background">
+        {cat.tagline && (
+          <p className="mb-2 text-[10px] md:text-xs uppercase tracking-[0.25em] opacity-80">
+            {cat.tagline}
+          </p>
+        )}
+        <h3 className="font-display text-2xl md:text-4xl leading-tight">{cat.name}</h3>
+        <p className="mt-2 text-xs md:text-sm uppercase tracking-[0.2em] opacity-80">
+          Shop {cat.name} →
+        </p>
+      </div>
+    </Link>
+  );
+}
+
 function Index() {
   useCartSync();
 
