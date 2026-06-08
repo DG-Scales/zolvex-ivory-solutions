@@ -1,3 +1,5 @@
+import exteriorWallCover from "@/assets/exterior-wall-cover.png.asset.json";
+
 export type CategoryGroup = "Collection" | "Featured";
 
 export interface Category {
@@ -95,8 +97,7 @@ export const categories: Category[] = [
     tagline: "Façade · Entrance · Outdoor wall",
     group: "Collection",
     collectionHandle: "zolvex-exteroir-wall-lighting",
-    cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_160903_c200a371-4704-4d5c-8cf1-14715c0715fa.png?v=1780762683",
+    cover: exteriorWallCover.url,
     keywords: ["outdoor", "exterior", "waterproof", "courtyard", "patio", "ip65", "ip55", "balcony", "facade"],
   },
   {
