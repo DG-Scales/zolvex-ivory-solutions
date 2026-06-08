@@ -21,9 +21,10 @@ interface ProductGridProps {
   showFilters?: boolean;
 }
 
-type SortOption = "newest" | "price-asc" | "price-desc";
+type SortOption = "featured" | "newest" | "price-asc" | "price-desc";
 
 const SORT_LABELS: Record<SortOption, string> = {
+  featured: "Featured",
   newest: "Newest",
   "price-asc": "Price: Low to High",
   "price-desc": "Price: High to Low",
@@ -64,7 +65,7 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
   const [min, max] = range;
   const currency = scoped[0]?.node.priceRange.minVariantPrice.currencyCode ?? "USD";
 
-  const [sort, setSort] = useState<SortOption>("newest");
+  const [sort, setSort] = useState<SortOption>("featured");
 
   let filtered = scoped.filter((p) => {
     const amt = parseFloat(p.node.priceRange.minVariantPrice.amount);
@@ -91,9 +92,34 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
           new Date(b.node.createdAt).getTime() -
           new Date(a.node.createdAt).getTime(),
       );
+    } else if (sort === "featured") {
+      // Premium-first, modern-first, lightly interleaved so it doesn't read
+      // as a pure price ranking. Score = normalized price weight + recency
+      // weight, with a small deterministic jitter from the product id.
+      const prices = arr.map((p) => parseFloat(p.node.priceRange.minVariantPrice.amount) || 0);
+      const maxPrice = Math.max(1, ...prices);
+      const times = arr.map((p) => new Date(p.node.createdAt).getTime() || 0);
+      const maxTime = Math.max(1, ...times);
+      const minTime = Math.min(...times);
+      const timeSpan = Math.max(1, maxTime - minTime);
+      const hash = (s: string) => {
+        let h = 0;
+        for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+        return ((h >>> 0) % 1000) / 1000;
+      };
+      arr.sort((a, b) => {
+        const pa = parseFloat(a.node.priceRange.minVariantPrice.amount) || 0;
+        const pb = parseFloat(b.node.priceRange.minVariantPrice.amount) || 0;
+        const ta = new Date(a.node.createdAt).getTime() || 0;
+        const tb = new Date(b.node.createdAt).getTime() || 0;
+        const sa = 0.6 * (pa / maxPrice) + 0.35 * ((ta - minTime) / timeSpan) + 0.05 * hash(a.node.id);
+        const sb = 0.6 * (pb / maxPrice) + 0.35 * ((tb - minTime) / timeSpan) + 0.05 * hash(b.node.id);
+        return sb - sa;
+      });
     }
     return arr;
   }, [filtered, sort]);
+
 
   const display = limit ? sorted.slice(0, limit) : sorted;
 

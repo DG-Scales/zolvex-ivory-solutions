@@ -35,24 +35,38 @@ function fuzzyScore(text: string, query: string): number {
   const t = text.toLowerCase();
   const q = query.toLowerCase().trim();
   if (!q) return 0;
-  if (t.includes(q)) return -100 + t.indexOf(q); // best
-  // token-level fuzzy: each query word must roughly appear
-  const words = t.split(/\s+/);
-  const qWords = q.split(/\s+/);
+  if (t.includes(q)) return -1000 + t.indexOf(q); // best — substring
+  const words = t.split(/[\s\-_/,.]+/).filter(Boolean);
+  const qWords = q.split(/\s+/).filter(Boolean);
   let total = 0;
+  let matched = 0;
   for (const qw of qWords) {
     let best = Infinity;
     for (const w of words) {
-      if (w.includes(qw)) { best = Math.min(best, 0); continue; }
+      if (!w) continue;
+      if (w.includes(qw) || qw.includes(w)) { best = Math.min(best, 0); continue; }
+      // prefix match — very lenient
+      const pref = Math.min(qw.length, w.length, 3);
+      if (qw.length >= 3 && w.startsWith(qw.slice(0, pref))) {
+        best = Math.min(best, 1);
+        continue;
+      }
       const d = editDistance(qw, w);
-      const tol = Math.max(1, Math.floor(qw.length / 3));
+      const tol = Math.max(2, Math.floor(qw.length / 2));
       if (d <= tol) best = Math.min(best, d);
     }
-    if (best === Infinity) return Infinity;
-    total += best;
+    if (best !== Infinity) {
+      matched++;
+      total += best;
+    } else {
+      total += qw.length; // partial-match penalty instead of hard reject
+    }
   }
+  // require at least one token to match somehow
+  if (matched === 0) return Infinity;
   return total;
 }
+
 
 export function SearchDialog({ overlay = false }: { overlay?: boolean } = {}) {
   const [open, setOpen] = useState(false);
@@ -61,10 +75,11 @@ export function SearchDialog({ overlay = false }: { overlay?: boolean } = {}) {
 
   const { data: products = [] } = useQuery({
     queryKey: ["products", "search"],
-    queryFn: () => fetchProducts(100),
+    queryFn: () => fetchProducts(250),
     enabled: open,
     staleTime: 5 * 60 * 1000,
   });
+
 
   const filteredCategories = q
     ? categories
@@ -80,12 +95,23 @@ export function SearchDialog({ overlay = false }: { overlay?: boolean } = {}) {
   const productSuggestions = useMemo(() => {
     if (!q.trim()) return [] as ShopifyProduct[];
     return products
-      .map((p) => ({ p, score: fuzzyScore(p.node.title, q) }))
+      .map((p) => {
+        const titleScore = fuzzyScore(p.node.title, q);
+        const handleScore = fuzzyScore(p.node.handle.replace(/-/g, " "), q);
+        const descScore = fuzzyScore((p.node.description ?? "").slice(0, 200), q);
+        const score = Math.min(
+          titleScore,
+          handleScore + 1,
+          descScore === Infinity ? Infinity : descScore + 4,
+        );
+        return { p, score };
+      })
       .filter((x) => x.score !== Infinity)
       .sort((a, b) => a.score - b.score)
-      .slice(0, 6)
+      .slice(0, 12)
       .map((x) => x.p);
   }, [products, q]);
+
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
