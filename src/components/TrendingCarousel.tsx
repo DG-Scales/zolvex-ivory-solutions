@@ -57,7 +57,9 @@ export function TrendingCarousel() {
     let moved = false;
 
     const onDown = (e: PointerEvent) => {
-      if (e.pointerType === "mouse" && e.button !== 0) return;
+      // Let touch devices use native momentum scrolling
+      if (e.pointerType !== "mouse") return;
+      if (e.button !== 0) return;
       isDown = true;
       moved = false;
       startX = e.clientX;
@@ -68,7 +70,11 @@ export function TrendingCarousel() {
       if (!isDown) return;
       const dx = e.clientX - startX;
       if (Math.abs(dx) > 4) moved = true;
-      el.scrollLeft = startScroll - dx;
+      // rAF-batched for smoother updates
+      const next = startScroll - dx;
+      requestAnimationFrame(() => {
+        el.scrollLeft = next;
+      });
     };
     const onUp = (e: PointerEvent) => {
       if (!isDown) return;
@@ -150,7 +156,7 @@ export function TrendingCarousel() {
       <div className="relative pb-24 md:pb-32">
         <div
           ref={scrollerRef}
-          className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x snap-mandatory scrollbar-hide cursor-grab active:cursor-grabbing select-none [touch-action:pan-y]"
+          className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x scrollbar-hide cursor-grab active:cursor-grabbing select-none [touch-action:pan-x] [-webkit-overflow-scrolling:touch] [scroll-behavior:smooth] [overscroll-behavior-x:contain]"
         >
           {ordered.map((p) => {
             const img = p.node.images.edges[0]?.node.url;
