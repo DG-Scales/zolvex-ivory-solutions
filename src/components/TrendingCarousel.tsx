@@ -24,6 +24,79 @@ export function TrendingCarousel() {
     .map((h) => products.find((p) => p.node.handle === h))
     .filter(Boolean) as typeof products;
 
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  const updateArrows = useCallback(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    setCanPrev(el.scrollLeft > 4);
+    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    updateArrows();
+  }, [ordered.length, updateArrows]);
+
+  const scrollByCards = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>("[data-card]");
+    const step = card ? card.offsetWidth + 24 : el.clientWidth * 0.8;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
+
+  // Pointer drag-to-scroll
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    let isDown = false;
+    let startX = 0;
+    let startScroll = 0;
+    let moved = false;
+
+    const onDown = (e: PointerEvent) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      isDown = true;
+      moved = false;
+      startX = e.clientX;
+      startScroll = el.scrollLeft;
+      el.setPointerCapture(e.pointerId);
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!isDown) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      el.scrollLeft = startScroll - dx;
+    };
+    const onUp = (e: PointerEvent) => {
+      if (!isDown) return;
+      isDown = false;
+      try { el.releasePointerCapture(e.pointerId); } catch {}
+      if (moved) {
+        const prevent = (ev: Event) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+        };
+        el.addEventListener("click", prevent, { capture: true, once: true });
+      }
+    };
+
+    el.addEventListener("pointerdown", onDown);
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerup", onUp);
+    el.addEventListener("pointercancel", onUp);
+    el.addEventListener("scroll", updateArrows, { passive: true });
+    return () => {
+      el.removeEventListener("pointerdown", onDown);
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerup", onUp);
+      el.removeEventListener("pointercancel", onUp);
+      el.removeEventListener("scroll", updateArrows);
+    };
+  }, [updateArrows]);
+
   return (
     <section className="relative border-y border-black/10 bg-black text-background overflow-hidden">
       <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_15%_25%,rgba(245,241,232,0.18),transparent_55%),radial-gradient(circle_at_85%_75%,rgba(245,241,232,0.12),transparent_60%)] pointer-events-none" />
