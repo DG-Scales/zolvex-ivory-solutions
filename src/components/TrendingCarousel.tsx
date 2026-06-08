@@ -2,11 +2,12 @@ import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/lib/shopify";
 import { getCategory } from "@/lib/categories";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
+import { useRef, useCallback, useEffect, useState } from "react";
 
 /**
- * Cinematic trending carousel — horizontal snap-scroll, hover reveals
- * white title overlay.
+ * Cinematic trending carousel — horizontal snap-scroll with drag-to-swipe
+ * and arrow controls.
  */
 export function TrendingCarousel() {
   const cat = getCategory("trending");
@@ -22,6 +23,79 @@ export function TrendingCarousel() {
   const ordered = handles
     .map((h) => products.find((p) => p.node.handle === h))
     .filter(Boolean) as typeof products;
+
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  const updateArrows = useCallback(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    setCanPrev(el.scrollLeft > 4);
+    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    updateArrows();
+  }, [ordered.length, updateArrows]);
+
+  const scrollByCards = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>("[data-card]");
+    const step = card ? card.offsetWidth + 24 : el.clientWidth * 0.8;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
+
+  // Pointer drag-to-scroll
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    let isDown = false;
+    let startX = 0;
+    let startScroll = 0;
+    let moved = false;
+
+    const onDown = (e: PointerEvent) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      isDown = true;
+      moved = false;
+      startX = e.clientX;
+      startScroll = el.scrollLeft;
+      el.setPointerCapture(e.pointerId);
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!isDown) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      el.scrollLeft = startScroll - dx;
+    };
+    const onUp = (e: PointerEvent) => {
+      if (!isDown) return;
+      isDown = false;
+      try { el.releasePointerCapture(e.pointerId); } catch {}
+      if (moved) {
+        const prevent = (ev: Event) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+        };
+        el.addEventListener("click", prevent, { capture: true, once: true });
+      }
+    };
+
+    el.addEventListener("pointerdown", onDown);
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerup", onUp);
+    el.addEventListener("pointercancel", onUp);
+    el.addEventListener("scroll", updateArrows, { passive: true });
+    return () => {
+      el.removeEventListener("pointerdown", onDown);
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerup", onUp);
+      el.removeEventListener("pointercancel", onUp);
+      el.removeEventListener("scroll", updateArrows);
+    };
+  }, [updateArrows]);
 
   return (
     <section className="relative border-y border-black/10 bg-black text-background overflow-hidden">
@@ -41,18 +115,43 @@ export function TrendingCarousel() {
               crystal and full-spectrum statement lighting.
             </p>
           </div>
-          <Link
-            to="/categories/$slug"
-            params={{ slug: "trending" }}
-            className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] border-b border-background/40 pb-1 hover:border-background transition-colors"
-          >
-            View All Trending <ArrowRight className="w-3 h-3" />
-          </Link>
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-2 mr-2">
+              <button
+                type="button"
+                onClick={() => scrollByCards(-1)}
+                disabled={!canPrev}
+                aria-label="Previous"
+                className="w-10 h-10 rounded-full border border-background/30 flex items-center justify-center hover:bg-background hover:text-black transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-background"
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollByCards(1)}
+                disabled={!canNext}
+                aria-label="Next"
+                className="w-10 h-10 rounded-full border border-background/30 flex items-center justify-center hover:bg-background hover:text-black transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-background"
+              >
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+            <Link
+              to="/categories/$slug"
+              params={{ slug: "trending" }}
+              className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] border-b border-background/40 pb-1 hover:border-background transition-colors"
+            >
+              View All Trending <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
         </div>
       </div>
 
       <div className="relative pb-24 md:pb-32">
-        <div className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x snap-mandatory scrollbar-hide">
+        <div
+          ref={scrollerRef}
+          className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x snap-mandatory scrollbar-hide cursor-grab active:cursor-grabbing select-none [touch-action:pan-y]"
+        >
           {ordered.map((p) => {
             const img = p.node.images.edges[0]?.node.url;
             const price = p.node.priceRange.minVariantPrice.amount;
@@ -61,6 +160,8 @@ export function TrendingCarousel() {
                 key={p.node.id}
                 to="/product/$handle"
                 params={{ handle: p.node.handle }}
+                data-card
+                draggable={false}
                 className="group relative shrink-0 snap-start block overflow-hidden rounded-sm bg-neutral-900 w-[78vw] sm:w-[58vw] md:w-[420px] aspect-[4/5]"
               >
                 {img && (
@@ -68,7 +169,8 @@ export function TrendingCarousel() {
                     src={img}
                     alt={p.node.title}
                     loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover transition-all duration-[900ms] ease-out group-hover:scale-110 group-hover:brightness-90"
+                    draggable={false}
+                    className="absolute inset-0 h-full w-full object-cover transition-all duration-[900ms] ease-out group-hover:scale-110 group-hover:brightness-90 pointer-events-none"
                   />
                 )}
                 {/* gradient base */}
