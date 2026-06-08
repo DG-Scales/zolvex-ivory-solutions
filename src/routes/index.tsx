@@ -5,8 +5,8 @@ import { ProductGrid } from "@/components/ProductGrid";
 import { useCartSync } from "@/hooks/useCartSync";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { Logo } from "@/components/Logo";
 import { CategoryGrid } from "@/components/CategoryGrid";
+import heroImage from "@/assets/hero-room.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,30 +25,29 @@ function Index() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <SiteHeader />
-
-      {/* Hero */}
-      <section className="relative border-b">
-        <div className="mx-auto max-w-5xl px-6 pt-20 pb-24 md:pt-28 md:pb-32 text-center">
-          <div className="fade-up flex flex-col items-center">
-            <Logo size="xl" showTagline />
-            <p className="mt-12 text-xs uppercase tracking-[0.3em] text-muted-foreground">Elegance through the ages</p>
-            <h1 className="mt-4 font-display text-5xl sm:text-6xl md:text-7xl leading-[1.02] tracking-tight max-w-3xl">
-              Light your style, <em className="italic">layer</em> your story.
-            </h1>
-            <p className="mt-8 max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed">
-              Premium designer lighting for interior and exterior spaces — chandeliers, pendants, wall sconces, and architectural fixtures. Crafted with care, built to endure.
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-7">
-                <Link to="/shop">
-                  Shop the collection <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-7">
-                <Link to="/story">Our story</Link>
-              </Button>
-            </div>
+      {/* Full-bleed hero with overlay header */}
+      <section className="relative h-screen min-h-[640px] w-full overflow-hidden">
+        <img
+          src={heroImage}
+          alt="Designer chandelier illuminating a warm, textured bedroom interior"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/30" />
+        <SiteHeader overlay />
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 text-background">
+          <p className="font-display italic text-lg md:text-xl opacity-95">Elegance Through The Ages</p>
+          <h1 className="mt-4 font-display uppercase tracking-[0.06em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] max-w-5xl">
+            Light Your Style, Layer Your Story
+          </h1>
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            <Button asChild size="lg" className="rounded-full px-7">
+              <Link to="/shop">
+                Shop the collection <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="rounded-full px-7 bg-transparent text-background border-background/60 hover:bg-background hover:text-foreground">
+              <Link to="/story">Our story</Link>
+            </Button>
           </div>
         </div>
       </section>
