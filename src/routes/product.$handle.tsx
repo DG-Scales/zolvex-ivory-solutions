@@ -69,8 +69,9 @@ function ProductPage() {
 
                 <div className="md:py-8">
                   <h1 className="font-display text-4xl md:text-5xl mb-4">{product.title}</h1>
-                  <p className="text-2xl font-display mb-8">
-                    {variant?.price.currencyCode} {parseFloat(variant?.price.amount || "0").toFixed(2)}
+                  <p className="text-2xl font-display mb-8 flex items-baseline gap-3">
+                    <span className="text-foreground line-through opacity-70">{variant?.price.currencyCode} {(parseFloat(variant?.price.amount || "0") * 1.1).toFixed(2)}</span>
+                    <span>{variant?.price.currencyCode} {parseFloat(variant?.price.amount || "0").toFixed(2)}</span>
                   </p>
                   <div className="prose prose-sm text-muted-foreground mb-10 whitespace-pre-line leading-relaxed">
                     {product.description || "A considered solution. More details coming soon."}
