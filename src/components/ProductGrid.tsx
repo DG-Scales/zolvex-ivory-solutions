@@ -21,9 +21,10 @@ interface ProductGridProps {
   showFilters?: boolean;
 }
 
-type SortOption = "newest" | "price-asc" | "price-desc";
+type SortOption = "featured" | "newest" | "price-asc" | "price-desc";
 
 const SORT_LABELS: Record<SortOption, string> = {
+  featured: "Featured",
   newest: "Newest",
   "price-asc": "Price: Low to High",
   "price-desc": "Price: High to Low",
