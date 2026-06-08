@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
 import { formatVariantTitle } from "@/lib/variantTitle";
+import { parseDescription } from "@/lib/parseSpecs";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/product/$handle")({
