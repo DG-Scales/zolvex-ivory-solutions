@@ -69,12 +69,14 @@ export function TrendingCarousel() {
     const onMove = (e: PointerEvent) => {
       if (!isDown) return;
       const dx = e.clientX - startX;
-      if (Math.abs(dx) > 4) moved = true;
-      // rAF-batched for smoother updates
-      const next = startScroll - dx;
-      requestAnimationFrame(() => {
-        el.scrollLeft = next;
-      });
+      if (Math.abs(dx) > 8) {
+        moved = true;
+        // Only hijack scroll once we know it's a drag, so small clicks pass through
+        const next = startScroll - dx;
+        requestAnimationFrame(() => {
+          el.scrollLeft = next;
+        });
+      }
     };
     const onUp = (e: PointerEvent) => {
       if (!isDown) return;
