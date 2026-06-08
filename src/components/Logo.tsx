@@ -15,7 +15,7 @@ export function Logo({ size = "md", showTagline = false, tone = "dark" }: { size
   const subColor = tone === "light" ? "text-background/70" : "text-muted-foreground";
   return (
     <div className={`flex flex-col ${showTagline ? "items-center" : "items-start"} leading-none select-none`}>
-      <span className={`font-logo ${sizes[size]} ${mainColor}`}>ZOLVEX</span>
+      <span className={`font-logo font-bold ${sizes[size]} ${mainColor}`}>ZOLVEX</span>
       {showTagline && (
         <span className={`mt-2 uppercase ${subColor} ${taglineSizes[size]} text-center`}>
           Where Design Comes to Light
