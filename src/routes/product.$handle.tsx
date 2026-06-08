@@ -104,7 +104,22 @@ function ProductPage() {
                 </div>
 
                 <div className="md:py-8">
-                  <h1 className="font-display text-4xl md:text-5xl mb-4">{product.title}</h1>
+                  <div className="flex items-start justify-between gap-4 mb-4">
+                    <h1 className="font-display text-4xl md:text-5xl">{product.title}</h1>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const url = `${window.location.origin}/product/${handle}`;
+                        navigator.clipboard.writeText(url).then(() => {
+                          toast.success("Link copied to clipboard");
+                        });
+                      }}
+                      aria-label="Share product"
+                      className="shrink-0 h-10 w-10 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors mt-1"
+                    >
+                      <Share2 className="w-4 h-4" />
+                    </button>
+                  </div>
                   <p className="text-2xl font-display mb-8 flex items-baseline gap-3">
                     <span className="text-foreground line-through opacity-70">{variant?.price.currencyCode} {(parseFloat(variant?.price.amount || "0") * 1.1).toFixed(2)}</span>
                     <span>{variant?.price.currencyCode} {parseFloat(variant?.price.amount || "0").toFixed(2)}</span>
