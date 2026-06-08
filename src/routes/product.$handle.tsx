@@ -49,9 +49,11 @@ function ProductPage() {
             const images = product.images.edges;
             const mainImage = images[imageIndex]?.node;
             const variant = product.variants.edges[variantIndex]?.node;
+            const { prose, specs } = parseDescription(product.description);
             return (
               <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
                 <div>
+                  <div
                   <div
                     className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative"
                     onTouchStart={(e) => {
