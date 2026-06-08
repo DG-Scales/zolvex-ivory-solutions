@@ -27,6 +27,7 @@ function ProductPage() {
   const addItem = useCartStore((s) => s.addItem);
   const isAdding = useCartStore((s) => s.isLoading);
   const [variantIndex, setVariantIndex] = useState(0);
+  const galleryRef = useRef<HTMLDivElement>(null);
   const [imageIndex, setImageIndex] = useState(0);
 
   return (
