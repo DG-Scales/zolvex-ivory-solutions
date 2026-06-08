@@ -57,7 +57,9 @@ export function TrendingCarousel() {
     let moved = false;
 
     const onDown = (e: PointerEvent) => {
-      if (e.pointerType === "mouse" && e.button !== 0) return;
+      // Let touch devices use native momentum scrolling
+      if (e.pointerType !== "mouse") return;
+      if (e.button !== 0) return;
       isDown = true;
       moved = false;
       startX = e.clientX;
