@@ -119,7 +119,29 @@ function ProductPage() {
                         {product.variants.edges.map((v, i) => (
                           <button
                             key={v.node.id}
-                            onClick={() => setVariantIndex(i)}
+                            onClick={() => {
+                              setVariantIndex(i);
+                              // Try exact match on variant.image first
+                              const target = v.node.image?.url;
+                              if (target) {
+                                const idx = images.findIndex((img) => img.node.url === target);
+                                if (idx >= 0) {
+                                  setImageIndex(idx);
+                                  return;
+                                }
+                              }
+                              // Fallback: match an image whose alt text contains an option value
+                              const needles = (v.node.selectedOptions || [])
+                                .map((o) => o.value?.toLowerCase())
+                                .filter(Boolean) as string[];
+                              if (needles.length) {
+                                const idx = images.findIndex((img) => {
+                                  const alt = (img.node.altText || "").toLowerCase();
+                                  return needles.some((n) => alt.includes(n));
+                                });
+                                if (idx >= 0) setImageIndex(idx);
+                              }
+                            }}
                             className={`px-4 py-2 text-sm border rounded-full transition-colors ${i === variantIndex ? "bg-foreground text-background border-foreground" : "hover:border-foreground"}`}
                           >
                             {formatVariantTitle(v.node) || `Option ${i + 1}`}
