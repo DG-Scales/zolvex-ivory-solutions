@@ -11,6 +11,7 @@ import { useCartSync } from "@/hooks/useCartSync";
 import { formatVariantTitle } from "@/lib/variantTitle";
 import { parseDescription } from "@/lib/parseSpecs";
 import { toast } from "sonner";
+import { PromoBox } from "@/components/PromoBox";
 
 export const Route = createFileRoute("/product/$handle")({
   component: ProductPage,
@@ -225,8 +226,8 @@ function ProductPage() {
                     <span className="flex items-center gap-1.5"><Truck className="w-3.5 h-3.5" /> Free Shipping</span>
                     <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> Secure Payment</span>
                   </div>
-                  <div className="mt-3 bg-primary text-primary-foreground text-center text-xs uppercase tracking-wider py-2.5 px-4 rounded-md">
-                    Special Summer Promotion — Use code SMRDLZ20 for 20% off
+                  <div className="mt-3">
+                    <PromoBox />
                   </div>
                 </div>
               </div>
