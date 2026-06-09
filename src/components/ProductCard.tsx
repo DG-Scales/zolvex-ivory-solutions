@@ -155,6 +155,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
           >
             {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Add To Bag"}
           </Button>
+          <PromoBox compact />
           <div className={`flex items-center justify-center gap-2 text-[10px] uppercase tracking-wider ${isFeatured ? "text-white" : "text-white"}`}>
             <span className="flex items-center gap-1"><Headphones className="w-3 h-3" /> 24/7 Support</span>
             <span className="w-px h-3 bg-current opacity-30" />
@@ -162,7 +163,6 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
             <span className="w-px h-3 bg-current opacity-30" />
             <span className="flex items-center gap-1"><ShieldCheck className="w-3 h-3" /> Secure</span>
           </div>
-          <PromoBox compact />
 
         </div>
       </div>

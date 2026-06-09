@@ -221,13 +221,13 @@ function ProductPage() {
                   >
                     {isAdding ? <Loader2 className="w-4 h-4 animate-spin" /> : variant?.availableForSale ? "Add to bag" : "Sold out"}
                   </Button>
-                  <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-[11px] uppercase tracking-wider text-muted-foreground">
+                  <div className="mt-4">
+                    <PromoBox />
+                  </div>
+                  <div className="mt-3 flex flex-wrap items-center justify-center gap-3 text-[11px] uppercase tracking-wider text-muted-foreground">
                     <span className="flex items-center gap-1.5"><Headphones className="w-3.5 h-3.5" /> 24/7 Customer Support</span>
                     <span className="flex items-center gap-1.5"><Truck className="w-3.5 h-3.5" /> Free Shipping</span>
                     <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> Secure Payment</span>
-                  </div>
-                  <div className="mt-3">
-                    <PromoBox />
                   </div>
                 </div>
               </div>
