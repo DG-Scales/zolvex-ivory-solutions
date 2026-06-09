@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Loader2, ChevronLeft, ChevronRight, Headphones, Truck, ShieldCheck } from "lucide-react";
+import { PromoBox } from "@/components/PromoBox";
 import { useState, useRef } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import type { ShopifyProduct } from "@/lib/shopify";
@@ -161,9 +162,8 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
             <span className="w-px h-3 bg-current opacity-30" />
             <span className="flex items-center gap-1"><ShieldCheck className="w-3 h-3" /> Secure</span>
           </div>
-          <div className={`text-center text-[10px] uppercase tracking-wider py-1.5 px-2 rounded ${isFeatured ? "bg-[#F5F1E8] text-black" : "bg-primary text-primary-foreground"}`}>
-            Summer Promo — Code SMRDLZ20 for 20% off
-          </div>
+          <PromoBox compact />
+
         </div>
       </div>
       <div className="flex flex-col gap-1.5">
