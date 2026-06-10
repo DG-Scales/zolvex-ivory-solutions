@@ -25,6 +25,24 @@ export function SiteFooter() {
           <p className="mt-8 text-sm text-muted-foreground max-w-xs leading-relaxed">
             Zolvex — premium designer lighting for considered interiors and exteriors. Chandeliers, pendants, wall lights and more.
           </p>
+          <div className="mt-6 max-w-xs">
+            <p className="text-xs text-muted-foreground mb-3">We accept these payment methods</p>
+            <div className="flex flex-wrap items-center gap-2">
+              {paymentLogos.map((logo) => (
+                <div
+                  key={logo.alt}
+                  className="h-7 w-11 bg-white rounded-[3px] flex items-center justify-center p-0.5 ring-1 ring-black/5"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.alt}
+                    className="max-h-full max-w-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="md:col-span-2">
@@ -71,23 +89,6 @@ export function SiteFooter() {
               </a>
             </li>
           </ul>
-        </div>
-      </div>
-
-      <div className="border-t border-border/60">
-        <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col items-center gap-4">
-          <p className="text-sm text-muted-foreground text-center">We accept these payment methods</p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {paymentLogos.map((logo) => (
-              <img
-                key={logo.alt}
-                src={logo.src}
-                alt={logo.alt}
-                className="h-8 w-auto object-contain"
-                loading="lazy"
-              />
-            ))}
-          </div>
         </div>
       </div>
 
