@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Share2, Headphones, Truck, ShieldCheck } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
 import { formatVariantTitle } from "@/lib/variantTitle";
@@ -30,14 +30,6 @@ function ProductPage() {
   const [variantIndex, setVariantIndex] = useState(0);
   const galleryRef = useRef<HTMLDivElement>(null);
   const [imageIndex, setImageIndex] = useState(0);
-
-  useEffect(() => {
-    const el = galleryRef.current;
-    if (!el) return;
-    const target = el.children[imageIndex] as HTMLElement | undefined;
-    if (!target) return;
-    el.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
-  }, [imageIndex]);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -70,9 +62,9 @@ function ProductPage() {
             const scrollToIndex = (i: number) => {
               const el = galleryRef.current;
               if (!el) return;
-              const target = el.children[i] as HTMLElement;
-              if (!target) return;
-              el.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
+              const next = (i + images.length) % images.length;
+              setImageIndex(next);
+              el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" });
             };
 
 
@@ -82,10 +74,10 @@ function ProductPage() {
                   <div className="relative">
                     <div
                       ref={galleryRef}
-                      className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 flex snap-x snap-mandatory overflow-x-auto scrollbar-hide scroll-smooth"
+                      className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 flex snap-x snap-mandatory overflow-x-auto scrollbar-hide scroll-smooth touch-pan-x"
                       onScroll={(e) => {
                         const el = e.currentTarget;
-                        const i = Math.round(el.scrollLeft / el.clientWidth);
+                        const i = Math.max(0, Math.min(images.length - 1, Math.round(el.scrollLeft / el.clientWidth)));
                         if (i !== imageIndex) setImageIndex(i);
                       }}
                     >
@@ -107,7 +99,7 @@ function ProductPage() {
                       <>
                         <button
                           type="button"
-                          onClick={() => setImageIndex((i) => (i - 1 + images.length) % images.length)}
+                          onClick={() => scrollToIndex(imageIndex - 1)}
                           aria-label="Previous image"
                           className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm z-20"
                         >
@@ -115,7 +107,7 @@ function ProductPage() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setImageIndex((i) => (i + 1) % images.length)}
+                          onClick={() => scrollToIndex(imageIndex + 1)}
                           aria-label="Next image"
                           className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm z-20"
                         >
@@ -130,7 +122,7 @@ function ProductPage() {
                       {images.map((img, i) => (
                         <button
                           key={i}
-                          onClick={() => setImageIndex(i)}
+                          onClick={() => scrollToIndex(i)}
                           className={`aspect-square overflow-hidden rounded transition-opacity duration-300 ${i === imageIndex ? "ring-2 ring-foreground opacity-100" : "opacity-60 hover:opacity-100"}`}
                         >
                           <img src={img.node.url} alt="" className="w-full h-full object-cover" draggable={false} />
@@ -195,7 +187,7 @@ function ProductPage() {
                               if (target) {
                                 const idx = images.findIndex((img) => img.node.url === target);
                                 if (idx >= 0) {
-                                  setImageIndex(idx);
+                                  scrollToIndex(idx);
                                   return;
                                 }
                               }
@@ -208,7 +200,7 @@ function ProductPage() {
                                   const alt = (img.node.altText || "").toLowerCase();
                                   return needles.some((n) => alt.includes(n));
                                 });
-                                if (idx >= 0) setImageIndex(idx);
+                                if (idx >= 0) scrollToIndex(idx);
                               }
                             }}
                             className={`px-4 py-2 text-sm border rounded-full transition-colors ${i === variantIndex ? "bg-foreground text-background border-foreground" : "hover:border-foreground"}`}
