@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { ShoppingBag, Minus, Plus, Trash2, Lock, Loader2, ShieldCheck, Truck, PackageCheck } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
-import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
+
 import visaLogo from "@/assets/visa.svg.asset.json";
 import mastercardLogo from "@/assets/mastercard.svg.asset.json";
 import amexLogo from "@/assets/amex.svg.asset.json";
@@ -34,16 +34,10 @@ export const CartDrawer = () => {
   }, [isOpen, syncCart]);
 
   const handleCheckout = () => {
-    if (items.length === 0) return;
-    const parts = items
-      .map((i) => {
-        const m = String(i.variantId).match(/(\d+)\s*$/);
-        return m ? `${m[1]}:${i.quantity}` : null;
-      })
-      .filter(Boolean);
-    if (parts.length === 0) return;
+    const url = getCheckoutUrl();
+    if (!url) return;
     setIsOpen(false);
-    window.location.href = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/cart/${parts.join(",")}`;
+    window.location.href = url;
   };
 
   return (
