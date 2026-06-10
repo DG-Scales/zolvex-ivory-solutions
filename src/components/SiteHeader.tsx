@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { CartDrawer } from "./CartDrawer";
+import { CartIconLink } from "./CartIconLink";
 import { Logo } from "./Logo";
 import { SearchDialog } from "./SearchDialog";
 import { PromoBar } from "./PromoBar";
@@ -135,7 +135,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
           <div className="flex items-center justify-end gap-0.5 sm:gap-1">
             <SearchDialog overlay={overlay} />
             <AccountMenu overlay={overlay} />
-            <CartDrawer />
+            <CartIconLink />
           </div>
         </div>
       </header>
