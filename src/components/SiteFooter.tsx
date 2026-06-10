@@ -78,13 +78,15 @@ export function SiteFooter() {
         <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col items-center gap-4">
           <p className="text-sm text-muted-foreground text-center">We accept these payment methods</p>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <VisaLogo />
-            <MastercardLogo />
-            <AmexLogo />
-            <DiscoverLogo />
-            <ApplePayLogo />
-            <GooglePayLogo />
-            <ShopPayLogo />
+            {paymentLogos.map((logo) => (
+              <img
+                key={logo.alt}
+                src={logo.src}
+                alt={logo.alt}
+                className="h-8 w-auto object-contain"
+                loading="lazy"
+              />
+            ))}
           </div>
         </div>
       </div>
