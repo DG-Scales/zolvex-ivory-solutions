@@ -43,6 +43,20 @@ export function SiteFooter() {
                 </div>
               ))}
             </div>
+            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+              <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Secure checkout</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                <Truck className="w-3.5 h-3.5" />
+                <span>Fast shipping</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Easy returns</span>
+              </div>
+            </div>
           </div>
         </div>
 
