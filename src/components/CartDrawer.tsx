@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { ShoppingBag, Minus, Plus, Trash2, Lock, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
+import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
