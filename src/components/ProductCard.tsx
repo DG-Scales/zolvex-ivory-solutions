@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef } from "react";
-import { useCartStore } from "@/stores/cartStore";
 import type { ShopifyProduct } from "@/lib/shopify";
+import { goToCheckout } from "@/lib/checkout";
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -11,8 +11,6 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, variant = "default" }: ProductCardProps) {
-  const addItem = useCartStore((s) => s.addItem);
-  const isLoading = useCartStore((s) => s.isLoading);
   const node = product.node;
   const selectedVariant = node.variants.edges[0]?.node;
   const images = node.images.edges;
@@ -27,17 +25,11 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
   const [imgIndex, setImgIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
 
-  const handleAddToCart = async (e: React.MouseEvent) => {
+  const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!selectedVariant) return;
-    await addItem({
-      product,
-      variantId: selectedVariant.id,
-      variantTitle: selectedVariant.title,
-      price: selectedVariant.price,
-      quantity: 1,
-      selectedOptions: selectedVariant.selectedOptions || [],
-    });
+    goToCheckout(selectedVariant.id, 1);
   };
 
   const stop = (e: React.MouseEvent) => {
@@ -150,7 +142,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
         <div className="absolute inset-x-3 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity space-y-2 pointer-events-none group-hover:pointer-events-auto">
           <Button
             onClick={handleAddToCart}
-            disabled={isLoading || !selectedVariant}
+            disabled={!selectedVariant}
             className={
               isFeatured
                 ? "w-full rounded-none bg-black text-[#F5F1E8] hover:bg-black/85"
@@ -158,8 +150,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
             }
             size="sm"
           >
-
-            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Add To Bag"}
+            Add To Bag
           </Button>
         </div>
       </div>
