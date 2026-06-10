@@ -3,10 +3,25 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ShoppingBag, Minus, Plus, Trash2, Lock, Loader2 } from "lucide-react";
+import { ShoppingBag, Minus, Plus, Trash2, Lock, Loader2, ShieldCheck, Truck, PackageCheck } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
 import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
+import visaLogo from "@/assets/visa.svg.asset.json";
+import mastercardLogo from "@/assets/mastercard.svg.asset.json";
+import amexLogo from "@/assets/amex.svg.asset.json";
+import applePayLogo from "@/assets/applepay.svg.asset.json";
+import googlePayLogo from "@/assets/googlepay.svg.asset.json";
+import shopPayLogo from "@/assets/shoppay.svg.asset.json";
+
+const paymentLogos = [
+  { src: visaLogo.url, alt: "Visa" },
+  { src: mastercardLogo.url, alt: "Mastercard" },
+  { src: amexLogo.url, alt: "American Express" },
+  { src: applePayLogo.url, alt: "Apple Pay" },
+  { src: googlePayLogo.url, alt: "Google Pay" },
+  { src: shopPayLogo.url, alt: "Shop Pay" },
+];
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
