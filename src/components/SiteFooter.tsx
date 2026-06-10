@@ -101,13 +101,3 @@ export function SiteFooter() {
     </footer>
   );
 }
-
-      <div className="border-t border-border/60">
-        <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col md:flex-row justify-between text-xs text-muted-foreground gap-2">
-          <p>© 2026 Zolvex. All rights reserved.</p>
-          <p>Crafted with intention.</p>
-        </div>
-      </div>
-    </footer>
-  );
-}
