@@ -79,30 +79,37 @@ function ProductPage() {
             return (
               <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
                 <div>
-                  <div
-                    ref={galleryRef}
-                    className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative flex snap-x snap-mandatory overflow-x-auto scrollbar-hide scroll-smooth"
-                  >
-                    {images.map((img, i) => (
-                      <div
-                        key={i}
-                        className="w-full h-full shrink-0 snap-center relative"
-                      >
-                        <img
-                          src={img.node.url}
-                          alt={img.node.altText || product.title}
-                          className="w-full h-full object-cover"
-                          draggable={false}
-                        />
-                      </div>
-                    ))}
+                  <div className="relative">
+                    <div
+                      ref={galleryRef}
+                      className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 flex snap-x snap-mandatory overflow-x-auto scrollbar-hide scroll-smooth"
+                      onScroll={(e) => {
+                        const el = e.currentTarget;
+                        const i = Math.round(el.scrollLeft / el.clientWidth);
+                        if (i !== imageIndex) setImageIndex(i);
+                      }}
+                    >
+                      {images.map((img, i) => (
+                        <div
+                          key={i}
+                          className="w-full h-full shrink-0 snap-center relative"
+                        >
+                          <img
+                            src={img.node.url}
+                            alt={img.node.altText || product.title}
+                            className="w-full h-full object-cover"
+                            draggable={false}
+                          />
+                        </div>
+                      ))}
+                    </div>
                     {images.length > 1 && (
                       <>
                         <button
                           type="button"
                           onClick={() => setImageIndex((i) => (i - 1 + images.length) % images.length)}
                           aria-label="Previous image"
-                          className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm z-10"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm z-20"
                         >
                           <ChevronLeft className="h-5 w-5" />
                         </button>
@@ -110,13 +117,14 @@ function ProductPage() {
                           type="button"
                           onClick={() => setImageIndex((i) => (i + 1) % images.length)}
                           aria-label="Next image"
-                          className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm z-10"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm z-20"
                         >
                           <ChevronRight className="h-5 w-5" />
                         </button>
                       </>
                     )}
                   </div>
+
                   {images.length > 1 && (
                     <div className="grid grid-cols-5 gap-2">
                       {images.map((img, i) => (

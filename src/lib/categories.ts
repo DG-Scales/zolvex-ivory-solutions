@@ -65,9 +65,15 @@ export const categories: Category[] = [
     cover:
       "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_155657_a296dce2-5a56-405f-85cc-177c94f26a60.png?v=1780761618",
     keywords: ["wall light", "wall lamp", "sconce", "wall sconce", "wall-light"],
-    exclude: ["outdoor", "exterior", "waterproof", "courtyard", "garden", "ip65", "ip55", "vanity", "mirror front", "solar"],
+    exclude: ["outdoor", "exterior", "waterproof", "courtyard", "garden", "ip65", "ip55", "vanity", "mirror front", "solar", "motion sensor", "garage", "workshop", "high bay"],
     includeHandles: ["led-vanity-mirror-wall-light-7-sizes-from-40-120cm"],
+    excludeHandles: [
+      "led-wall-light-curved-moon-induction-wall-light",
+      "household-waterproof-super-bright-lighting-led-induction-wall-lamp",
+      "honeycomb-shaped-hexagonal-garage-light",
+    ],
   },
+
   {
     slug: "ceiling-flush",
     name: "Ceiling & Flush Mounts",
@@ -128,8 +134,9 @@ export const categories: Category[] = [
       "12led-solar-underground-light-solar-lawn-light",
       "12led-solar-light-led-combination-sink-light",
       "solar-outdoor-light-waterproof-lawn",
-      "honeycomb-shaped-hexagonal-garage-light",
     ],
+    excludeHandles: ["honeycomb-shaped-hexagonal-garage-light"],
+
   },
 ];
 
