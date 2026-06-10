@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { CartDrawer } from "./CartDrawer";
+import { CartIconLink } from "./CartIconLink";
 import { Logo } from "./Logo";
 import { SearchDialog } from "./SearchDialog";
 import { PromoBar } from "./PromoBar";
