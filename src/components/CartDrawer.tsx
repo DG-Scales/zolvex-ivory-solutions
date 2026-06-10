@@ -138,6 +138,33 @@ export const CartDrawer = () => {
                 <Button onClick={handleCheckout} className="w-full rounded-full" size="lg" disabled={items.length === 0 || isLoading || isSyncing}>
                   {isLoading || isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Lock className="w-4 h-4 mr-2" />Checkout</>}
                 </Button>
+                <div className="grid grid-cols-3 gap-2 pt-1">
+                  <div className="flex flex-col items-center gap-1 rounded-md border bg-muted/30 px-2 py-2 text-center">
+                    <ShieldCheck className="w-4 h-4" />
+                    <span className="text-[10px] leading-tight text-muted-foreground">Insured Shipping</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1 rounded-md border bg-muted/30 px-2 py-2 text-center">
+                    <Truck className="w-4 h-4" />
+                    <span className="text-[10px] leading-tight text-muted-foreground">Fast Delivery</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1 rounded-md border bg-muted/30 px-2 py-2 text-center">
+                    <PackageCheck className="w-4 h-4" />
+                    <span className="text-[10px] leading-tight text-muted-foreground">Purchase Protection</span>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">We accept</p>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {paymentLogos.map((logo) => (
+                      <div
+                        key={logo.alt}
+                        className="h-6 w-9 bg-white rounded-[3px] flex items-center justify-center p-0.5 ring-1 ring-black/5"
+                      >
+                        <img src={logo.src} alt={logo.alt} className="max-h-full max-w-full object-contain" loading="lazy" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </>
           )}
