@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { ShoppingBag, Minus, Plus, Trash2, Lock, Loader2, ShieldCheck, Truck, PackageCheck } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
-import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
+
 import visaLogo from "@/assets/visa.svg.asset.json";
 import mastercardLogo from "@/assets/mastercard.svg.asset.json";
 import amexLogo from "@/assets/amex.svg.asset.json";
