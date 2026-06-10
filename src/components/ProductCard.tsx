@@ -2,8 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef } from "react";
+import { toast } from "sonner";
 import type { ShopifyProduct } from "@/lib/shopify";
-import { goToCheckout } from "@/lib/checkout";
+import { useCartStore } from "@/stores/cartStore";
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -15,6 +16,9 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
   const selectedVariant = node.variants.edges[0]?.node;
   const images = node.images.edges;
   const price = node.priceRange.minVariantPrice;
+
+  const addItem = useCartStore((s) => s.addItem);
+  const isLoading = useCartStore((s) => s.isLoading);
 
   let h = 0;
   for (let i = 0; i < node.id.length; i++) h = (h * 31 + node.id.charCodeAt(i)) >>> 0;
@@ -29,11 +33,19 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
   const [drag, setDrag] = useState(0);
   const [dragging, setDragging] = useState(false);
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (!selectedVariant) return;
-    goToCheckout(selectedVariant.id, 1);
+    await addItem({
+      product,
+      variantId: selectedVariant.id,
+      variantTitle: selectedVariant.title,
+      price: selectedVariant.price,
+      quantity: 1,
+      selectedOptions: selectedVariant.selectedOptions || [],
+    });
+    toast.success("Added to bag", { description: node.title });
   };
 
   const stop = (e: React.MouseEvent) => {
@@ -167,7 +179,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
         <div className="absolute inset-x-3 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity space-y-2 pointer-events-none group-hover:pointer-events-auto">
           <Button
             onClick={handleAddToCart}
-            disabled={!selectedVariant}
+            disabled={!selectedVariant || isLoading}
             className={
               isFeatured
                 ? "w-full rounded-none bg-black text-[#F5F1E8] hover:bg-black/85"
@@ -175,7 +187,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
             }
             size="sm"
           >
-            Add To Bag
+            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Add To Bag"}
           </Button>
         </div>
       </div>

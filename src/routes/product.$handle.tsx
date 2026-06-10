@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Share2, Headphones, Truck, ShieldCheck } from "lucide-react";
 import { useState, useRef } from "react";
-import { goToCheckout } from "@/lib/checkout";
+import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
 import { formatVariantTitle } from "@/lib/variantTitle";
 import { parseDescription } from "@/lib/parseSpecs";
@@ -26,6 +26,8 @@ function ProductPage() {
   });
 
   const [variantIndex, setVariantIndex] = useState(0);
+  const addItem = useCartStore((s) => s.addItem);
+  const isAdding = useCartStore((s) => s.isLoading);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const trackWidthRef = useRef<number>(0);
@@ -263,13 +265,21 @@ function ProductPage() {
                   <Button
                     size="lg"
                     className="w-full rounded-full"
-                    disabled={!variant || !variant.availableForSale}
-                    onClick={() => {
+                    disabled={!variant || !variant.availableForSale || isAdding}
+                    onClick={async () => {
                       if (!variant) return;
-                      goToCheckout(variant.id, 1);
+                      await addItem({
+                        product: { node: product },
+                        variantId: variant.id,
+                        variantTitle: variant.title,
+                        price: variant.price,
+                        quantity: 1,
+                        selectedOptions: variant.selectedOptions || [],
+                      });
+                      toast.success("Added to bag", { description: product.title });
                     }}
                   >
-                    {variant?.availableForSale ? "Add to bag" : "Sold out"}
+                    {isAdding ? <Loader2 className="w-4 h-4 animate-spin" /> : variant?.availableForSale ? "Add to bag" : "Sold out"}
                   </Button>
                   <div className="mt-4">
                     <PromoBox />
