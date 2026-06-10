@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { ShieldCheck, Truck, RefreshCw } from "lucide-react";
 import { Logo } from "./Logo";
 import visaLogo from "@/assets/visa.svg.asset.json";
 import mastercardLogo from "@/assets/mastercard.svg.asset.json";
