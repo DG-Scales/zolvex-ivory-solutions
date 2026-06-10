@@ -18,6 +18,12 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
   const images = node.images.edges;
   const price = node.priceRange.minVariantPrice;
 
+  let h = 0;
+  for (let i = 0; i < node.id.length; i++) h = (h * 31 + node.id.charCodeAt(i)) >>> 0;
+  const discountPct = 10 + (h % 16);
+  const beforePrice = parseFloat(price.amount) / (1 - discountPct / 100);
+
+
   const [imgIndex, setImgIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
 
@@ -109,8 +115,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
               type="button"
               onClick={prev}
               aria-label="Previous image"
-              className="absolute left-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-background/85 text-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 md:opacity-0 transition-opacity hover:bg-background"
-              style={{ opacity: undefined }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-background/85 text-foreground flex items-center justify-center transition-opacity hover:bg-background z-10"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -118,11 +123,12 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
               type="button"
               onClick={next}
               aria-label="Next image"
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-background/85 text-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-background/85 text-foreground flex items-center justify-center transition-opacity hover:bg-background z-10"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+
               {images.map((_, i) => (
                 <button
                   key={i}
@@ -160,8 +166,8 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
         <h3
           className={
             isFeatured
-              ? "text-sm font-medium leading-snug text-black group-hover:opacity-60 transition-opacity"
-              : "text-sm font-medium leading-snug group-hover:opacity-60 transition-opacity"
+              ? "text-base md:text-lg font-medium leading-snug text-black group-hover:opacity-60 transition-opacity"
+              : "text-base md:text-lg font-medium leading-snug group-hover:opacity-60 transition-opacity"
           }
         >
           {node.title}
@@ -169,16 +175,20 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
         <p
           className={
             isFeatured
-              ? "text-sm font-medium flex items-baseline gap-2 text-black"
-              : "text-sm font-medium flex items-baseline gap-2"
+              ? "text-sm font-medium flex items-center gap-2 text-black flex-wrap"
+              : "text-sm font-medium flex items-center gap-2 flex-wrap"
           }
         >
-          <span className={isFeatured ? "line-through opacity-50" : "text-foreground line-through opacity-70"}>
-            {price.currencyCode} {(parseFloat(price.amount) * 1.1).toFixed(2)}
-          </span>
           <span>{price.currencyCode} {parseFloat(price.amount).toFixed(2)}</span>
+          <span className={isFeatured ? "line-through opacity-50" : "text-foreground line-through opacity-70"}>
+            {price.currencyCode} {beforePrice.toFixed(2)}
+          </span>
+          <span className="inline-flex items-center justify-center bg-black text-white text-[10px] font-semibold px-1.5 py-0.5 rounded">
+            -{discountPct}%
+          </span>
         </p>
       </div>
+
     </Link>
   );
 }
