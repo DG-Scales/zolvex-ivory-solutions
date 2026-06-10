@@ -29,6 +29,7 @@ function ProductPage() {
   const isAdding = useCartStore((s) => s.isLoading);
   const [variantIndex, setVariantIndex] = useState(0);
   const galleryRef = useRef<HTMLDivElement>(null);
+  const scrollRafRef = useRef<number | null>(null);
   const [imageIndex, setImageIndex] = useState(0);
 
   return (
@@ -67,6 +68,13 @@ function ProductPage() {
               el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" });
             };
 
+            const advanceGallery = (direction: -1 | 1) => {
+              const el = galleryRef.current;
+              if (!el) return;
+              const current = Math.round(el.scrollLeft / el.clientWidth);
+              scrollToIndex(current + direction);
+            };
+
 
             return (
               <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
@@ -77,8 +85,11 @@ function ProductPage() {
                       className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 flex snap-x snap-mandatory overflow-x-auto scrollbar-hide scroll-smooth touch-pan-x"
                       onScroll={(e) => {
                         const el = e.currentTarget;
-                        const i = Math.max(0, Math.min(images.length - 1, Math.round(el.scrollLeft / el.clientWidth)));
-                        if (i !== imageIndex) setImageIndex(i);
+                        if (scrollRafRef.current) cancelAnimationFrame(scrollRafRef.current);
+                        scrollRafRef.current = requestAnimationFrame(() => {
+                          const i = Math.max(0, Math.min(images.length - 1, Math.round(el.scrollLeft / el.clientWidth)));
+                          setImageIndex((current) => (current === i ? current : i));
+                        });
                       }}
                     >
                       {images.map((img, i) => (
@@ -99,7 +110,7 @@ function ProductPage() {
                       <>
                         <button
                           type="button"
-                          onClick={() => scrollToIndex(imageIndex - 1)}
+                          onClick={() => advanceGallery(-1)}
                           aria-label="Previous image"
                           className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm z-20"
                         >
@@ -107,7 +118,7 @@ function ProductPage() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => scrollToIndex(imageIndex + 1)}
+                          onClick={() => advanceGallery(1)}
                           aria-label="Next image"
                           className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background flex items-center justify-center shadow-sm z-20"
                         >
