@@ -34,16 +34,10 @@ export const CartDrawer = () => {
   }, [isOpen, syncCart]);
 
   const handleCheckout = () => {
-    if (items.length === 0) return;
-    const parts = items
-      .map((i) => {
-        const m = String(i.variantId).match(/(\d+)\s*$/);
-        return m ? `${m[1]}:${i.quantity}` : null;
-      })
-      .filter(Boolean);
-    if (parts.length === 0) return;
+    const url = getCheckoutUrl();
+    if (!url) return;
     setIsOpen(false);
-    window.location.href = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/cart/${parts.join(",")}`;
+    window.location.href = url;
   };
 
   return (
