@@ -23,7 +23,7 @@ interface CartStore {
   removeItem: (variantId: string) => Promise<void>;
   clearCart: () => void;
   syncCart: () => Promise<void>;
-  getCheckoutUrl: () => string | null;
+  getCheckoutUrl: () => Promise<string | null>;
 }
 
 const CART_QUERY = `query cart($id: ID!) { cart(id: $id) { id totalQuantity } }`;
