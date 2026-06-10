@@ -33,8 +33,8 @@ export const CartDrawer = () => {
     if (isOpen) syncCart();
   }, [isOpen, syncCart]);
 
-  const handleCheckout = () => {
-    const url = getCheckoutUrl();
+  const handleCheckout = async () => {
+    const url = await getCheckoutUrl();
     if (!url) return;
     setIsOpen(false);
     window.location.href = url;
