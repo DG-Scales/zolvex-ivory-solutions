@@ -45,7 +45,7 @@ function CheckoutPage() {
 
   const handleCheckout = () => {
     const url = getCheckoutUrl();
-    if (url) window.open(url, "_blank");
+    if (url) window.location.href = url;
   };
 
   if (items.length === 0) {
