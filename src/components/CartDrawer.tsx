@@ -21,7 +21,7 @@ export const CartDrawer = () => {
     const url = getCheckoutUrl();
     if (url) {
       setIsOpen(false);
-      window.location.href = url;
+      window.open(url, "_blank", "noopener,noreferrer");
     }
   };
 
