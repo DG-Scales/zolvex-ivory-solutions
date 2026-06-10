@@ -23,7 +23,7 @@ interface CartStore {
   removeItem: (variantId: string) => Promise<void>;
   clearCart: () => void;
   syncCart: () => Promise<void>;
-  getCheckoutUrl: () => string | null;
+  getCheckoutUrl: () => Promise<string | null>;
 }
 
 const CART_QUERY = `query cart($id: ID!) { cart(id: $id) { id totalQuantity } }`;
@@ -221,9 +221,35 @@ export const useCartStore = create<CartStore>()(
       },
 
       clearCart: () => set({ items: [], cartId: null, checkoutUrl: null }),
-      getCheckoutUrl: () => {
-        const url = get().checkoutUrl;
-        return url ? formatCheckoutUrl(url) : null;
+      getCheckoutUrl: async () => {
+        const { items } = get();
+        if (items.length === 0) return null;
+        try {
+          const data = await storefrontApiRequest(CART_CREATE_MUTATION, {
+            input: {
+              lines: items.map((i) => ({ quantity: i.quantity, merchandiseId: i.variantId })),
+            },
+          });
+          if (data?.data?.cartCreate?.userErrors?.length > 0) {
+            console.error("Fresh cart creation failed:", data.data.cartCreate.userErrors);
+            return null;
+          }
+          const cart = data?.data?.cartCreate?.cart;
+          if (!cart?.checkoutUrl) return null;
+          const checkoutUrl = formatCheckoutUrl(cart.checkoutUrl);
+          const lineEdges = cart.lines?.edges || [];
+          const newItems = get().items.map((i) => {
+            const match = lineEdges.find(
+              (l: { node: { merchandise: { id: string } } }) => l.node.merchandise.id === i.variantId,
+            );
+            return { ...i, lineId: match?.node?.id ?? i.lineId };
+          });
+          set({ cartId: cart.id, checkoutUrl, items: newItems });
+          return checkoutUrl;
+        } catch (error) {
+          console.error("Failed to create fresh checkout cart:", error);
+          return null;
+        }
       },
 
       syncCart: async () => {
