@@ -90,18 +90,21 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
       <div
         className={
           isFeatured
-            ? "aspect-[4/5] overflow-hidden bg-[#F5F1E8] border border-black/80 rounded-none mb-4 relative"
-            : "aspect-[4/5] overflow-hidden bg-muted rounded-md mb-4 relative"
+            ? "aspect-[4/5] overflow-hidden bg-[#F5F1E8] border border-black/80 rounded-none mb-4 relative touch-pan-y select-none"
+            : "aspect-[4/5] overflow-hidden bg-muted rounded-md mb-4 relative touch-pan-y select-none"
         }
         onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
+        onTouchCancel={onTouchEnd}
       >
         {images.length > 0 ? (
           <div
-            className="flex h-full transition-transform duration-500 ease-out will-change-transform"
+            className="flex h-full will-change-transform"
             style={{
               width: `${images.length * 100}%`,
-              transform: `translateX(-${imgIndex * (100 / images.length)}%)`,
+              transform: `translate3d(calc(${-imgIndex * (100 / images.length)}% + ${drag}px), 0, 0)`,
+              transition: dragging ? "none" : "transform 500ms cubic-bezier(0.22, 1, 0.36, 1)",
             }}
           >
             {images.map(({ node: img }, i) => (
