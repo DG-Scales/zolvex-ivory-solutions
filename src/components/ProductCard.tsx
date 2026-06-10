@@ -147,7 +147,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
           </>
         )}
 
-        <div className="absolute inset-x-3 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity space-y-2">
+        <div className="absolute inset-x-3 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity space-y-2 pointer-events-none group-hover:pointer-events-auto">
           <Button
             onClick={handleAddToCart}
             disabled={isLoading || !selectedVariant}
@@ -158,6 +158,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
             }
             size="sm"
           >
+
             {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Add To Bag"}
           </Button>
         </div>
