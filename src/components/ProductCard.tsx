@@ -24,6 +24,10 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
 
   const [imgIndex, setImgIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const trackWidth = useRef<number>(0);
+  const [drag, setDrag] = useState(0);
+  const [dragging, setDragging] = useState(false);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -49,16 +53,34 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
 
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    trackWidth.current = e.currentTarget.clientWidth;
+    setDragging(true);
   };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current == null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(dx) > 40 && images.length > 1) {
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current == null || touchStartY.current == null) return;
+    const dx = e.touches[0].clientX - touchStartX.current;
+    const dy = e.touches[0].clientY - touchStartY.current;
+    if (Math.abs(dy) > Math.abs(dx)) return;
+    let next = dx;
+    if ((imgIndex === 0 && dx > 0) || (imgIndex === images.length - 1 && dx < 0)) {
+      next = dx * 0.35;
+    }
+    setDrag(next);
+  };
+  const onTouchEnd = () => {
+    const width = trackWidth.current || 1;
+    const offset = drag;
+    touchStartX.current = null;
+    touchStartY.current = null;
+    setDragging(false);
+    setDrag(0);
+    const threshold = Math.min(70, width * 0.18);
+    if (Math.abs(offset) > threshold && images.length > 1) {
       setImgIndex((i) =>
-        dx < 0 ? (i + 1) % images.length : (i - 1 + images.length) % images.length,
+        offset < 0 ? (i + 1) % images.length : (i - 1 + images.length) % images.length,
       );
     }
-    touchStartX.current = null;
   };
 
   const isFeatured = variant === "featured";
