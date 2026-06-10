@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Share2, Headphones, Truck, ShieldCheck } from "lucide-react";
 import { useState, useRef, type TouchEvent } from "react";
-import { useCartStore } from "@/stores/cartStore";
+import { goToCheckout } from "@/lib/checkout";
 import { useCartSync } from "@/hooks/useCartSync";
 import { formatVariantTitle } from "@/lib/variantTitle";
 import { parseDescription } from "@/lib/parseSpecs";
@@ -25,8 +25,6 @@ function ProductPage() {
     queryFn: () => fetchProductByHandle(handle),
   });
 
-  const addItem = useCartStore((s) => s.addItem);
-  const isAdding = useCartStore((s) => s.isLoading);
   const [variantIndex, setVariantIndex] = useState(0);
   const touchStartXRef = useRef<number | null>(null);
   const [imageIndex, setImageIndex] = useState(0);
@@ -220,20 +218,13 @@ function ProductPage() {
                   <Button
                     size="lg"
                     className="w-full rounded-full"
-                    disabled={isAdding || !variant || !variant.availableForSale}
-                    onClick={async () => {
+                    disabled={!variant || !variant.availableForSale}
+                    onClick={() => {
                       if (!variant) return;
-                      await addItem({
-                        product: { node: product },
-                        variantId: variant.id,
-                        variantTitle: variant.title,
-                        price: variant.price,
-                        quantity: 1,
-                        selectedOptions: variant.selectedOptions || [],
-                      });
+                      goToCheckout(variant.id, 1);
                     }}
                   >
-                    {isAdding ? <Loader2 className="w-4 h-4 animate-spin" /> : variant?.availableForSale ? "Add to bag" : "Sold out"}
+                    {variant?.availableForSale ? "Add to bag" : "Sold out"}
                   </Button>
                   <div className="mt-4">
                     <PromoBox />
