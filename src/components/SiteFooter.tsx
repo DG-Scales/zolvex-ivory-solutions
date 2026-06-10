@@ -93,21 +93,14 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-border/60">
-        <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col items-center gap-4">
-          <p className="text-sm text-muted-foreground text-center">We accept these payment methods</p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {paymentLogos.map((logo) => (
-              <img
-                key={logo.alt}
-                src={logo.src}
-                alt={logo.alt}
-                className="h-8 w-auto object-contain"
-                loading="lazy"
-              />
-            ))}
-          </div>
+        <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col md:flex-row justify-between text-xs text-muted-foreground gap-2">
+          <p>© 2026 Zolvex. All rights reserved.</p>
+          <p>Crafted with intention.</p>
         </div>
       </div>
+    </footer>
+  );
+}
 
       <div className="border-t border-border/60">
         <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col md:flex-row justify-between text-xs text-muted-foreground gap-2">
