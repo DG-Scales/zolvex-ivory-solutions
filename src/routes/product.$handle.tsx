@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Share2, Headphones, Truck, ShieldCheck } from "lucide-react";
-import { useState, useRef, type TouchEvent } from "react";
+import { useState, useRef } from "react";
 import { goToCheckout } from "@/lib/checkout";
 import { useCartSync } from "@/hooks/useCartSync";
 import { formatVariantTitle } from "@/lib/variantTitle";
@@ -27,7 +27,11 @@ function ProductPage() {
 
   const [variantIndex, setVariantIndex] = useState(0);
   const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const trackWidthRef = useRef<number>(0);
   const [imageIndex, setImageIndex] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -66,37 +70,78 @@ function ProductPage() {
               scrollToIndex(imageIndex + direction);
             };
 
-            const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
-              const startX = touchStartXRef.current;
-              touchStartXRef.current = null;
-              if (startX === null) return;
-              const distance = startX - event.changedTouches[0].clientX;
-              if (Math.abs(distance) < 40) return;
-              advanceGallery(distance > 0 ? 1 : -1);
+            const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+              touchStartXRef.current = event.touches[0].clientX;
+              touchStartYRef.current = event.touches[0].clientY;
+              trackWidthRef.current = event.currentTarget.clientWidth;
+              setIsDragging(true);
             };
 
+            const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+              const startX = touchStartXRef.current;
+              const startY = touchStartYRef.current;
+              if (startX === null || startY === null) return;
+              const dx = event.touches[0].clientX - startX;
+              const dy = event.touches[0].clientY - startY;
+              if (Math.abs(dy) > Math.abs(dx)) return;
+              // Add resistance at the edges
+              let next = dx;
+              if ((imageIndex === 0 && dx > 0) || (imageIndex === images.length - 1 && dx < 0)) {
+                next = dx * 0.35;
+              }
+              setDragOffset(next);
+            };
+
+            const handleTouchEnd = () => {
+              const width = trackWidthRef.current || 1;
+              const offset = dragOffset;
+              touchStartXRef.current = null;
+              touchStartYRef.current = null;
+              setIsDragging(false);
+              setDragOffset(0);
+              const threshold = Math.min(80, width * 0.18);
+              if (Math.abs(offset) > threshold) {
+                advanceGallery(offset < 0 ? 1 : -1);
+              }
+            };
 
             return (
               <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
                 <div>
                   <div className="relative">
                     <div
-                      className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative touch-pan-y"
-                      onTouchStart={(event) => {
-                        touchStartXRef.current = event.touches[0].clientX;
-                      }}
+                      className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative touch-pan-y select-none"
+                      onTouchStart={handleTouchStart}
+                      onTouchMove={handleTouchMove}
                       onTouchEnd={handleTouchEnd}
+                      onTouchCancel={handleTouchEnd}
                     >
-                      {images.map((img, i) => (
-                        <img
-                          key={img.node.url || i}
-                          src={img.node.url}
-                          alt={img.node.altText || product.title}
-                          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out ${i === imageIndex ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-                          draggable={false}
-                          loading={i === 0 ? "eager" : "lazy"}
-                        />
-                      ))}
+                      <div
+                        className="flex h-full will-change-transform"
+                        style={{
+                          width: `${images.length * 100}%`,
+                          transform: `translate3d(calc(${-imageIndex * (100 / images.length)}% + ${dragOffset}px), 0, 0)`,
+                          transition: isDragging
+                            ? "none"
+                            : "transform 500ms cubic-bezier(0.22, 1, 0.36, 1)",
+                        }}
+                      >
+                        {images.map((img, i) => (
+                          <div
+                            key={img.node.url || i}
+                            className="h-full shrink-0 overflow-hidden"
+                            style={{ width: `${100 / images.length}%` }}
+                          >
+                            <img
+                              src={img.node.url}
+                              alt={img.node.altText || product.title}
+                              className="w-full h-full object-cover"
+                              draggable={false}
+                              loading={i === 0 ? "eager" : "lazy"}
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
                     {images.length > 1 && (
                       <>

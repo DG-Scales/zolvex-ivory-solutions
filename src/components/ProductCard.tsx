@@ -24,6 +24,10 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
 
   const [imgIndex, setImgIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const trackWidth = useRef<number>(0);
+  const [drag, setDrag] = useState(0);
+  const [dragging, setDragging] = useState(false);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -49,16 +53,34 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
 
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    trackWidth.current = e.currentTarget.clientWidth;
+    setDragging(true);
   };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current == null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(dx) > 40 && images.length > 1) {
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current == null || touchStartY.current == null) return;
+    const dx = e.touches[0].clientX - touchStartX.current;
+    const dy = e.touches[0].clientY - touchStartY.current;
+    if (Math.abs(dy) > Math.abs(dx)) return;
+    let next = dx;
+    if ((imgIndex === 0 && dx > 0) || (imgIndex === images.length - 1 && dx < 0)) {
+      next = dx * 0.35;
+    }
+    setDrag(next);
+  };
+  const onTouchEnd = () => {
+    const width = trackWidth.current || 1;
+    const offset = drag;
+    touchStartX.current = null;
+    touchStartY.current = null;
+    setDragging(false);
+    setDrag(0);
+    const threshold = Math.min(70, width * 0.18);
+    if (Math.abs(offset) > threshold && images.length > 1) {
       setImgIndex((i) =>
-        dx < 0 ? (i + 1) % images.length : (i - 1 + images.length) % images.length,
+        offset < 0 ? (i + 1) % images.length : (i - 1 + images.length) % images.length,
       );
     }
-    touchStartX.current = null;
   };
 
   const isFeatured = variant === "featured";
@@ -68,18 +90,21 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
       <div
         className={
           isFeatured
-            ? "aspect-[4/5] overflow-hidden bg-[#F5F1E8] border border-black/80 rounded-none mb-4 relative"
-            : "aspect-[4/5] overflow-hidden bg-muted rounded-md mb-4 relative"
+            ? "aspect-[4/5] overflow-hidden bg-[#F5F1E8] border border-black/80 rounded-none mb-4 relative touch-pan-y select-none"
+            : "aspect-[4/5] overflow-hidden bg-muted rounded-md mb-4 relative touch-pan-y select-none"
         }
         onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
+        onTouchCancel={onTouchEnd}
       >
         {images.length > 0 ? (
           <div
-            className="flex h-full transition-transform duration-500 ease-out will-change-transform"
+            className="flex h-full will-change-transform"
             style={{
               width: `${images.length * 100}%`,
-              transform: `translateX(-${imgIndex * (100 / images.length)}%)`,
+              transform: `translate3d(calc(${-imgIndex * (100 / images.length)}% + ${drag}px), 0, 0)`,
+              transition: dragging ? "none" : "transform 500ms cubic-bezier(0.22, 1, 0.36, 1)",
             }}
           >
             {images.map(({ node: img }, i) => (
