@@ -6,8 +6,8 @@ import { Loader2 } from "lucide-react";
 
 const PICK_HANDLES = [
   "villa-light-luxury-living-room-floor-lamp",
-  "modern-light-luxury-natural-marble-chandelier-for-villas",
-  "spanish-marble-restaurant-round-light-luxury-bar-aisle-light-designer-model-coffee-dining-table-chandelier",
+  "light-luxury-crystal-living-room-chandelier-postmodern-round-stainless-steel",
+  "led-strip-simple-office-long-line-pendant-light",
 ];
 
 export function MakersPick() {
