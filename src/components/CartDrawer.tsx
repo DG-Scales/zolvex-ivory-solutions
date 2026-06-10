@@ -9,8 +9,7 @@ import { formatVariantTitle } from "@/lib/variantTitle";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-  const { items, isLoading, isSyncing, updateQuantity, removeItem, syncCart } = useCartStore();
+  const { items, isLoading, isSyncing, updateQuantity, removeItem, syncCart, getCheckoutUrl } = useCartStore();
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
 
@@ -19,8 +18,11 @@ export const CartDrawer = () => {
   }, [isOpen, syncCart]);
 
   const handleCheckout = () => {
-    setIsOpen(false);
-    navigate({ to: "/checkout" });
+    const url = getCheckoutUrl();
+    if (url) {
+      setIsOpen(false);
+      window.location.href = url;
+    }
   };
 
   return (
