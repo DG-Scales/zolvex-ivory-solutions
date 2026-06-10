@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Share2, Headphones, Truck, ShieldCheck } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, type TouchEvent } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
 import { formatVariantTitle } from "@/lib/variantTitle";
@@ -28,8 +28,7 @@ function ProductPage() {
   const addItem = useCartStore((s) => s.addItem);
   const isAdding = useCartStore((s) => s.isLoading);
   const [variantIndex, setVariantIndex] = useState(0);
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const scrollRafRef = useRef<number | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
   const [imageIndex, setImageIndex] = useState(0);
 
   return (
@@ -61,18 +60,21 @@ function ProductPage() {
 
 
             const scrollToIndex = (i: number) => {
-              const el = galleryRef.current;
-              if (!el) return;
               const next = (i + images.length) % images.length;
               setImageIndex(next);
-              el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" });
             };
 
             const advanceGallery = (direction: -1 | 1) => {
-              const el = galleryRef.current;
-              if (!el) return;
-              const current = Math.round(el.scrollLeft / el.clientWidth);
-              scrollToIndex(current + direction);
+              scrollToIndex(imageIndex + direction);
+            };
+
+            const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+              const startX = touchStartXRef.current;
+              touchStartXRef.current = null;
+              if (startX === null) return;
+              const distance = startX - event.changedTouches[0].clientX;
+              if (Math.abs(distance) < 40) return;
+              advanceGallery(distance > 0 ? 1 : -1);
             };
 
 
@@ -81,29 +83,21 @@ function ProductPage() {
                 <div>
                   <div className="relative">
                     <div
-                      ref={galleryRef}
-                      className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 flex snap-x snap-mandatory overflow-x-auto scrollbar-hide scroll-smooth touch-pan-x"
-                      onScroll={(e) => {
-                        const el = e.currentTarget;
-                        if (scrollRafRef.current) cancelAnimationFrame(scrollRafRef.current);
-                        scrollRafRef.current = requestAnimationFrame(() => {
-                          const i = Math.max(0, Math.min(images.length - 1, Math.round(el.scrollLeft / el.clientWidth)));
-                          setImageIndex((current) => (current === i ? current : i));
-                        });
+                      className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative touch-pan-y"
+                      onTouchStart={(event) => {
+                        touchStartXRef.current = event.touches[0].clientX;
                       }}
+                      onTouchEnd={handleTouchEnd}
                     >
                       {images.map((img, i) => (
-                        <div
-                          key={i}
-                          className="w-full h-full shrink-0 snap-center relative"
-                        >
-                          <img
-                            src={img.node.url}
-                            alt={img.node.altText || product.title}
-                            className="w-full h-full object-cover"
-                            draggable={false}
-                          />
-                        </div>
+                        <img
+                          key={img.node.url || i}
+                          src={img.node.url}
+                          alt={img.node.altText || product.title}
+                          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out ${i === imageIndex ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                          draggable={false}
+                          loading={i === 0 ? "eager" : "lazy"}
+                        />
                       ))}
                     </div>
                     {images.length > 1 && (
