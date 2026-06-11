@@ -5,6 +5,8 @@ import { Separator } from "@/components/ui/separator";
 import { ShoppingBag, Minus, Plus, X, Lock, Loader2, ShieldCheck, Truck, PackageCheck, ArrowLeft } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 
 import visaLogo from "@/assets/visa.svg.asset.json";
 import mastercardLogo from "@/assets/mastercard.svg.asset.json";
