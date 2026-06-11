@@ -72,16 +72,8 @@ const CART_LINES_REMOVE_MUTATION = `
 `;
 
 function formatCheckoutUrl(checkoutUrl: string): string {
-  try {
-    const url = new URL(checkoutUrl);
-    // Force the Shopify-hosted checkout domain (avoid custom storefront domains like zolvex.org)
-    url.host = "zolvex-solutions-hub-pnf34.myshopify.com";
-    url.protocol = "https:";
-    url.searchParams.set("channel", "online_store");
-    return url.toString();
-  } catch {
-    return checkoutUrl;
-  }
+  // Return the checkoutUrl exactly as Shopify returns it — do NOT rewrite the host.
+  return checkoutUrl;
 }
 
 function isCartNotFoundError(userErrors: Array<{ field: string[] | null; message: string }>): boolean {
