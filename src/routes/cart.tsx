@@ -5,6 +5,8 @@ import { Separator } from "@/components/ui/separator";
 import { ShoppingBag, Minus, Plus, X, Lock, Loader2, ShieldCheck, Truck, PackageCheck, ArrowLeft } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 
 import visaLogo from "@/assets/visa.svg.asset.json";
 import mastercardLogo from "@/assets/mastercard.svg.asset.json";
@@ -53,7 +55,9 @@ function CartPage() {
     new Intl.NumberFormat("en-US", { style: "currency", currency }).format(n);
 
   return (
-    <div className="min-h-[70vh] bg-background">
+    <div className="flex min-h-screen flex-col bg-background">
+      <SiteHeader />
+      <main className="flex-1">
       <div className="container mx-auto px-4 md:px-6 py-10 md:py-14 max-w-6xl">
         {/* Header */}
         <div className="mb-10 md:mb-12">
@@ -290,6 +294,8 @@ function CartPage() {
           </div>
         )}
       </div>
+      </main>
+      <SiteFooter />
     </div>
   );
 }
