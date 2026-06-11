@@ -172,5 +172,6 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
         </div>
       </header>
     </div>
+    </>
   );
 }
