@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "@tanstack/react-router";
 import { CartIconLink } from "./CartIconLink";
 import { Logo } from "./Logo";
@@ -14,6 +14,30 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   const collections = categoriesByGroup("Collection");
   const featured = categoriesByGroup("Featured");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const lastYRef = useRef(0);
+
+  useEffect(() => {
+    if (overlay) return;
+    lastYRef.current = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const delta = y - lastYRef.current;
+      if (Math.abs(delta) < 6) return;
+      if (y < 10) {
+        setVisible(true);
+      } else if (delta > 0) {
+        // scrolling down -> show (per user request)
+        setVisible(true);
+      } else {
+        // scrolling up -> hide
+        setVisible(false);
+      }
+      lastYRef.current = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [overlay]);
 
   const headerClass = overlay
     ? "bg-transparent text-background"
@@ -26,7 +50,13 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   const close = () => setMobileOpen(false);
 
   return (
-    <div className={overlay ? "absolute inset-x-0 top-0 z-40" : "sticky top-0 z-40"}>
+    <div
+      className={
+        overlay
+          ? "absolute inset-x-0 top-0 z-40"
+          : `fixed inset-x-0 top-0 z-40 transition-transform duration-300 ${visible ? "translate-y-0" : "-translate-y-full"}`
+      }
+    >
       <PromoBar />
       <header className={headerClass}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between gap-3 md:gap-8">
