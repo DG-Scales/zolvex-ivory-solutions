@@ -65,7 +65,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
       className={
         overlay
           ? "absolute inset-x-0 top-0 z-40"
-          : `fixed inset-x-0 top-0 z-40 transition-transform duration-300 ${visible ? "translate-y-0" : "-translate-y-full"}`
+          : `fixed inset-x-0 top-0 z-40 transition-transform duration-300 ease-out will-change-transform ${visible ? "translate-y-0" : "-translate-y-full"}`
       }
     >
       <PromoBar />
