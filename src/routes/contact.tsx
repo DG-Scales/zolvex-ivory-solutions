@@ -31,17 +31,24 @@ function ContactPage() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            toast.success("Message sent. We'll get back to you shortly.");
-            (e.target as HTMLFormElement).reset();
+            const form = e.target as HTMLFormElement;
+            const data = new FormData(form);
+            const name = String(data.get("name") || "");
+            const email = String(data.get("email") || "");
+            const subject = String(data.get("subject") || "Message from Zolvex contact form");
+            const message = String(data.get("message") || "");
+            const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+            window.location.href = `mailto:zolvex.business@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            toast.success("Opening your email app to send the message.");
           }}
           className="space-y-5"
         >
           <div className="grid sm:grid-cols-2 gap-5">
-            <input required placeholder="Name" className="w-full px-5 py-3 rounded-full bg-transparent border border-border focus:outline-none focus:border-foreground" />
-            <input required type="email" placeholder="Email" className="w-full px-5 py-3 rounded-full bg-transparent border border-border focus:outline-none focus:border-foreground" />
+            <input name="name" required placeholder="Name" className="w-full px-5 py-3 rounded-full bg-transparent border border-border focus:outline-none focus:border-foreground" />
+            <input name="email" required type="email" placeholder="Email" className="w-full px-5 py-3 rounded-full bg-transparent border border-border focus:outline-none focus:border-foreground" />
           </div>
-          <input placeholder="Subject" className="w-full px-5 py-3 rounded-full bg-transparent border border-border focus:outline-none focus:border-foreground" />
-          <textarea required placeholder="Your message" rows={6} className="w-full px-5 py-4 rounded-3xl bg-transparent border border-border focus:outline-none focus:border-foreground resize-none" />
+          <input name="subject" placeholder="Subject" className="w-full px-5 py-3 rounded-full bg-transparent border border-border focus:outline-none focus:border-foreground" />
+          <textarea name="message" required placeholder="Your message" rows={6} className="w-full px-5 py-4 rounded-3xl bg-transparent border border-border focus:outline-none focus:border-foreground resize-none" />
           <Button type="submit" size="lg" className="rounded-full px-8">Send message</Button>
         </form>
       </main>
