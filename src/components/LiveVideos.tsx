@@ -107,12 +107,20 @@ export function LiveVideos() {
       </div>
 
       <Dialog open={openIndex !== null} onOpenChange={(o) => !o && setOpenIndex(null)}>
-        <DialogContent className="max-w-3xl p-0 overflow-hidden bg-black border-none">
+        <DialogContent className="max-w-3xl p-0 overflow-hidden bg-black border-none max-h-[100dvh] sm:max-h-[90vh] w-screen sm:w-auto h-[100dvh] sm:h-auto rounded-none sm:rounded-lg">
           <DialogTitle className="sr-only">
             {openIndex !== null ? videos[openIndex].productTitle : "Live video"}
           </DialogTitle>
+          <button
+            type="button"
+            onClick={() => setOpenIndex(null)}
+            aria-label="Close video"
+            className="absolute right-3 top-3 z-50 h-11 w-11 rounded-full bg-black/70 text-white flex items-center justify-center backdrop-blur-sm hover:bg-black/90 transition-colors"
+          >
+            <X className="h-6 w-6" />
+          </button>
           {openIndex !== null && (
-            <div className="relative aspect-[9/16] md:aspect-video w-full bg-black">
+            <div className="relative w-full h-full sm:aspect-[9/16] md:aspect-video sm:h-auto bg-black">
               <video
                 ref={modalVideoRef}
                 src={videos[openIndex].url}
