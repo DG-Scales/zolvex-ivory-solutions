@@ -175,7 +175,7 @@ function StoryPage() {
               Every piece is judged against the same quiet standards. It has to be made well. It has to earn its place — no filler, no novelty, nothing chasing a trend. And the light it gives has to feel right. Warm, considered, true to the room.
             </p>
             <p>
-              If a fixture fails any one of these, it doesn't belong here. The catalog is built to last — forty pieces we believe in, not four hundred we don't.
+              If a fixture fails any one of these, it doesn't belong here. The catalog is small by design — each piece chosen with patience, held to a standard we would apply to our own homes.
             </p>
           </div>
         </section>
