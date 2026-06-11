@@ -8,6 +8,7 @@ import { formatVariantTitle } from "@/lib/variantTitle";
 
 export const CartIconLink = () => {
   const items = useCartStore((s) => s.items);
+  const removeItem = useCartStore((s) => s.removeItem);
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce(
     (sum, item) => sum + parseFloat(item.price.amount) * item.quantity,
