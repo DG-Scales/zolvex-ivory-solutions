@@ -68,6 +68,9 @@ function Index() {
         <MakersPick />
       </section>
 
+      {/* Trending highlight */}
+      <TrendingCarousel />
+
       {/* Collections */}
       <section id="categories" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
         <div className="mb-10">
@@ -79,9 +82,6 @@ function Index() {
         </div>
         <CategoryGrid columns={3} excludeSlugs={["trending"]} />
       </section>
-
-      {/* Trending highlight */}
-      <TrendingCarousel />
 
       {/* Live product videos */}
       <LiveVideos />
