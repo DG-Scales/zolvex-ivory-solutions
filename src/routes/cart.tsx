@@ -294,6 +294,8 @@ function CartPage() {
           </div>
         )}
       </div>
+      </main>
+      <SiteFooter />
     </div>
   );
 }
