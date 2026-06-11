@@ -146,8 +146,19 @@ function Index() {
           <p className="max-w-md mx-auto opacity-70 mb-10">
             New fixtures, limited collections, and quiet stories on light — sent only when there's something worth saying.
           </p>
-          <form className="flex flex-col sm:flex-row max-w-md mx-auto gap-2" onSubmit={(e) => e.preventDefault()}>
+          <form
+            className="flex flex-col sm:flex-row max-w-md mx-auto gap-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const form = e.target as HTMLFormElement;
+              const email = String(new FormData(form).get("email") || "");
+              const subject = "New Zolvex newsletter subscriber";
+              const body = `New subscriber: ${email}`;
+              window.location.href = `mailto:zolvex.business@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            }}
+          >
             <input
+              name="email"
               type="email"
               required
               placeholder="your@email.com"
