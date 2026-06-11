@@ -50,6 +50,8 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   const close = () => setMobileOpen(false);
 
   return (
+    <>
+    {!overlay && <div aria-hidden className="h-[60px] md:h-[76px]" />}
     <div
       className={
         overlay
