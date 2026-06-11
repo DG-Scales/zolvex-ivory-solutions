@@ -2,12 +2,13 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, X } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
 
 export const CartIconLink = () => {
   const items = useCartStore((s) => s.items);
+  const removeItem = useCartStore((s) => s.removeItem);
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce(
     (sum, item) => sum + parseFloat(item.price.amount) * item.quantity,
@@ -44,7 +45,7 @@ export const CartIconLink = () => {
           <>
             <div className="max-h-72 overflow-y-auto px-4 py-3 space-y-3">
               {items.slice(0, 4).map((item) => (
-                <div key={item.variantId} className="flex gap-3">
+                <div key={item.variantId} className="flex gap-3 items-start">
                   <div className="w-12 h-12 bg-muted rounded-md overflow-hidden flex-shrink-0">
                     {item.product.node.images?.edges?.[0]?.node && (
                       <img
@@ -63,6 +64,17 @@ export const CartIconLink = () => {
                       {item.quantity} × {item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}
                     </p>
                   </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeItem(item.variantId);
+                    }}
+                    className="text-muted-foreground hover:text-destructive transition-colors p-1 -mr-1"
+                    aria-label="Remove item"
+                    title="Remove"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
                 </div>
               ))}
               {items.length > 4 && (
