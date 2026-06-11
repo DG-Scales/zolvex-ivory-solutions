@@ -55,7 +55,9 @@ function CartPage() {
     new Intl.NumberFormat("en-US", { style: "currency", currency }).format(n);
 
   return (
-    <div className="min-h-[70vh] bg-background">
+    <div className="flex min-h-screen flex-col bg-background">
+      <SiteHeader />
+      <main className="flex-1">
       <div className="container mx-auto px-4 md:px-6 py-10 md:py-14 max-w-6xl">
         {/* Header */}
         <div className="mb-10 md:mb-12">
