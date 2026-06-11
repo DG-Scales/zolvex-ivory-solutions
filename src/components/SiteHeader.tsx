@@ -51,7 +51,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
 
   return (
     <>
-    {!overlay && <div aria-hidden className="h-[60px] md:h-[76px]" />}
+    {!overlay && <div aria-hidden className="h-[100px] md:h-[120px]" />}
     <div
       className={
         overlay
