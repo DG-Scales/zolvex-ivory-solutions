@@ -20,20 +20,29 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   useEffect(() => {
     if (overlay) return;
     lastYRef.current = window.scrollY;
+    let ticking = false;
     const onScroll = () => {
-      const y = window.scrollY;
-      const delta = y - lastYRef.current;
-      if (Math.abs(delta) < 6) return;
-      if (y < 10) {
-        setVisible(true);
-      } else if (delta > 0) {
-        // scrolling down -> show (per user request)
-        setVisible(true);
-      } else {
-        // scrolling up -> hide
-        setVisible(false);
-      }
-      lastYRef.current = y;
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const y = Math.max(0, window.scrollY);
+        const delta = y - lastYRef.current;
+        if (Math.abs(delta) < 8) {
+          ticking = false;
+          return;
+        }
+        if (y < 24) {
+          setVisible(true);
+        } else if (delta > 0) {
+          // scrolling down -> show (per user request)
+          setVisible(true);
+        } else {
+          // scrolling up -> hide
+          setVisible(false);
+        }
+        lastYRef.current = y;
+        ticking = false;
+      });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
