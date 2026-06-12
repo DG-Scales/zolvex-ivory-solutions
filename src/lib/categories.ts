@@ -57,8 +57,7 @@ export const categories: Category[] = [
     tagline: "Pendants · Hanging · Droplights",
     group: "Collection",
     collectionHandle: "pendant-hanging-lights",
-    cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151648_436d7c08-fe63-41ed-8cb9-bf61e85f70fc.png?v=1780845496",
+    cover: pendantCover,
   },
   {
     slug: "chandeliers-statement-lights",
@@ -67,8 +66,7 @@ export const categories: Category[] = [
     tagline: "Chandeliers · Statement · Luxury",
     group: "Collection",
     collectionHandle: "chandeliers-statement-lights",
-    cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151137_31852eb4-f3d8-4d71-bbd7-0044efd2a2f6.png?v=1780845271",
+    cover: chandelierCover,
   },
   {
     slug: "ceiling-lights",
@@ -77,8 +75,7 @@ export const categories: Category[] = [
     tagline: "Flush · Semi-flush · Linear",
     group: "Collection",
     collectionHandle: "ceiling-lights",
-    cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/5c3204d5-1342-4933-931e-09fe33f0fc65.jpg?v=1780527142",
+    cover: ceilingCover,
   },
   {
     slug: "wall-lights-sconces",
@@ -87,8 +84,7 @@ export const categories: Category[] = [
     tagline: "Sconces · Reading · Staircase",
     group: "Collection",
     collectionHandle: "wall-lights-sconces",
-    cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_155657_a296dce2-5a56-405f-85cc-177c94f26a60.png?v=1780761618",
+    cover: wallCover,
   },
   {
     slug: "exterior-outdoor-lighting",
@@ -97,8 +93,7 @@ export const categories: Category[] = [
     tagline: "Façade · Entrance · Outdoor",
     group: "Collection",
     collectionHandle: "exterior-outdoor-lighting",
-    cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_183408_19c3ac73-46ef-40a8-92d0-1e8d57594df2.png?v=1780857305",
+    cover: exteriorCover,
   },
   {
     slug: "walkway-aisle-lighting",
@@ -107,8 +102,7 @@ export const categories: Category[] = [
     tagline: "Aisle · Walkway · Landscape",
     group: "Collection",
     collectionHandle: "walkway-aisle-lighting",
-    cover:
-      "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260606_162406_303088d7-7c33-49f5-86b5-410a39902255.jpg?v=1780763349",
+    cover: aisleCover,
   },
 ];
 
