@@ -61,10 +61,9 @@ const ContactFormEmail = ({
 
 export const template = {
   component: ContactFormEmail,
-  subject: (data: Record<string, any>) =>
-    `New contact form message${data?.name ? ` from ${data.name}` : ''}`,
+  subject: () => `New Contact Form Submission – Zolvex`,
   displayName: 'Contact form message',
-  to: 'support@zolvex.org',
+  to: 'notify@zolvex.org',
   previewData: {
     name: 'Jane Doe',
     email: 'jane@example.com',

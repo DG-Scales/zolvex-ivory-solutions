@@ -32,10 +32,9 @@ const NewsletterSubscribeEmail = ({ email = '' }: Props) => (
 
 export const template = {
   component: NewsletterSubscribeEmail,
-  subject: (data: Record<string, any>) =>
-    `New newsletter subscriber: ${data?.email ?? ''}`.trim(),
+  subject: () => `New Newsletter Subscriber – Zolvex`,
   displayName: 'Newsletter subscriber',
-  to: 'support@zolvex.org',
+  to: 'notify@zolvex.org',
   previewData: { email: 'reader@example.com' },
 } satisfies TemplateEntry
 
