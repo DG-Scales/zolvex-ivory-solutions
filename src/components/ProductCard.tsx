@@ -116,6 +116,13 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
         onTouchEnd={onTouchEnd}
         onTouchCancel={onTouchEnd}
       >
+        {isSoldOut && (
+          <div className="absolute top-3 left-3 z-20">
+            <Badge variant="destructive" className="uppercase tracking-wider text-[10px]">
+              Sold Out
+            </Badge>
+          </div>
+        )}
         {images.length > 0 ? (
           <div
             className="flex h-full will-change-transform"
