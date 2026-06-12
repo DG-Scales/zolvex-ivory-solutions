@@ -99,7 +99,7 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
   const isFeatured = variant === "featured";
 
   return (
-    <Link to="/product/$handle" params={{ handle: node.handle }} className="group block">
+    <Link to="/product/$handle" params={{ handle: node.handle }} search={fromCategory ? { from: fromCategory } : undefined} className="group block">
       <div
         className={
           isFeatured
