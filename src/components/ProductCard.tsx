@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
@@ -98,6 +99,10 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
 
   const isFeatured = variant === "featured";
 
+  const isSoldOut =
+    (node.variants?.edges?.length ?? 0) > 0 &&
+    node.variants.edges.every((v) => !v.node.availableForSale);
+
   return (
     <Link to="/product/$handle" params={{ handle: node.handle }} search={fromCategory ? { from: fromCategory } : undefined} className="group block">
       <div
@@ -111,6 +116,13 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
         onTouchEnd={onTouchEnd}
         onTouchCancel={onTouchEnd}
       >
+        {isSoldOut && (
+          <div className="absolute top-3 left-3 z-20">
+            <Badge variant="destructive" className="uppercase tracking-wider text-[10px]">
+              Sold Out
+            </Badge>
+          </div>
+        )}
         {images.length > 0 ? (
           <div
             className="flex h-full will-change-transform"
