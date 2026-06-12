@@ -9,9 +9,10 @@ import { useCartStore } from "@/stores/cartStore";
 interface ProductCardProps {
   product: ShopifyProduct;
   variant?: "default" | "featured";
+  fromCategory?: string;
 }
 
-export function ProductCard({ product, variant = "default" }: ProductCardProps) {
+export function ProductCard({ product, variant = "default", fromCategory }: ProductCardProps) {
   const node = product.node;
   const selectedVariant = node.variants.edges[0]?.node;
   const images = node.images.edges;
@@ -98,7 +99,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
   const isFeatured = variant === "featured";
 
   return (
-    <Link to="/product/$handle" params={{ handle: node.handle }} className="group block">
+    <Link to="/product/$handle" params={{ handle: node.handle }} search={fromCategory ? { from: fromCategory } : undefined} className="group block">
       <div
         className={
           isFeatured

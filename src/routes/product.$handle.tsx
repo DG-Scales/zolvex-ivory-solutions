@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import { createFileRoute, Link, useParams, useLocation } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProductByHandle } from "@/lib/shopify";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -20,6 +20,8 @@ export const Route = createFileRoute("/product/$handle")({
 function ProductPage() {
   useCartSync();
   const { handle } = useParams({ from: "/product/$handle" });
+  const location = useLocation();
+  const fromCategory = new URLSearchParams(location.search).get("from");
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", handle],
     queryFn: () => fetchProductByHandle(handle),
@@ -39,9 +41,15 @@ function ProductPage() {
     <div className="min-h-screen flex flex-col bg-background">
       <SiteHeader />
       <main className="flex-1 mx-auto max-w-7xl px-6 py-10 w-full">
-        <Link to="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8">
-          <ArrowLeft className="w-4 h-4 mr-2" /> Back
-        </Link>
+        {fromCategory ? (
+          <Link to="/categories/$slug" params={{ slug: fromCategory }} className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back
+          </Link>
+        ) : (
+          <Link to="/categories" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back
+          </Link>
+        )}
 
         {isLoading ? (
           <div className="flex justify-center py-32"><Loader2 className="w-6 h-6 animate-spin" /></div>
