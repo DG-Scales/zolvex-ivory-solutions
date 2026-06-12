@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import { createFileRoute, Link, useParams, useLocation } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProductByHandle } from "@/lib/shopify";
 import { SiteHeader } from "@/components/SiteHeader";
