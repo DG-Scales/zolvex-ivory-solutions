@@ -99,6 +99,10 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
 
   const isFeatured = variant === "featured";
 
+  const isSoldOut =
+    (node.variants?.edges?.length ?? 0) > 0 &&
+    node.variants.edges.every((v) => !v.node.availableForSale);
+
   return (
     <Link to="/product/$handle" params={{ handle: node.handle }} search={fromCategory ? { from: fromCategory } : undefined} className="group block">
       <div
