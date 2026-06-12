@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WholesaleRouteImport } from './routes/wholesale'
+import { Route as UnsubscribeRouteImport } from './routes/unsubscribe'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SustainabilityRouteImport } from './routes/sustainability'
 import { Route as StoryRouteImport } from './routes/story'
@@ -37,6 +38,11 @@ import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/e
 const WholesaleRoute = WholesaleRouteImport.update({
   id: '/wholesale',
   path: '/wholesale',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnsubscribeRoute = UnsubscribeRouteImport.update({
+  id: '/unsubscribe',
+  path: '/unsubscribe',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -173,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/story': typeof StoryRoute
   '/sustainability': typeof SustainabilityRoute
   '/terms': typeof TermsRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/wholesale': typeof WholesaleRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
@@ -199,6 +206,7 @@ export interface FileRoutesByTo {
   '/story': typeof StoryRoute
   '/sustainability': typeof SustainabilityRoute
   '/terms': typeof TermsRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/wholesale': typeof WholesaleRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
@@ -226,6 +234,7 @@ export interface FileRoutesById {
   '/story': typeof StoryRoute
   '/sustainability': typeof SustainabilityRoute
   '/terms': typeof TermsRoute
+  '/unsubscribe': typeof UnsubscribeRoute
   '/wholesale': typeof WholesaleRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
@@ -254,6 +263,7 @@ export interface FileRouteTypes {
     | '/story'
     | '/sustainability'
     | '/terms'
+    | '/unsubscribe'
     | '/wholesale'
     | '/categories/$slug'
     | '/email/unsubscribe'
@@ -280,6 +290,7 @@ export interface FileRouteTypes {
     | '/story'
     | '/sustainability'
     | '/terms'
+    | '/unsubscribe'
     | '/wholesale'
     | '/categories/$slug'
     | '/email/unsubscribe'
@@ -306,6 +317,7 @@ export interface FileRouteTypes {
     | '/story'
     | '/sustainability'
     | '/terms'
+    | '/unsubscribe'
     | '/wholesale'
     | '/categories/$slug'
     | '/email/unsubscribe'
@@ -333,6 +345,7 @@ export interface RootRouteChildren {
   StoryRoute: typeof StoryRoute
   SustainabilityRoute: typeof SustainabilityRoute
   TermsRoute: typeof TermsRoute
+  UnsubscribeRoute: typeof UnsubscribeRoute
   WholesaleRoute: typeof WholesaleRoute
   CategoriesSlugRoute: typeof CategoriesSlugRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
@@ -352,6 +365,13 @@ declare module '@tanstack/react-router' {
       path: '/wholesale'
       fullPath: '/wholesale'
       preLoaderRoute: typeof WholesaleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unsubscribe': {
+      id: '/unsubscribe'
+      path: '/unsubscribe'
+      fullPath: '/unsubscribe'
+      preLoaderRoute: typeof UnsubscribeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -533,6 +553,7 @@ const rootRouteChildren: RootRouteChildren = {
   StoryRoute: StoryRoute,
   SustainabilityRoute: SustainabilityRoute,
   TermsRoute: TermsRoute,
+  UnsubscribeRoute: UnsubscribeRoute,
   WholesaleRoute: WholesaleRoute,
   CategoriesSlugRoute: CategoriesSlugRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
@@ -547,3 +568,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
