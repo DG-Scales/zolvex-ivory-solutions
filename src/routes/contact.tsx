@@ -25,7 +25,7 @@ function ContactPage() {
         <h1 className="font-display text-5xl md:text-6xl mb-6">Get in touch.</h1>
         <p className="text-lg text-muted-foreground mb-12">
           Specification questions, custom finishes, bespoke chandeliers, or a fixture you wish existed — we read every message.
-          Email us at <a href="mailto:zolvex.business@gmail.com" className="text-foreground underline underline-offset-4">zolvex.business@gmail.com</a>.
+          Email us at <a href="mailto:zolvex.business@gmail.com" target="_top" className="text-foreground underline underline-offset-4">zolvex.business@gmail.com</a>.
         </p>
 
         <form
