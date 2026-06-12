@@ -69,13 +69,10 @@ export function TrendingCarousel() {
     const onMove = (e: PointerEvent) => {
       if (!isDown) return;
       const dx = e.clientX - startX;
-      if (Math.abs(dx) > 8) {
+      if (Math.abs(dx) > 4) {
         moved = true;
-        // Only hijack scroll once we know it's a drag, so small clicks pass through
-        const next = startScroll - dx;
-        requestAnimationFrame(() => {
-          el.scrollLeft = next;
-        });
+        // Direct assignment — fastest, no rAF queueing
+        el.scrollLeft = startScroll - dx;
       }
     };
     const onUp = (e: PointerEvent) => {
