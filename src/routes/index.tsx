@@ -34,6 +34,8 @@ function Index() {
         <img
           src={heroImage}
           alt="Designer chandelier illuminating a warm, textured bedroom interior"
+          fetchPriority="high"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-black/30" />

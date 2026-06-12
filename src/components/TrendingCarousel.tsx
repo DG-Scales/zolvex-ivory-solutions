@@ -69,13 +69,10 @@ export function TrendingCarousel() {
     const onMove = (e: PointerEvent) => {
       if (!isDown) return;
       const dx = e.clientX - startX;
-      if (Math.abs(dx) > 8) {
+      if (Math.abs(dx) > 4) {
         moved = true;
-        // Only hijack scroll once we know it's a drag, so small clicks pass through
-        const next = startScroll - dx;
-        requestAnimationFrame(() => {
-          el.scrollLeft = next;
-        });
+        // Direct assignment — fastest, no rAF queueing
+        el.scrollLeft = startScroll - dx;
       }
     };
     const onUp = (e: PointerEvent) => {
@@ -158,7 +155,7 @@ export function TrendingCarousel() {
       <div className="relative pb-24 md:pb-32">
         <div
           ref={scrollerRef}
-          className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x scrollbar-hide cursor-grab active:cursor-grabbing select-none [touch-action:pan-x] [-webkit-overflow-scrolling:touch] [scroll-behavior:smooth] [overscroll-behavior-x:contain]"
+          className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x scrollbar-hide cursor-grab active:cursor-grabbing select-none [touch-action:pan-x] [-webkit-overflow-scrolling:touch] [overscroll-behavior-x:contain] [scrollbar-width:none] [will-change:scroll-position]"
         >
           {ordered.map((p) => {
             const img = p.node.images.edges[0]?.node.url;
@@ -177,6 +174,7 @@ export function TrendingCarousel() {
                     src={img}
                     alt={p.node.title}
                     loading="lazy"
+                    decoding="async"
                     draggable={false}
                     className="absolute inset-0 h-full w-full object-cover transition-all duration-[900ms] ease-out group-hover:scale-110 group-hover:brightness-90 pointer-events-none"
                   />
