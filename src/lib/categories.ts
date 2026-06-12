@@ -1,5 +1,5 @@
 import pendantCover from "@/assets/collection-pendant.png";
-import chandelierCover from "@/assets/collection-chandelier.jpg";
+import chandelierCover from "@/assets/collection-chandelier.png";
 import ceilingCover from "@/assets/collection-ceiling.jpg";
 import wallCover from "@/assets/collection-wall.jpg";
 import exteriorCover from "@/assets/collection-exterior.jpg";
