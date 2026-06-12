@@ -41,7 +41,7 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
       : ["products"],
     queryFn: () =>
       useCollection
-        ? fetchCollectionProducts(category!.collectionHandle!, 60)
+        ? fetchCollectionProducts(category!.collectionHandle!, 50)
         : fetchProducts(120),
   });
 
