@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
