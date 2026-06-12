@@ -1,4 +1,4 @@
-import pendantCover from "@/assets/collection-pendant.jpg";
+import pendantCover from "@/assets/collection-pendant.png";
 import chandelierCover from "@/assets/collection-chandelier.jpg";
 import ceilingCover from "@/assets/collection-ceiling.jpg";
 import wallCover from "@/assets/collection-wall.jpg";
