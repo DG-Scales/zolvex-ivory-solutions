@@ -186,7 +186,7 @@ function StoryPage() {
             <h2 className="font-display text-4xl md:text-5xl mb-5">Find a piece that fits the room.</h2>
             <p className="text-muted-foreground mb-8 max-w-xl mx-auto leading-relaxed">
               Browse the collection, or write to us about a space you're designing. We answer every message personally at{" "}
-              <a href="mailto:zolvex.business@gmail.com" className="text-foreground underline underline-offset-4">
+              <a target="_top" href="mailto:zolvex.business@gmail.com" className="text-foreground underline underline-offset-4">
                 zolvex.business@gmail.com
               </a>
               .

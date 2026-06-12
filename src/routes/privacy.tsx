@@ -74,7 +74,7 @@ function PrivacyPage() {
           <section>
             <h2 className="font-display text-2xl mb-3">7. Contact</h2>
             <p>
-              Questions about this policy? Reach us at <a className="underline" href="mailto:zolvex.business@gmail.com">zolvex.business@gmail.com</a>.
+              Questions about this policy? Reach us at <a className="underline" target="_top" href="mailto:zolvex.business@gmail.com">zolvex.business@gmail.com</a>.
             </p>
           </section>
         </div>

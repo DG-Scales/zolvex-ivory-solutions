@@ -15,7 +15,7 @@ export const Route = createFileRoute("/terms")({
       <section><h2 className="font-display text-2xl mb-3">3. Pricing</h2><p>Prices are listed in USD and may change without notice. Taxes and shipping are calculated at checkout.</p></section>
       <section><h2 className="font-display text-2xl mb-3">4. Intellectual Property</h2><p>All content on this site — text, images, logos, and code — is the property of Zolvex and may not be reused without permission.</p></section>
       <section><h2 className="font-display text-2xl mb-3">5. Liability</h2><p>Zolvex is not liable for any indirect or consequential damages arising from the use of our products or website.</p></section>
-      <section><h2 className="font-display text-2xl mb-3">6. Contact</h2><p>Questions about these terms? Email <a className="underline" href="mailto:zolvex.business@gmail.com">zolvex.business@gmail.com</a>.</p></section>
+      <section><h2 className="font-display text-2xl mb-3">6. Contact</h2><p>Questions about these terms? Email <a className="underline" target="_top" href="mailto:zolvex.business@gmail.com">zolvex.business@gmail.com</a>.</p></section>
     </PageShell>
   ),
 });

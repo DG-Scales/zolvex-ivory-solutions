@@ -156,7 +156,7 @@ function Index() {
               const email = String(new FormData(form).get("email") || "");
               const subject = "New Zolvex newsletter subscriber";
               const body = `New subscriber: ${email}`;
-              window.location.href = `mailto:zolvex.business@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+              (window.top ?? window).location.href = `mailto:zolvex.business@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             }}
           >
             <input
