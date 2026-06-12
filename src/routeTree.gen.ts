@@ -19,7 +19,6 @@ import { Route as ReturnsRouteImport } from './routes/returns'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as FaqRouteImport } from './routes/faq'
-import { Route as CraftsmanshipRouteImport } from './routes/craftsmanship'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -79,11 +78,6 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CraftsmanshipRoute = CraftsmanshipRouteImport.update({
-  id: '/craftsmanship',
-  path: '/craftsmanship',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -131,7 +125,6 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
-  '/craftsmanship': typeof CraftsmanshipRoute
   '/faq': typeof FaqRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -152,7 +145,6 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
-  '/craftsmanship': typeof CraftsmanshipRoute
   '/faq': typeof FaqRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -174,7 +166,6 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
-  '/craftsmanship': typeof CraftsmanshipRoute
   '/faq': typeof FaqRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -197,7 +188,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/cart'
     | '/contact'
-    | '/craftsmanship'
     | '/faq'
     | '/privacy'
     | '/reset-password'
@@ -218,7 +208,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/cart'
     | '/contact'
-    | '/craftsmanship'
     | '/faq'
     | '/privacy'
     | '/reset-password'
@@ -239,7 +228,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/cart'
     | '/contact'
-    | '/craftsmanship'
     | '/faq'
     | '/privacy'
     | '/reset-password'
@@ -261,7 +249,6 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CartRoute: typeof CartRoute
   ContactRoute: typeof ContactRoute
-  CraftsmanshipRoute: typeof CraftsmanshipRoute
   FaqRoute: typeof FaqRoute
   PrivacyRoute: typeof PrivacyRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -349,13 +336,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/craftsmanship': {
-      id: '/craftsmanship'
-      path: '/craftsmanship'
-      fullPath: '/craftsmanship'
-      preLoaderRoute: typeof CraftsmanshipRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -421,7 +401,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CartRoute: CartRoute,
   ContactRoute: ContactRoute,
-  CraftsmanshipRoute: CraftsmanshipRoute,
   FaqRoute: FaqRoute,
   PrivacyRoute: PrivacyRoute,
   ResetPasswordRoute: ResetPasswordRoute,
@@ -439,3 +418,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
