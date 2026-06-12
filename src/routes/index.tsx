@@ -150,13 +150,23 @@ function Index() {
           </p>
           <form
             className="flex flex-col sm:flex-row max-w-md mx-auto gap-2"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
               const form = e.target as HTMLFormElement;
               const email = String(new FormData(form).get("email") || "");
-              const subject = "New Zolvex newsletter subscriber";
-              const body = `New subscriber: ${email}`;
-              (window.top ?? window).location.href = `mailto:zolvex.business@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+              const t = toast.loading("Subscribing…");
+              try {
+                const res = await fetch("/api/public/notify", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ kind: "subscribe", email }),
+                });
+                if (!res.ok) throw new Error("Subscribe failed");
+                toast.success("You're on the list. Welcome to Zolvex.", { id: t });
+                form.reset();
+              } catch {
+                toast.error("Couldn't subscribe right now. Please try again.", { id: t });
+              }
             }}
           >
             <input

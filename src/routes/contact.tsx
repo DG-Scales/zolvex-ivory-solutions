@@ -25,21 +25,34 @@ function ContactPage() {
         <h1 className="font-display text-5xl md:text-6xl mb-6">Get in touch.</h1>
         <p className="text-lg text-muted-foreground mb-12">
           Specification questions, custom finishes, bespoke chandeliers, or a fixture you wish existed — we read every message.
-          Email us at <a href="mailto:zolvex.business@gmail.com" target="_top" className="text-foreground underline underline-offset-4">zolvex.business@gmail.com</a>.
+          Email us directly at <a href="mailto:support@zolvex.org" target="_top" className="text-foreground underline underline-offset-4">support@zolvex.org</a> or use the form below.
         </p>
 
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
             const form = e.target as HTMLFormElement;
             const data = new FormData(form);
-            const name = String(data.get("name") || "");
-            const email = String(data.get("email") || "");
-            const subject = String(data.get("subject") || "Message from Zolvex contact form");
-            const message = String(data.get("message") || "");
-            const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-            (window.top ?? window).location.href = `mailto:zolvex.business@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            toast.success("Opening your email app to send the message.");
+            const payload = {
+              kind: "contact",
+              name: String(data.get("name") || ""),
+              email: String(data.get("email") || ""),
+              subject: String(data.get("subject") || ""),
+              message: String(data.get("message") || ""),
+            };
+            const t = toast.loading("Sending your message…");
+            try {
+              const res = await fetch("/api/public/notify", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              });
+              if (!res.ok) throw new Error("Send failed");
+              toast.success("Message sent. We'll get back to you shortly.", { id: t });
+              form.reset();
+            } catch {
+              toast.error("Something went wrong. Please email us directly at support@zolvex.org.", { id: t });
+            }
           }}
           className="space-y-5"
         >
