@@ -2,7 +2,7 @@ import pendantCover from "@/assets/collection-pendant.png";
 import chandelierCover from "@/assets/collection-chandelier.png";
 import ceilingCover from "@/assets/collection-ceiling.png";
 import wallCover from "@/assets/collection-wall.png";
-import exteriorCover from "@/assets/collection-exterior.jpg";
+import exteriorCover from "@/assets/collection-exterior.png";
 import aisleCover from "@/assets/collection-aisle.jpg";
 
 export type CategoryGroup = "Collection" | "Featured";
