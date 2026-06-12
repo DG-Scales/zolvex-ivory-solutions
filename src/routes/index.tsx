@@ -57,7 +57,7 @@ function Index() {
       </section>
 
       {/* Maker's Pick */}
-      <section id="makers-pick" className="mx-auto max-w-7xl px-6 pt-24 md:pt-32 w-full">
+      <section id="makers-pick" className="mx-auto max-w-7xl px-6 pt-24 md:pt-32 pb-16 md:pb-24 w-full">
         <div className="mb-10">
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">Maker's Pick</p>
           <h2 className="font-display text-3xl md:text-4xl">The finest pieces, hand-selected</h2>
