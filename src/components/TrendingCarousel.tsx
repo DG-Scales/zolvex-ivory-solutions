@@ -174,6 +174,7 @@ export function TrendingCarousel() {
                     src={img}
                     alt={p.node.title}
                     loading="lazy"
+                    decoding="async"
                     draggable={false}
                     className="absolute inset-0 h-full w-full object-cover transition-all duration-[900ms] ease-out group-hover:scale-110 group-hover:brightness-90 pointer-events-none"
                   />
