@@ -127,8 +127,19 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
     return arr;
   }, [filtered, sort]);
 
+  // Always push sold-out products to the end, preserving the chosen sort within each group
+  const isSoldOut = (p: typeof sorted[number]) =>
+    (p.node.variants?.edges?.length ?? 0) > 0 &&
+    p.node.variants.edges.every((v) => !v.node.availableForSale);
 
-  const display = limit ? sorted.slice(0, limit) : sorted;
+  const ordered = useMemo(() => {
+    const inStock: typeof sorted = [];
+    const soldOut: typeof sorted = [];
+    for (const p of sorted) (isSoldOut(p) ? soldOut : inStock).push(p);
+    return [...inStock, ...soldOut];
+  }, [sorted]);
+
+  const display = limit ? ordered.slice(0, limit) : ordered;
 
   if (isLoading) {
     return (
