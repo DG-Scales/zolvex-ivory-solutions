@@ -20,6 +20,8 @@ export const Route = createFileRoute("/product/$handle")({
 function ProductPage() {
   useCartSync();
   const { handle } = useParams({ from: "/product/$handle" });
+  const location = useLocation();
+  const fromCategory = new URLSearchParams(location.search).get("from");
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", handle],
     queryFn: () => fetchProductByHandle(handle),
