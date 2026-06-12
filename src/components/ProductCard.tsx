@@ -204,7 +204,7 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
           </Button>
         </div>
       </div>
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-1.5 pb-1">
         <h3
           className={
             isFeatured
