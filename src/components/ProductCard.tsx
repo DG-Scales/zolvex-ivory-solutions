@@ -9,9 +9,10 @@ import { useCartStore } from "@/stores/cartStore";
 interface ProductCardProps {
   product: ShopifyProduct;
   variant?: "default" | "featured";
+  fromCategory?: string;
 }
 
-export function ProductCard({ product, variant = "default" }: ProductCardProps) {
+export function ProductCard({ product, variant = "default", fromCategory }: ProductCardProps) {
   const node = product.node;
   const selectedVariant = node.variants.edges[0]?.node;
   const images = node.images.edges;
