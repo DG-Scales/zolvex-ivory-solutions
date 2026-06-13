@@ -12,6 +12,51 @@ const subscribeSchema = z.object({
   email: z.string().trim().email().max(320),
 })
 
+const FROM = 'Zolvex <notify@zolvex.org>'
+const TO = 'zolvex.business@gmail.com'
+
+function escapeHtml(s: string) {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
+async function sendResend(args: {
+  subject: string
+  html: string
+  text: string
+  replyTo?: string
+}) {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    return { ok: false, status: 500, body: { error: 'Email not configured' } }
+  }
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: FROM,
+      to: [TO],
+      subject: args.subject,
+      html: args.html,
+      text: args.text,
+      reply_to: args.replyTo,
+    }),
+  })
+  if (!res.ok) {
+    const errText = await res.text().catch(() => '')
+    console.error('Resend send failed', res.status, errText)
+    return { ok: false, status: 502, body: { error: 'Failed to send email' } }
+  }
+  return { ok: true, status: 200, body: { success: true } }
+}
+
 export const Route = createFileRoute('/api/public/notify')({
   server: {
     handlers: {
@@ -24,19 +69,27 @@ export const Route = createFileRoute('/api/public/notify')({
         }
 
         const kind = body?.kind
-        const { enqueueTemplateEmail } = await import(
-          '@/lib/email/enqueue.server'
-        )
 
         if (kind === 'contact') {
           const parsed = contactSchema.safeParse(body)
           if (!parsed.success) {
             return Response.json({ error: 'Invalid input' }, { status: 400 })
           }
-          const result = await enqueueTemplateEmail({
-            templateName: 'contact-form',
-            templateData: parsed.data,
-            idempotencyKey: `contact-${parsed.data.email}-${Date.now()}`,
+          const { name, email, subject, message } = parsed.data
+          const html = `
+            <h2>New Contact Form Submission – Zolvex</h2>
+            <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+            <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+            <p><strong>Subject:</strong> ${escapeHtml(subject || '(none)')}</p>
+            <p><strong>Message:</strong></p>
+            <p style="white-space:pre-wrap">${escapeHtml(message)}</p>
+          `
+          const text = `New Contact Form Submission – Zolvex\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject || '(none)'}\n\nMessage:\n${message}`
+          const result = await sendResend({
+            subject: 'New Contact Form Submission – Zolvex',
+            html,
+            text,
+            replyTo: email,
           })
           return Response.json(result.body, { status: result.status })
         }
@@ -46,10 +99,17 @@ export const Route = createFileRoute('/api/public/notify')({
           if (!parsed.success) {
             return Response.json({ error: 'Invalid email' }, { status: 400 })
           }
-          const result = await enqueueTemplateEmail({
-            templateName: 'newsletter-subscribe',
-            templateData: parsed.data,
-            idempotencyKey: `subscribe-${parsed.data.email}`,
+          const { email } = parsed.data
+          const html = `
+            <h2>New Newsletter Subscriber – Zolvex</h2>
+            <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          `
+          const text = `New Newsletter Subscriber – Zolvex\n\nEmail: ${email}`
+          const result = await sendResend({
+            subject: 'New Newsletter Subscriber – Zolvex',
+            html,
+            text,
+            replyTo: email,
           })
           return Response.json(result.body, { status: result.status })
         }
