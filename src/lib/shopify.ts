@@ -113,10 +113,25 @@ function hasChinese(str: string | null | undefined): boolean {
 
 function stripChineseImages(product: ShopifyProduct["node"] | null | undefined) {
   if (!product?.images?.edges) return product;
+  // Preserve any image referenced by a variant so option swatches can swap to them.
+  const variantUrls = new Set<string>();
+  for (const v of product.variants?.edges ?? []) {
+    if (v.node.image?.url) variantUrls.add(v.node.image.url);
+  }
   const filtered = product.images.edges.filter(
-    (e) => !hasChinese(e.node.altText) && !hasChinese(e.node.url),
+    (e) =>
+      variantUrls.has(e.node.url) ||
+      (!hasChinese(e.node.altText) && !hasChinese(e.node.url)),
   );
-  // Keep at least one image so cards don't break entirely
+  // Ensure every variant image exists in the gallery (append if missing).
+  const presentUrls = new Set(filtered.map((e) => e.node.url));
+  for (const v of product.variants?.edges ?? []) {
+    const img = v.node.image;
+    if (img?.url && !presentUrls.has(img.url)) {
+      filtered.push({ node: { url: img.url, altText: img.altText ?? null } });
+      presentUrls.add(img.url);
+    }
+  }
   product.images.edges = filtered.length > 0 ? filtered : product.images.edges.slice(0, 1);
   return product;
 }
