@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useParams, useLocation } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { fetchProductByHandle } from "@/lib/shopify";
+import { fetchProductByHandle, fetchProducts } from "@/lib/shopify";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { formatVariantTitle, formatOptionValue } from "@/lib/variantTitle";
 import { parseDescription } from "@/lib/parseSpecs";
 import { toast } from "sonner";
 import { PromoBox } from "@/components/PromoBox";
+import { ProductCard } from "@/components/ProductCard";
 
 export const Route = createFileRoute("/product/$handle")({
   component: ProductPage,
