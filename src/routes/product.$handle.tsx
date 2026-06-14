@@ -8,7 +8,7 @@ import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Share2, Headphones, Truc
 import { useState, useRef } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
-import { formatVariantTitle } from "@/lib/variantTitle";
+import { formatVariantTitle, formatOptionValue } from "@/lib/variantTitle";
 import { parseDescription } from "@/lib/parseSpecs";
 import { toast } from "sonner";
 import { PromoBox } from "@/components/PromoBox";
@@ -231,44 +231,112 @@ function ProductPage() {
                     {prose || "A considered solution. More details coming soon."}
                   </div>
 
-                  {product.variants.edges.length > 1 && (
-                    <div className="mb-8">
-                      <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Variant</p>
-                      <div className="flex flex-wrap gap-2">
-                        {product.variants.edges.map((v, i) => (
-                          <button
-                            key={v.node.id}
-                            onClick={() => {
-                              setVariantIndex(i);
-                              // Try exact match on variant.image first
-                              const target = v.node.image?.url;
-                              if (target) {
-                                const idx = images.findIndex((img) => img.node.url === target);
-                                if (idx >= 0) {
-                                  scrollToIndex(idx);
-                                  return;
-                                }
-                              }
-                              // Fallback: match an image whose alt text contains an option value
-                              const needles = (v.node.selectedOptions || [])
-                                .map((o) => o.value?.toLowerCase())
-                                .filter(Boolean) as string[];
-                              if (needles.length) {
-                                const idx = images.findIndex((img) => {
-                                  const alt = (img.node.altText || "").toLowerCase();
-                                  return needles.some((n) => alt.includes(n));
-                                });
-                                if (idx >= 0) scrollToIndex(idx);
-                              }
-                            }}
-                            className={`px-4 py-2 text-sm border rounded-full transition-colors ${i === variantIndex ? "bg-foreground text-background border-foreground" : "hover:border-foreground"}`}
-                          >
-                            {formatVariantTitle(v.node) || `Option ${i + 1}`}
-                          </button>
-                        ))}
+                  {(() => {
+                    const allVariants = product.variants.edges.map((e) => e.node);
+                    const rawOptions = (product.options || []).filter(
+                      (o) => !(o.values.length === 1 && o.values[0]?.toLowerCase() === "default title"),
+                    );
+                    if (rawOptions.length === 0 || allVariants.length <= 1) return null;
+
+                    const isTempName = (n: string) => /light|temp|kelvin|color\s*temp/i.test(n);
+                    const isColorName = (n: string) => /color|colour|finish/i.test(n) && !isTempName(n);
+                    const options = [...rawOptions].sort((a, b) => {
+                      const score = (n: string) => (isTempName(n) ? 0 : isColorName(n) ? 2 : 1);
+                      return score(a.name) - score(b.name);
+                    });
+
+                    const currentSel: Record<string, string> = {};
+                    for (const o of variant?.selectedOptions || []) currentSel[o.name] = o.value;
+
+                    const findVariantIndex = (sel: Record<string, string>) => {
+                      // Exact match
+                      let idx = allVariants.findIndex((v) =>
+                        (v.selectedOptions || []).every((o) => sel[o.name] === o.value),
+                      );
+                      if (idx >= 0) return idx;
+                      return -1;
+                    };
+
+                    const pickVariant = (optName: string, value: string) => {
+                      const desired = { ...currentSel, [optName]: value };
+                      let idx = findVariantIndex(desired);
+                      if (idx < 0) {
+                        // Relax other options one at a time, prefer available
+                        const others = options.map((o) => o.name).filter((n) => n !== optName);
+                        // Try keeping each other option, drop the rest
+                        for (let k = others.length - 1; k >= 0; k--) {
+                          const keep = others.slice(0, k);
+                          const candidate = allVariants.findIndex((v) => {
+                            const map: Record<string, string> = {};
+                            for (const o of v.selectedOptions || []) map[o.name] = o.value;
+                            if (map[optName] !== value) return false;
+                            return keep.every((n) => map[n] === currentSel[n]);
+                          });
+                          if (candidate >= 0) {
+                            idx = candidate;
+                            break;
+                          }
+                        }
+                      }
+                      if (idx < 0) return;
+                      setVariantIndex(idx);
+                      const v = allVariants[idx];
+                      const target = v.image?.url;
+                      if (target) {
+                        const imgIdx = images.findIndex((img) => img.node.url === target);
+                        if (imgIdx >= 0) {
+                          scrollToIndex(imgIdx);
+                          return;
+                        }
+                      }
+                      const needles = (v.selectedOptions || [])
+                        .map((o) => o.value?.toLowerCase())
+                        .filter(Boolean) as string[];
+                      if (needles.length) {
+                        const imgIdx = images.findIndex((img) => {
+                          const alt = (img.node.altText || "").toLowerCase();
+                          return needles.some((n) => alt.includes(n));
+                        });
+                        if (imgIdx >= 0) scrollToIndex(imgIdx);
+                      }
+                    };
+
+                    const labelFor = (name: string) => {
+                      if (isTempName(name)) return "Light Color";
+                      return formatOptionValue(name) || name;
+                    };
+
+                    return (
+                      <div className="mb-8 space-y-5">
+                        {options.map((opt) => {
+                          const selected = currentSel[opt.name];
+                          return (
+                            <div key={opt.name}>
+                              <p className="text-sm mb-2">
+                                <span className="text-muted-foreground">{labelFor(opt.name)} : </span>
+                                <span className="font-medium">{formatOptionValue(selected || "") || selected}</span>
+                              </p>
+                              <div className="flex flex-wrap gap-2">
+                                {opt.values.map((val) => {
+                                  const isSelected = val === selected;
+                                  return (
+                                    <button
+                                      key={val}
+                                      type="button"
+                                      onClick={() => pickVariant(opt.name, val)}
+                                      className={`px-4 py-2 text-sm border rounded-md transition-colors ${isSelected ? "bg-foreground text-background border-foreground" : "hover:border-foreground"}`}
+                                    >
+                                      {formatOptionValue(val) || val}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
-                    </div>
-                  )}
+                    );
+                  })()}
 
                   <Button
                     size="lg"

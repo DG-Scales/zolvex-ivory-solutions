@@ -43,7 +43,7 @@ export const PRODUCT_FRAGMENT = `
     handle
     priceRange { minVariantPrice { amount currencyCode } }
     images(first: 20) { edges { node { url altText } } }
-    variants(first: 10) {
+    variants(first: 100) {
       edges {
         node {
           id
