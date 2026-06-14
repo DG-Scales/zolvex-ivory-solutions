@@ -383,12 +383,20 @@ function ProductPage() {
               </Link>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {allProducts
-                .filter((p) => p.node.handle !== product.handle)
-                .slice(0, 4)
-                .map((p) => (
-                  <ProductCard key={p.node.id} product={p} />
-                ))}
+              {(() => {
+                const pool = allProducts.filter((p) => p.node.handle !== product.handle);
+                let seed = 0;
+                for (let i = 0; i < product.id.length; i++) seed = (seed * 31 + product.id.charCodeAt(i)) >>> 0;
+                const scored = pool
+                  .map((p, i) => {
+                    let h = seed ^ i;
+                    for (let j = 0; j < p.node.id.length; j++) h = (h * 131 + p.node.id.charCodeAt(j)) >>> 0;
+                    return { p, h };
+                  })
+                  .sort((a, b) => a.h - b.h)
+                  .slice(0, 4);
+                return scored.map(({ p }) => <ProductCard key={p.node.id} product={p} />);
+              })()}
             </div>
           </section>
         )}
