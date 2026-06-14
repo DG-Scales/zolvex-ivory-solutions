@@ -375,6 +375,25 @@ function ProductPage() {
             );
           })()
         )}
+
+        {product && allProducts && allProducts.length > 1 && (
+          <section className="mt-20 border-t border-border pt-10">
+            <div className="flex items-baseline justify-between mb-8">
+              <h2 className="font-display text-2xl md:text-3xl tracking-tight">You may also like</h2>
+              <Link to="/categories" className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground">
+                Shop all
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {allProducts
+                .filter((p) => p.node.handle !== product.handle)
+                .slice(0, 4)
+                .map((p) => (
+                  <ProductCard key={p.node.id} product={p} />
+                ))}
+            </div>
+          </section>
+        )}
       </main>
       <SiteFooter />
     </div>
