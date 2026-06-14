@@ -8,7 +8,7 @@ import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Share2, Headphones, Truc
 import { useState, useRef } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
-import { formatVariantTitle } from "@/lib/variantTitle";
+import { formatVariantTitle, formatOptionValue } from "@/lib/variantTitle";
 import { parseDescription } from "@/lib/parseSpecs";
 import { toast } from "sonner";
 import { PromoBox } from "@/components/PromoBox";
