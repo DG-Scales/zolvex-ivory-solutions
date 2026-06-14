@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useParams, useLocation } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { fetchProductByHandle } from "@/lib/shopify";
+import { fetchProductByHandle, fetchProducts } from "@/lib/shopify";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { formatVariantTitle, formatOptionValue } from "@/lib/variantTitle";
 import { parseDescription } from "@/lib/parseSpecs";
 import { toast } from "sonner";
 import { PromoBox } from "@/components/PromoBox";
+import { ProductCard } from "@/components/ProductCard";
 
 export const Route = createFileRoute("/product/$handle")({
   component: ProductPage,
@@ -25,6 +26,10 @@ function ProductPage() {
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", handle],
     queryFn: () => fetchProductByHandle(handle),
+  });
+  const { data: allProducts } = useQuery({
+    queryKey: ["products", "related"],
+    queryFn: () => fetchProducts(24),
   });
 
   const [variantIndex, setVariantIndex] = useState(0);
@@ -369,6 +374,25 @@ function ProductPage() {
               </div>
             );
           })()
+        )}
+
+        {product && allProducts && allProducts.length > 1 && (
+          <section className="mt-20 border-t border-border pt-10">
+            <div className="flex items-baseline justify-between mb-8">
+              <h2 className="font-display text-2xl md:text-3xl tracking-tight">You may also like</h2>
+              <Link to="/categories" className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground">
+                Shop all
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {allProducts
+                .filter((p) => p.node.handle !== product.handle)
+                .slice(0, 4)
+                .map((p) => (
+                  <ProductCard key={p.node.id} product={p} />
+                ))}
+            </div>
+          </section>
         )}
       </main>
       <SiteFooter />
