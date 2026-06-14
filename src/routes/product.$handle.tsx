@@ -253,35 +253,33 @@ function ProductPage() {
                     const currentSel: Record<string, string> = {};
                     for (const o of variant?.selectedOptions || []) currentSel[o.name] = o.value;
 
-                    const findVariantIndex = (sel: Record<string, string>) => {
-                      // Exact match
-                      let idx = allVariants.findIndex((v) =>
+                    const findExact = (sel: Record<string, string>) =>
+                      allVariants.findIndex((v) =>
                         (v.selectedOptions || []).every((o) => sel[o.name] === o.value),
                       );
-                      if (idx >= 0) return idx;
-                      return -1;
-                    };
 
                     const pickVariant = (optName: string, value: string) => {
                       const desired = { ...currentSel, [optName]: value };
-                      let idx = findVariantIndex(desired);
+                      let idx = findExact(desired);
                       if (idx < 0) {
-                        // Relax other options one at a time, prefer available
-                        const others = options.map((o) => o.name).filter((n) => n !== optName);
-                        // Try keeping each other option, drop the rest
-                        for (let k = others.length - 1; k >= 0; k--) {
-                          const keep = others.slice(0, k);
-                          const candidate = allVariants.findIndex((v) => {
+                        // Find variants that match the clicked option, then pick the one
+                        // that overlaps most with the current selection.
+                        const candidates = allVariants
+                          .map((v, i) => {
                             const map: Record<string, string> = {};
                             for (const o of v.selectedOptions || []) map[o.name] = o.value;
-                            if (map[optName] !== value) return false;
-                            return keep.every((n) => map[n] === currentSel[n]);
-                          });
-                          if (candidate >= 0) {
-                            idx = candidate;
-                            break;
-                          }
-                        }
+                            if (map[optName] !== value) return null;
+                            let score = 0;
+                            for (const n of Object.keys(currentSel)) {
+                              if (n !== optName && map[n] === currentSel[n]) score++;
+                            }
+                            return { i, score, available: v.availableForSale };
+                          })
+                          .filter(Boolean) as Array<{ i: number; score: number; available: boolean }>;
+                        candidates.sort(
+                          (a, b) => b.score - a.score || Number(b.available) - Number(a.available),
+                        );
+                        idx = candidates[0]?.i ?? -1;
                       }
                       if (idx < 0) return;
                       setVariantIndex(idx);
