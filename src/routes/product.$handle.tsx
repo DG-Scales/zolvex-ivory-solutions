@@ -27,6 +27,10 @@ function ProductPage() {
     queryKey: ["product", handle],
     queryFn: () => fetchProductByHandle(handle),
   });
+  const { data: allProducts } = useQuery({
+    queryKey: ["products", "related"],
+    queryFn: () => fetchProducts(24),
+  });
 
   const [variantIndex, setVariantIndex] = useState(0);
   const addItem = useCartStore((s) => s.addItem);
