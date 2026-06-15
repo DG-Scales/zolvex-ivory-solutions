@@ -101,6 +101,10 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
           new Date(a.node.createdAt).getTime(),
       );
     } else if (sort === "featured") {
+      if (category?.slug === "trending") {
+        // Preserve pinned + shuffled curated order for trending
+        return arr;
+      }
       // Premium-first, modern-first, lightly interleaved so it doesn't read
       // as a pure price ranking. Score = normalized price weight + recency
       // weight, with a small deterministic jitter from the product id.
