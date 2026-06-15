@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { categories as ALL_CATEGORIES, type Category, matchesCategory } from "@/lib/categories";
+import { categories as ALL_CATEGORIES, type Category, matchesCategory, getTrendingHandles } from "@/lib/categories";
 
 interface ProductGridProps {
   category?: Category;
@@ -49,8 +49,9 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
   const scoped = useMemo(() => {
     const products = data ?? [];
     if (useCurated) {
+      const handles = category!.slug === "trending" ? getTrendingHandles() : category!.productHandles!;
       const map = new Map(products.map((p) => [p.node.handle, p]));
-      return category!.productHandles!
+      return handles
         .map((h) => map.get(h))
         .filter((p): p is (typeof products)[number] => !!p);
     }
@@ -100,6 +101,10 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
           new Date(a.node.createdAt).getTime(),
       );
     } else if (sort === "featured") {
+      if (category?.slug === "trending") {
+        // Preserve pinned + shuffled curated order for trending
+        return arr;
+      }
       // Premium-first, modern-first, lightly interleaved so it doesn't read
       // as a pure price ranking. Score = normalized price weight + recency
       // weight, with a small deterministic jitter from the product id.

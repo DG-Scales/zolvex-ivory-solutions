@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/lib/shopify";
-import { getCategory } from "@/lib/categories";
+import { getCategory, getTrendingHandles } from "@/lib/categories";
 import { ArrowRight, ArrowLeft, Share2 } from "lucide-react";
-import { useRef, useCallback, useEffect, useState } from "react";
+import { useRef, useCallback, useEffect, useState, useMemo } from "react";
 import { toast } from "sonner";
 
 /**
@@ -12,7 +12,7 @@ import { toast } from "sonner";
  */
 export function TrendingCarousel() {
   const cat = getCategory("trending");
-  const handles = cat?.productHandles ?? [];
+  const handles = useMemo(() => getTrendingHandles(), []);
 
   const { data } = useQuery({
     queryKey: ["products"],
