@@ -320,7 +320,15 @@ function ProductPage() {
                                 <span className="font-medium">{formatOptionValue(selected || "") || selected}</span>
                               </p>
                               <div className="flex flex-wrap gap-2">
-                                {opt.values.map((val) => {
+                                {[...opt.values]
+                                  .sort((a, b) =>
+                                    (formatOptionValue(a) || a).localeCompare(
+                                      formatOptionValue(b) || b,
+                                      undefined,
+                                      { numeric: true, sensitivity: "base" },
+                                    ),
+                                  )
+                                  .map((val) => {
                                   const isSelected = val === selected;
                                   return (
                                     <button
