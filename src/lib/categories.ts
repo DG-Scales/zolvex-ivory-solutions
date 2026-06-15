@@ -29,25 +29,15 @@ export interface Category {
 }
 
 const TRENDING_HANDLES = [
-  "4inch-modern-crystal-pendant-light-3-pack-adjustable-hanging-ceiling-lamp-with-crystal-prism-design-for-dining-room-kitchen-island-and-living-room-golden-finish",
-  "gold-pendant-light-fixtures-3-pack-modern-pendant-lighting-with-clear-striped-glass-shade-hanging-pendant-lights-kitchen-island-farmhouse-pendant-lighting-for-dining-room-bedroom-bathroom",
   "spanish-marble-restaurant-round-light-luxury-bar-aisle-light-designer-model-coffee-dining-table-chandelier",
   "led-full-spectrum-modern-dining-room-chandelier-with-a-light-luxury-design",
+  "4inch-modern-crystal-pendant-light-3-pack-adjustable-hanging-ceiling-lamp-with-crystal-prism-design-for-dining-room-kitchen-island-and-living-room-golden-finish",
   "modern-light-luxury-natural-marble-chandelier-for-villas",
   "29-nickel-finish-vintage-crystal-vanity-light-elegant-5-light-bathroom-mirror-fixture-with-clear-glass-shades-no-bulbs",
   "6-light-modern-farmhouse-black-chandelier-contemporary-dining-room-light-fixture-adjustable-height-hanging-industrial-pendant-lights-kitchen-island-clear-glass-shade",
+  "gold-pendant-light-fixtures-3-pack-modern-pendant-lighting-with-clear-striped-glass-shade-hanging-pendant-lights-kitchen-island-farmhouse-pendant-lighting-for-dining-room-bedroom-bathroom",
   "leafless-overhead-fan-light-square-intelligence",
 ];
-
-export function getTrendingHandles(): string[] {
-  const pinned = TRENDING_HANDLES.slice(0, 2);
-  const rest = [...TRENDING_HANDLES.slice(2)];
-  for (let i = rest.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [rest[i], rest[j]] = [rest[j], rest[i]];
-  }
-  return [...pinned, ...rest];
-}
 
 export const categories: Category[] = [
   {

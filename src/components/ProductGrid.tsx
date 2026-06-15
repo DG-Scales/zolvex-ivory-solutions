@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { categories as ALL_CATEGORIES, type Category, matchesCategory, getTrendingHandles } from "@/lib/categories";
+import { categories as ALL_CATEGORIES, type Category, matchesCategory } from "@/lib/categories";
 
 interface ProductGridProps {
   category?: Category;
@@ -49,7 +49,7 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
   const scoped = useMemo(() => {
     const products = data ?? [];
     if (useCurated) {
-      const handles = category!.slug === "trending" ? getTrendingHandles() : category!.productHandles!;
+      const handles = category!.productHandles!;
       const map = new Map(products.map((p) => [p.node.handle, p]));
       return handles
         .map((h) => map.get(h))
