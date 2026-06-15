@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/lib/shopify";
-import { getCategory } from "@/lib/categories";
+import { getCategory, getTrendingHandles } from "@/lib/categories";
 import { ArrowRight, ArrowLeft, Share2 } from "lucide-react";
 import { useRef, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
