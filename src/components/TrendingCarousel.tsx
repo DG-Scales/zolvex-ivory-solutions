@@ -12,7 +12,7 @@ import { toast } from "sonner";
  */
 export function TrendingCarousel() {
   const cat = getCategory("trending");
-  const handles = useMemo(() => getTrendingHandles(), []);
+  const handles = cat?.productHandles ?? [];
 
   const { data } = useQuery({
     queryKey: ["products"],
