@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { categories as ALL_CATEGORIES, type Category, matchesCategory } from "@/lib/categories";
+import { categories as ALL_CATEGORIES, type Category, matchesCategory, getTrendingHandles } from "@/lib/categories";
 
 interface ProductGridProps {
   category?: Category;
