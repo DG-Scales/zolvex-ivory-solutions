@@ -12,9 +12,7 @@ const subscribeSchema = z.object({
   email: z.string().trim().email().max(320),
 })
 
-// To send from notify@zolvex.org, verify zolvex.org at https://resend.com/domains.
-// Until then, use Resend's shared sandbox sender (onboarding@resend.dev).
-const FROM = 'Zolvex <onboarding@resend.dev>'
+const FROM = 'Zolvex <notify@zolvex.org>'
 const TO = 'zolvex.business@gmail.com'
 
 function escapeHtml(s: string) {
