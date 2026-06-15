@@ -149,7 +149,6 @@ export async function enqueueTemplateEmail(
       to: effectiveRecipient,
       from: `Zolvex <notify@${FROM_DOMAIN}>`,
       sender_domain: SENDER_DOMAIN,
-      sender_domain: SENDER_DOMAIN,
       subject: resolvedSubject,
       html,
       text: plainText,
