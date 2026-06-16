@@ -15,10 +15,15 @@ import heroImage from "@/assets/hero-room.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Zolvex — Premium designer lighting" },
-      { name: "description", content: "Zolvex is a curated destination for premium designer lighting — chandeliers, pendants, wall sconces, and outdoor lights for considered interiors." },
-      { property: "og:title", content: "Zolvex — Premium designer lighting" },
-      { property: "og:description", content: "Chandeliers, pendants, wall lights and exterior fixtures. Considered lighting, made to last." },
+      { title: "Zolvex – Where Design Comes to Light" },
+      { name: "description", content: "Shop 150+ premium chandeliers, pendant lights, wall sconces & outdoor fixtures. Free shipping on all US orders." },
+      { property: "og:title", content: "Zolvex – Where Design Comes to Light" },
+      { property: "og:description", content: "Shop 150+ premium chandeliers, pendant lights, wall sconces & outdoor fixtures. Free shipping on all US orders." },
+      { property: "og:image", content: "https://zolvex.org/__l5e/assets-v1/1846088b-1f18-4f42-8258-63676567670b/zolvex-og.png" },
+      { property: "og:image:width", content: "1536" },
+      { property: "og:image:height", content: "1024" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://zolvex.org/__l5e/assets-v1/1846088b-1f18-4f42-8258-63676567670b/zolvex-og.png" },
     ],
   }),
   component: Index,
