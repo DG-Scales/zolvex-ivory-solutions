@@ -16,10 +16,36 @@ const FROM = 'Zolvex <notify@zolvex.org>'
 const TO = 'zolvex.business@gmail.com'
 const RESEND_AUDIENCE_ID = '3a752339-55ff-4d8d-b810-ce1e9a5692f3'
 
+async function resendContactExists(email: string): Promise<boolean> {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) return false
+  try {
+    const res = await fetch(
+      `https://api.resend.com/audiences/${RESEND_AUDIENCE_ID}/contacts/${encodeURIComponent(email)}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+    return res.status === 200
+  } catch (err) {
+    console.error('Resend check contact error', err)
+    return false
+  }
+}
+
 async function addResendContact(email: string) {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) return
   try {
+    const alreadyExists = await resendContactExists(email)
+    if (alreadyExists) {
+      console.log('Resend contact already exists, skipping:', email)
+      return
+    }
     const res = await fetch(
       `https://api.resend.com/audiences/${RESEND_AUDIENCE_ID}/contacts`,
       {
