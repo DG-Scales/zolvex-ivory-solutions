@@ -14,6 +14,31 @@ const subscribeSchema = z.object({
 
 const FROM = 'Zolvex <notify@zolvex.org>'
 const TO = 'zolvex.business@gmail.com'
+const RESEND_AUDIENCE_ID = '3a752339-55ff-4d8d-b810-ce1e9a5692f3'
+
+async function addResendContact(email: string) {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) return
+  try {
+    const res = await fetch(
+      `https://api.resend.com/audiences/${RESEND_AUDIENCE_ID}/contacts`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, unsubscribed: false }),
+      },
+    )
+    if (!res.ok) {
+      const errText = await res.text().catch(() => '')
+      console.error('Resend add contact failed', res.status, errText)
+    }
+  } catch (err) {
+    console.error('Resend add contact error', err)
+  }
+}
 
 function escapeHtml(s: string) {
   return s
