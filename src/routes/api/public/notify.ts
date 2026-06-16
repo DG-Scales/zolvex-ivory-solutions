@@ -136,6 +136,7 @@ export const Route = createFileRoute('/api/public/notify')({
             text,
             replyTo: email,
           })
+          await addResendContact(email)
           return Response.json(result.body, { status: result.status })
         }
 
