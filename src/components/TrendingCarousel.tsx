@@ -48,32 +48,80 @@ export function TrendingCarousel() {
     el.scrollBy({ left: dir * step, behavior: "smooth" });
   };
 
-  // Pointer drag-to-scroll
+  // Pointer drag-to-scroll with rAF batching + inertial momentum on release
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
     let isDown = false;
     let startX = 0;
     let startScroll = 0;
+    let lastX = 0;
+    let lastT = 0;
+    let velocity = 0; // px per ms
     let moved = false;
+    let pendingScroll: number | null = null;
+    let rafId: number | null = null;
+    let momentumId: number | null = null;
+
+    const flush = () => {
+      rafId = null;
+      if (pendingScroll != null) {
+        el.scrollLeft = pendingScroll;
+        pendingScroll = null;
+      }
+    };
+
+    const cancelMomentum = () => {
+      if (momentumId != null) {
+        cancelAnimationFrame(momentumId);
+        momentumId = null;
+      }
+    };
 
     const onDown = (e: PointerEvent) => {
-      // Let touch devices use native momentum scrolling
       if (e.pointerType !== "mouse") return;
       if (e.button !== 0) return;
+      cancelMomentum();
       isDown = true;
       moved = false;
       startX = e.clientX;
       startScroll = el.scrollLeft;
+      lastX = e.clientX;
+      lastT = performance.now();
+      velocity = 0;
     };
     const onMove = (e: PointerEvent) => {
       if (!isDown) return;
       const dx = e.clientX - startX;
-      if (Math.abs(dx) > 4) {
-        moved = true;
-        // Direct assignment — fastest, no rAF queueing
-        el.scrollLeft = startScroll - dx;
+      if (Math.abs(dx) > 4) moved = true;
+      const now = performance.now();
+      const dt = now - lastT;
+      if (dt > 0) {
+        velocity = 0.8 * velocity + 0.2 * ((e.clientX - lastX) / dt);
       }
+      lastX = e.clientX;
+      lastT = now;
+      pendingScroll = startScroll - dx;
+      if (rafId == null) rafId = requestAnimationFrame(flush);
+    };
+    const startMomentum = () => {
+      if (Math.abs(velocity) < 0.05) return;
+      let v = velocity * 16; // px per frame baseline
+      const friction = 0.93;
+      let lastFrame = performance.now();
+      const step = (t: number) => {
+        const dt = t - lastFrame;
+        lastFrame = t;
+        const frames = dt / 16;
+        el.scrollLeft -= v * frames;
+        v *= Math.pow(friction, frames);
+        if (Math.abs(v) > 0.2) {
+          momentumId = requestAnimationFrame(step);
+        } else {
+          momentumId = null;
+        }
+      };
+      momentumId = requestAnimationFrame(step);
     };
     const onUp = (e: PointerEvent) => {
       if (!isDown) return;
@@ -85,6 +133,7 @@ export function TrendingCarousel() {
           ev.stopPropagation();
         };
         el.addEventListener("click", prevent, { capture: true, once: true });
+        startMomentum();
       }
     };
 
@@ -99,6 +148,8 @@ export function TrendingCarousel() {
       el.removeEventListener("pointerup", onUp);
       el.removeEventListener("pointercancel", onUp);
       el.removeEventListener("scroll", updateArrows);
+      if (rafId != null) cancelAnimationFrame(rafId);
+      cancelMomentum();
     };
   }, [updateArrows]);
 
