@@ -75,16 +75,30 @@ function CategoryPage() {
           </div>
         </section>
       ) : (
-        <section className="relative border-b bg-muted/30">
-          <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
-            <Link to="/categories" className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-muted-foreground hover:text-foreground mb-6">
-              <ArrowLeft className="h-3 w-3" /> All collections
-            </Link>
-            {category.tagline && (
-              <p className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground mb-4">{category.tagline}</p>
-            )}
-            <h1 className="font-display text-5xl md:text-7xl">{category.name}</h1>
-            <p className="mt-4 max-w-xl text-muted-foreground">{category.description}</p>
+        <section className="relative border-b bg-black text-background overflow-hidden">
+          <img
+            src={category.cover}
+            alt=""
+            aria-hidden
+            className="absolute inset-0 h-full w-full object-cover opacity-35"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/30" />
+          <div className="relative mx-auto max-w-7xl px-6 py-24 md:py-32 grid md:grid-cols-12 gap-8 items-end">
+            <div className="md:col-span-8">
+              <Link to="/categories" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.35em] text-background/70 hover:text-background mb-6">
+                <ArrowLeft className="h-3 w-3" /> All collections
+              </Link>
+              {category.tagline && (
+                <p className="text-[10px] uppercase tracking-[0.5em] text-background/60 mb-5">{category.tagline}</p>
+              )}
+              <h1 className="font-display text-5xl md:text-7xl leading-[1.02]">{category.name}</h1>
+              <p className="mt-5 max-w-xl text-background/75 text-sm md:text-base">{category.description}</p>
+            </div>
+            <div className="md:col-span-4 hidden md:flex flex-col gap-3 text-[10px] uppercase tracking-[0.3em] text-background/60">
+              <div className="flex justify-between border-b border-background/15 pb-3"><span>Collection</span><span className="text-background">{category.name}</span></div>
+              <div className="flex justify-between border-b border-background/15 pb-3"><span>Shipping</span><span className="text-background">Free · US</span></div>
+              <div className="flex justify-between"><span>Lead time</span><span className="text-background">7–14 days</span></div>
+            </div>
           </div>
         </section>
       )}
