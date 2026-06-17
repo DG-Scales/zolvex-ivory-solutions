@@ -65,8 +65,7 @@ function ShopPage() {
             <div className="flex flex-col gap-3 text-[10px] uppercase tracking-[0.3em] text-background/60">
               <div className="flex justify-between border-b border-background/15 pb-3"><span>Pieces</span><span className="text-background">150+</span></div>
               <div className="flex justify-between border-b border-background/15 pb-3"><span>Collections</span><span className="text-background">07</span></div>
-              <div className="flex justify-between border-b border-background/15 pb-3"><span>Shipping</span><span className="text-background">Free · US</span></div>
-              <div className="flex justify-between"><span>Lead time</span><span className="text-background">7–14 days</span></div>
+              <div className="flex justify-between"><span>Shipping</span><span className="text-background">Free · US</span></div>
             </div>
           </div>
         </div>
