@@ -251,8 +251,8 @@ export function ProductGrid({ category, limit, variant = "default", showFilters 
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
-          {display.map((product) => (
-            <ProductCard key={product.node.id} product={product} variant={variant} fromCategory={category?.slug} />
+          {display.map((product, idx) => (
+            <ProductCard key={`${product.node.id}-${idx}`} product={product} variant={variant} fromCategory={category?.slug} />
           ))}
         </div>
       )}

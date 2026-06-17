@@ -208,12 +208,12 @@ export function TrendingCarousel() {
           ref={scrollerRef}
           className="flex gap-5 md:gap-6 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] snap-x scrollbar-hide cursor-grab active:cursor-grabbing select-none [touch-action:pan-x] [-webkit-overflow-scrolling:touch] [overscroll-behavior-x:contain] [scrollbar-width:none] [will-change:scroll-position]"
         >
-          {ordered.map((p) => {
+          {ordered.map((p, idx) => {
             const img = p.node.images.edges[0]?.node.url;
             const price = p.node.priceRange.minVariantPrice.amount;
             return (
               <Link
-                key={p.node.id}
+                key={`${p.node.id}-${idx}`}
                 to="/product/$handle"
                 params={{ handle: p.node.handle }}
                 data-card
