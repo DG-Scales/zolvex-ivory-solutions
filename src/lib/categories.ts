@@ -33,7 +33,7 @@ const TRENDING_HANDLES = [
   "led-full-spectrum-modern-dining-room-chandelier-with-a-light-luxury-design",
   "4inch-modern-crystal-pendant-light-3-pack-adjustable-hanging-ceiling-lamp-with-crystal-prism-design-for-dining-room-kitchen-island-and-living-room-golden-finish",
   "modern-light-luxury-natural-marble-chandelier-for-villas",
-  "29-nickel-finish-vintage-crystal-vanity-light-elegant-5-light-bathroom-mirror-fixture-with-clear-glass-shades-no-bulbs",
+  "13-8in-natural-marble-wall-sconce-black-sconces-set-of-two-indoor-modern-bathroom-sconces-wall-lighting-for-living-room-bedroom-hallway-stairs",
   "6-light-modern-farmhouse-black-chandelier-contemporary-dining-room-light-fixture-adjustable-height-hanging-industrial-pendant-lights-kitchen-island-clear-glass-shade",
   "gold-pendant-light-fixtures-3-pack-modern-pendant-lighting-with-clear-striped-glass-shade-hanging-pendant-lights-kitchen-island-farmhouse-pendant-lighting-for-dining-room-bedroom-bathroom",
   "leafless-overhead-fan-light-square-intelligence",
@@ -84,7 +84,7 @@ export const categories: Category[] = [
     tagline: "Sconces · Reading · Staircase",
     group: "Collection",
     collectionHandle: "wall-lights-sconces",
-    cover: wallCover,
+    cover: "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/9119cb4a-d848-4f29-9a4d-f917477d7478.png?v=1781625586",
   },
   {
     slug: "exterior-outdoor-lighting",
