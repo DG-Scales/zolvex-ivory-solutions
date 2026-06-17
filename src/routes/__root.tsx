@@ -109,9 +109,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
+     <head>
+  <HeadContent />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NJD4V4K981"></script>
+  <script dangerouslySetInnerHTML={{__html: `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NJD4V4K981');
+  `}} />
+</head>
       <body>
         {children}
         <Scripts />
