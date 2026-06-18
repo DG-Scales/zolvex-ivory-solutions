@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCollectionProducts } from "@/lib/shopify";
+import { fetchProductByHandle } from "@/lib/shopify";
 import { ArrowRight, ArrowLeft, Share2 } from "lucide-react";
 import { useRef, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -8,14 +8,33 @@ import { toast } from "sonner";
 const TRENDING_DISCOUNT_CODE = "SMRDLZ20";
 const TRENDING_DISCOUNT_PCT = 20;
 
+const TRENDING_HANDLES = [
+  "modern-minimalist-outdoor-waterproof-crystal-wall-light",
+  "light-luxury-elegant-crystal-dining-table-chandelier",
+  "huangdongshi-wall-lamp-bedside-living-room-sofa-decorative-lamp",
+  "spanish-marble-restaurant-round-light-luxury-bar-aisle-light-designer-model-coffee-dining-table-chandelier",
+  "minimalist-light-luxury-chandelier-minimalist-creative",
+  "crystal-chandelier-creative-unique-round-ring-pendant-light-for-bedroom-bedside",
+  "all-copper-light-luxury-crystal-chandelier-modern-minimalist-restaurant-three-head-chandelier",
+  "4inch-modern-crystal-pendant-light-3-pack-adjustable-hanging-ceiling-lamp-with-crystal-prism-design-for-dining-room-kitchen-island-and-living-room-golden-finish",
+];
+
 /**
- * Cinematic trending carousel — pulls the Shopify `trending` collection
- * and renders a horizontal snap-scroll with drag-to-swipe.
+ * Cinematic trending carousel — pulls a curated list of Shopify products
+ * by handle, preserving the editorial order, and renders a horizontal
+ * snap-scroll with drag-to-swipe.
  */
 export function TrendingCarousel() {
   const { data } = useQuery({
-    queryKey: ["collection", "trending"],
-    queryFn: () => fetchCollectionProducts("trending", 24),
+    queryKey: ["trending-handles", TRENDING_HANDLES],
+    queryFn: async () => {
+      const results = await Promise.all(
+        TRENDING_HANDLES.map((h) => fetchProductByHandle(h).catch(() => null)),
+      );
+      return results
+        .map((node) => (node ? { node } : null))
+        .filter((x): x is { node: NonNullable<typeof node> } => !!x);
+    },
   });
 
   const ordered = data ?? [];
