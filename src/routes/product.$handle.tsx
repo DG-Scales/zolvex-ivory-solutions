@@ -226,11 +226,19 @@ function ProductPage() {
                       <Share2 className="w-4 h-4" />
                     </button>
                   </div>
-                  <p className="text-2xl font-display mb-8 flex items-center gap-3 flex-wrap">
+                  <p className="text-2xl font-display mb-3 flex items-center gap-3 flex-wrap">
                     <span>{variant?.price.currencyCode} {currentAmt.toFixed(2)}</span>
                     <span className="text-foreground line-through opacity-70 text-lg">{variant?.price.currencyCode} {beforeAmt.toFixed(2)}</span>
                     <span className="inline-flex items-center justify-center bg-black text-white text-xs font-semibold px-2 py-1 rounded">-{discountPct}%</span>
                   </p>
+                  <div className="mb-8 flex items-center gap-0 text-[11px] overflow-hidden rounded-sm border border-border w-fit">
+                    <span className="px-2.5 py-1.5 bg-foreground text-background uppercase tracking-[0.18em] font-medium">
+                      SMRDLZ20
+                    </span>
+                    <span className="px-2.5 py-1.5 font-semibold tabular-nums">
+                      {variant?.price.currencyCode} {(currentAmt * 0.8).toFixed(2)}
+                    </span>
+                  </div>
 
                   <div className="prose prose-sm text-muted-foreground mb-10 whitespace-pre-line leading-relaxed">
                     {prose || "A considered solution. More details coming soon."}
