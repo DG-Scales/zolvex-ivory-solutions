@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { fetchProducts, fetchCollectionProducts } from "@/lib/shopify";
+import { fetchProducts, fetchCollectionProducts, fetchProductsByHandles } from "@/lib/shopify";
 import { ProductCard } from "./ProductCard";
 import { Loader2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
