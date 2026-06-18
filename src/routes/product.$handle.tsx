@@ -251,6 +251,8 @@ function ProductPage() {
                     {prose || "A considered solution. More details coming soon."}
                   </div>
 
+                  <div id="judgeme_product_reviews" data-handle={handle} className="mb-10" />
+
                   {(() => {
                     const allVariants = product.variants.edges.map((e) => e.node);
                     const rawOptions = (product.options || []).filter(
