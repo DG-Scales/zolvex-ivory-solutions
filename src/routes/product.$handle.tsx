@@ -22,6 +22,26 @@ function ProductPage() {
   useCartSync();
   const { handle } = useParams({ from: "/product/$handle" });
   const location = useLocation();
+
+  useEffect(() => {
+    const existing = document.getElementById("jm") as HTMLScriptElement | null;
+    if (existing) {
+      existing.remove();
+    }
+    const script = document.createElement("script");
+    script.id = "jm";
+    script.src = "https://cdn.judge.me/assets/widget.js";
+    script.async = true;
+    script.onload = () => {
+      if (window.jm) {
+        window.jm("init", { shop: "zolvex-solutions-hub-pnf34.myshopify.com" });
+      }
+    };
+    document.body.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, [handle]);
   const fromCategory = new URLSearchParams(location.search).get("from");
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", handle],
