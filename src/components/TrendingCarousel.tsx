@@ -5,7 +5,7 @@ import { ArrowRight, ArrowLeft, Share2 } from "lucide-react";
 import { useRef, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const TRENDING_DISCOUNT_CODE = "ZOLVEX20";
+const TRENDING_DISCOUNT_CODE = "SMRDLZ20";
 const TRENDING_DISCOUNT_PCT = 20;
 
 /**
@@ -230,14 +230,17 @@ export function TrendingCarousel() {
                 {/* gradient base */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
 
-                {/* always-visible price + discount stack */}
-                <div className="absolute top-4 left-4 flex flex-col gap-1.5">
-                  <div className="text-[10px] uppercase tracking-[0.3em] text-background/90 bg-black/55 backdrop-blur px-3 py-1.5 line-through opacity-75">
+                {/* always-visible price + discount pill */}
+                <div className="absolute top-4 left-4 flex items-center bg-black/60 backdrop-blur rounded-sm overflow-hidden text-[10px] uppercase tracking-[0.25em]">
+                  <span className="px-3 py-2 text-background/70 line-through">
                     ${priceNum.toFixed(0)}
-                  </div>
-                  <div className="text-[10px] uppercase tracking-[0.25em] text-black bg-background px-3 py-1.5 font-medium">
-                    ${discounted.toFixed(0)} <span className="opacity-60">· code {TRENDING_DISCOUNT_CODE}</span>
-                  </div>
+                  </span>
+                  <span className="px-3 py-2 bg-background text-black font-semibold">
+                    ${discounted.toFixed(0)}
+                  </span>
+                  <span className="px-3 py-2 text-background/80 border-l border-background/20">
+                    {TRENDING_DISCOUNT_CODE}
+                  </span>
                 </div>
 
                 {/* share chip */}

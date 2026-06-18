@@ -232,14 +232,14 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
         <div
           className={
             isFeatured
-              ? "mt-1 flex items-center justify-between gap-2 border border-black/80 px-2.5 py-1.5 text-[11px] text-black"
-              : "mt-1 flex items-center justify-between gap-2 border border-border bg-muted/40 px-2.5 py-1.5 text-[11px]"
+              ? "mt-1 flex items-center gap-0 text-[11px] text-black overflow-hidden rounded-sm border border-black/80"
+              : "mt-1 flex items-center gap-0 text-[11px] overflow-hidden rounded-sm border border-border"
           }
         >
-          <span className="uppercase tracking-[0.18em] opacity-70">
-            With code <span className="font-semibold opacity-100">ZOLVEX20</span>
+          <span className={isFeatured ? "px-2.5 py-1.5 bg-black text-[#F5F1E8] uppercase tracking-[0.18em] font-medium" : "px-2.5 py-1.5 bg-foreground text-background uppercase tracking-[0.18em] font-medium"}>
+            SMRDLZ20
           </span>
-          <span className="font-semibold tabular-nums">
+          <span className={isFeatured ? "px-2.5 py-1.5 font-semibold tabular-nums" : "px-2.5 py-1.5 font-semibold tabular-nums"}>
             {price.currencyCode} {(parseFloat(price.amount) * 0.8).toFixed(2)}
           </span>
         </div>
