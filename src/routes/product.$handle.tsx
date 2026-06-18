@@ -33,8 +33,10 @@ function ProductPage() {
     script.src = "https://cdn.judge.me/assets/widget.js";
     script.async = true;
     script.onload = () => {
-      if (window.jm) {
-        window.jm("init", { shop: "zolvex-solutions-hub-pnf34.myshopify.com" });
+      const w = window as unknown as Record<string, unknown>;
+      const jm = w.jm as ((cmd: string, opts: { shop: string }) => void) | undefined;
+      if (jm) {
+        jm("init", { shop: "zolvex-solutions-hub-pnf34.myshopify.com" });
       }
     };
     document.body.appendChild(script);
