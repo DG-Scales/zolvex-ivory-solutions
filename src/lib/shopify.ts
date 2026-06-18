@@ -151,6 +151,15 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   return stripChineseImages(data?.data?.product ?? null) ?? null;
 }
 
+export async function fetchProductsByHandles(handles: string[]): Promise<ShopifyProduct[]> {
+  const results = await Promise.all(
+    handles.map((handle) => fetchProductByHandle(handle).catch(() => null)),
+  );
+  return results
+    .filter((node): node is NonNullable<(typeof results)[number]> => !!node)
+    .map((node) => ({ node }));
+}
+
 const COLLECTION_PRODUCTS_QUERY = `
   ${PRODUCT_FRAGMENT}
   query GetCollectionProducts($handle: String!, $first: Int!) {

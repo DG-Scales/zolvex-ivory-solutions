@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { fetchProducts, fetchCollectionProducts } from "@/lib/shopify";
+import { fetchProducts, fetchCollectionProducts, fetchProductsByHandles } from "@/lib/shopify";
 import { ProductCard } from "./ProductCard";
 import { Loader2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
@@ -34,15 +34,20 @@ const SORT_LABELS: Record<SortOption, string> = {
 export function ProductGrid({ category, limit, variant = "default", showFilters = true }: ProductGridProps = {}) {
   const useCollection = !!category?.collectionHandle;
   const useCurated = !!category?.productHandles?.length;
+  const useHandles = !useCollection && useCurated;
 
   const { data, isLoading, error } = useQuery({
     queryKey: useCollection
       ? ["collection", category!.collectionHandle]
-      : ["products"],
+      : useHandles
+        ? ["products-by-handles", category!.productHandles!]
+        : ["products"],
     queryFn: () =>
       useCollection
         ? fetchCollectionProducts(category!.collectionHandle!, 50)
-        : fetchProducts(120),
+        : useHandles
+          ? fetchProductsByHandles(category!.productHandles!)
+          : fetchProducts(120),
   });
 
   // Pre-filter to category scope
