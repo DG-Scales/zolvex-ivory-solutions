@@ -5,7 +5,7 @@ import { ArrowRight, ArrowLeft, Share2 } from "lucide-react";
 import { useRef, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const TRENDING_DISCOUNT_CODE = "ZOLVEX20";
+const TRENDING_DISCOUNT_CODE = "SMRDLZ20";
 const TRENDING_DISCOUNT_PCT = 20;
 
 /**

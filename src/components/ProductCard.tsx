@@ -237,7 +237,7 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
           }
         >
           <span className="uppercase tracking-[0.18em] opacity-70">
-            With code <span className="font-semibold opacity-100">ZOLVEX20</span>
+            With code <span className="font-semibold opacity-100">SMRDLZ20</span>
           </span>
           <span className="font-semibold tabular-nums">
             {price.currencyCode} {(parseFloat(price.amount) * 0.8).toFixed(2)}
