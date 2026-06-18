@@ -31,9 +31,10 @@ export function TrendingCarousel() {
       const results = await Promise.all(
         TRENDING_HANDLES.map((h) => fetchProductByHandle(h).catch(() => null)),
       );
+      type Node = NonNullable<(typeof results)[number]>;
       return results
-        .map((node) => (node ? { node } : null))
-        .filter((x): x is { node: NonNullable<typeof node> } => !!x);
+        .filter((n): n is Node => !!n)
+        .map((node) => ({ node }));
     },
   });
 
