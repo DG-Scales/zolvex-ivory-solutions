@@ -37,7 +37,16 @@ export const categories: Category[] = [
     group: "Featured",
     cover:
       "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151137_31852eb4-f3d8-4d71-bbd7-0044efd2a2f6.png?v=1780845271",
-    collectionHandle: "trending",
+    productHandles: [
+      "modern-minimalist-outdoor-waterproof-crystal-wall-light",
+      "light-luxury-elegant-crystal-dining-table-chandelier",
+      "huangdongshi-wall-lamp-bedside-living-room-sofa-decorative-lamp",
+      "spanish-marble-restaurant-round-light-luxury-bar-aisle-light-designer-model-coffee-dining-table-chandelier",
+      "minimalist-light-luxury-chandelier-minimalist-creative",
+      "crystal-chandelier-creative-unique-round-ring-pendant-light-for-bedroom-bedside",
+      "all-copper-light-luxury-crystal-chandelier-modern-minimalist-restaurant-three-head-chandelier",
+      "4inch-modern-crystal-pendant-light-3-pack-adjustable-hanging-ceiling-lamp-with-crystal-prism-design-for-dining-room-kitchen-island-and-living-room-golden-finish",
+    ],
   },
   {
     slug: "pendant-hanging-lights",
