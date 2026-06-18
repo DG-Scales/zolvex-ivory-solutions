@@ -94,10 +94,15 @@ function CategoryPage() {
               <h1 className="font-display text-5xl md:text-7xl leading-[1.02]">{category.name}</h1>
               <p className="mt-5 max-w-xl text-background/75 text-sm md:text-base">{category.description}</p>
             </div>
-            <div className="md:col-span-4 hidden md:flex flex-col gap-3 text-[10px] uppercase tracking-[0.3em] text-background/60">
-              <div className="flex justify-between border-b border-background/15 pb-3"><span>Collection</span><span className="text-background">{category.name}</span></div>
-              <div className="flex justify-between border-b border-background/15 pb-3"><span>Shipping</span><span className="text-background">Free · US</span></div>
-              <div className="flex justify-between"><span>Lead time</span><span className="text-background">7–14 days</span></div>
+            <div className="md:col-span-4 hidden md:block text-[10px] uppercase tracking-[0.3em] text-background/60">
+              <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 items-baseline">
+                <dt>Collection</dt>
+                <dd className="text-background text-right truncate normal-case tracking-normal text-xs">{category.name}</dd>
+                <dt className="border-t border-background/15 pt-3">Shipping</dt>
+                <dd className="text-background text-right border-t border-background/15 pt-3">Free · US</dd>
+                <dt className="border-t border-background/15 pt-3">Lead time</dt>
+                <dd className="text-background text-right border-t border-background/15 pt-3">7–14 days</dd>
+              </dl>
             </div>
           </div>
         </section>

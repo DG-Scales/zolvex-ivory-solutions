@@ -229,6 +229,20 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
             -{discountPct}%
           </span>
         </p>
+        <div
+          className={
+            isFeatured
+              ? "mt-1 flex items-center justify-between gap-2 border border-black/80 px-2.5 py-1.5 text-[11px] text-black"
+              : "mt-1 flex items-center justify-between gap-2 border border-border bg-muted/40 px-2.5 py-1.5 text-[11px]"
+          }
+        >
+          <span className="uppercase tracking-[0.18em] opacity-70">
+            With code <span className="font-semibold opacity-100">ZOLVEX20</span>
+          </span>
+          <span className="font-semibold tabular-nums">
+            {price.currencyCode} {(parseFloat(price.amount) * 0.8).toFixed(2)}
+          </span>
+        </div>
       </div>
 
     </Link>

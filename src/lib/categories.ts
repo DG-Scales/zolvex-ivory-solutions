@@ -28,9 +28,6 @@ export interface Category {
   tagline?: string;
 }
 
-const DECORATIVE_WALL_LAMP = "huangdongshi-wall-lamp-bedside-living-room-sofa-decorative-lamp";
-const TRENDING_HANDLES = Array.from({ length: 8 }, () => DECORATIVE_WALL_LAMP);
-
 export const categories: Category[] = [
   {
     slug: "trending",
@@ -40,7 +37,7 @@ export const categories: Category[] = [
     group: "Featured",
     cover:
       "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151137_31852eb4-f3d8-4d71-bbd7-0044efd2a2f6.png?v=1780845271",
-    productHandles: TRENDING_HANDLES,
+    collectionHandle: "trending",
   },
   {
     slug: "pendant-hanging-lights",
