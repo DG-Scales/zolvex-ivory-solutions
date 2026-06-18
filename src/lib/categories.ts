@@ -33,7 +33,7 @@ export const categories: Category[] = [
     slug: "trending",
     name: "Trending Now",
     description: "The studio's most-coveted statement pieces — sculptural chandeliers, marble pendants and luxury fixtures defining the season.",
-    tagline: "Editor's edit · Luxury fixtures",
+    tagline: "Editor's edit · Luxury pieces",
     group: "Featured",
     cover:
       "https://cdn.shopify.com/s/files/1/0989/6987/8891/files/hf_20260607_151137_31852eb4-f3d8-4d71-bbd7-0044efd2a2f6.png?v=1780845271",

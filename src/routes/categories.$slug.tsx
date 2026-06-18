@@ -70,7 +70,7 @@ function CategoryPage() {
             </h1>
             <p className="mt-6 max-w-xl text-background/75">{category.description}</p>
             <div className="mt-8 inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-background/60">
-              <span className="h-px w-10 bg-background/40" /> Luxury fixtures · From $349
+              <span className="h-px w-10 bg-background/40" /> Luxury pieces
             </div>
           </div>
         </section>
