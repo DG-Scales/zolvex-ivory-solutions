@@ -1,29 +1,24 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "@/lib/shopify";
-import { getCategory } from "@/lib/categories";
+import { fetchCollectionProducts } from "@/lib/shopify";
 import { ArrowRight, ArrowLeft, Share2 } from "lucide-react";
 import { useRef, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
+const TRENDING_DISCOUNT_CODE = "ZOLVEX20";
+const TRENDING_DISCOUNT_PCT = 20;
+
 /**
- * Cinematic trending carousel — horizontal snap-scroll with drag-to-swipe
- * and arrow controls.
+ * Cinematic trending carousel — pulls the Shopify `trending` collection
+ * and renders a horizontal snap-scroll with drag-to-swipe.
  */
 export function TrendingCarousel() {
-  const cat = getCategory("trending");
-  const handles = cat?.productHandles ?? [];
-
   const { data } = useQuery({
-    queryKey: ["products"],
-    queryFn: () => fetchProducts(120),
+    queryKey: ["collection", "trending"],
+    queryFn: () => fetchCollectionProducts("trending", 24),
   });
 
-  const products = (data ?? []).filter((p) => handles.includes(p.node.handle));
-  // preserve curated order
-  const ordered = handles
-    .map((h) => products.find((p) => p.node.handle === h))
-    .filter(Boolean) as typeof products;
+  const ordered = data ?? [];
 
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
