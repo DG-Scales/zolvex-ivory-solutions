@@ -99,9 +99,7 @@ function CategoryPage() {
                 <dt>Collection</dt>
                 <dd className="text-background text-right truncate normal-case tracking-normal text-xs">{category.name}</dd>
                 <dt className="border-t border-background/15 pt-3">Shipping</dt>
-                <dd className="text-background text-right border-t border-background/15 pt-3">Free · US</dd>
-                <dt className="border-t border-background/15 pt-3">Lead time</dt>
-                <dd className="text-background text-right border-t border-background/15 pt-3">7–14 days</dd>
+                <dd className="text-background text-right border-t border-background/15 pt-3">Secure shipping</dd>
               </dl>
             </div>
           </div>
