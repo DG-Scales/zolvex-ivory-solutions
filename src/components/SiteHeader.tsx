@@ -34,11 +34,11 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
         if (y < 24) {
           setVisible(true);
         } else if (delta > 0) {
-          // scrolling down -> show (per user request)
-          setVisible(true);
-        } else {
-          // scrolling up -> hide
+          // scrolling down -> hide
           setVisible(false);
+        } else {
+          // scrolling up -> show
+          setVisible(true);
         }
         lastYRef.current = y;
         ticking = false;
