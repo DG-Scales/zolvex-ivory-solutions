@@ -206,6 +206,8 @@ export function TrendingCarousel() {
           {ordered.map((p, idx) => {
             const img = p.node.images.edges[0]?.node.url;
             const price = p.node.priceRange.minVariantPrice.amount;
+            const priceNum = parseFloat(price);
+            const discounted = priceNum * (1 - TRENDING_DISCOUNT_PCT / 100);
             return (
               <Link
                 key={`${p.node.id}-${idx}`}
@@ -228,9 +230,14 @@ export function TrendingCarousel() {
                 {/* gradient base */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
 
-                {/* always-visible price chip */}
-                <div className="absolute top-4 left-4 text-[10px] uppercase tracking-[0.3em] text-background/90 bg-black/55 backdrop-blur px-3 py-1.5">
-                  ${parseFloat(price).toFixed(0)}
+                {/* always-visible price + discount stack */}
+                <div className="absolute top-4 left-4 flex flex-col gap-1.5">
+                  <div className="text-[10px] uppercase tracking-[0.3em] text-background/90 bg-black/55 backdrop-blur px-3 py-1.5 line-through opacity-75">
+                    ${priceNum.toFixed(0)}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-[0.25em] text-black bg-background px-3 py-1.5 font-medium">
+                    ${discounted.toFixed(0)} <span className="opacity-60">· code {TRENDING_DISCOUNT_CODE}</span>
+                  </div>
                 </div>
 
                 {/* share chip */}
