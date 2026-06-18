@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Share2, Headphones, Truck, ShieldCheck } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
 import { formatVariantTitle, formatOptionValue } from "@/lib/variantTitle";
@@ -22,6 +22,28 @@ function ProductPage() {
   useCartSync();
   const { handle } = useParams({ from: "/product/$handle" });
   const location = useLocation();
+
+  useEffect(() => {
+    const existing = document.getElementById("jm") as HTMLScriptElement | null;
+    if (existing) {
+      existing.remove();
+    }
+    const script = document.createElement("script");
+    script.id = "jm";
+    script.src = "https://cdn.judge.me/assets/widget.js";
+    script.async = true;
+    script.onload = () => {
+      const w = window as unknown as Record<string, unknown>;
+      const jm = w.jm as ((cmd: string, opts: { shop: string }) => void) | undefined;
+      if (jm) {
+        jm("init", { shop: "zolvex-solutions-hub-pnf34.myshopify.com" });
+      }
+    };
+    document.body.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, [handle]);
   const fromCategory = new URLSearchParams(location.search).get("from");
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", handle],
@@ -250,6 +272,8 @@ function ProductPage() {
                   <div className="prose prose-sm text-muted-foreground mb-10 whitespace-pre-line leading-relaxed">
                     {prose || "A considered solution. More details coming soon."}
                   </div>
+
+                  <div id="judgeme_product_reviews" data-handle={handle} className="mb-10" />
 
                   {(() => {
                     const allVariants = product.variants.edges.map((e) => e.node);
