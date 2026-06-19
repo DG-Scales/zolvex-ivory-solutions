@@ -143,9 +143,9 @@ function ProductPage() {
             };
 
             return (
-              <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
-                <div>
-                  <div className="relative">
+              <div className="grid md:grid-cols-2 gap-12 lg:gap-20 max-md:gap-0">
+                <div className="max-md:contents">
+                  <div className="relative max-md:order-1">
                     <div
                       className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative touch-pan-y select-none"
                       onTouchStart={handleTouchStart}
