@@ -217,7 +217,7 @@ function ProductPage() {
                   )}
 
                   {specs.length > 0 && (
-                    <div className="mt-8 border border-border rounded-md p-6 bg-muted/30">
+                    <div className="mt-8 border border-border rounded-md p-6 bg-muted/30 max-md:order-7">
                       <h2 className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">Specifications</h2>
                       <ul className="space-y-2 text-sm">
                         {specs.map((s, i) => (
