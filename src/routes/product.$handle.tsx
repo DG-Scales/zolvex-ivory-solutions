@@ -356,7 +356,7 @@ function ProductPage() {
                     };
 
                     return (
-                      <div className="mb-8 space-y-5">
+                      <div className="mb-8 space-y-5 max-md:order-9">
                         {options.map((opt) => {
                           const selected = currentSel[opt.name];
                           return (
@@ -397,7 +397,7 @@ function ProductPage() {
 
                   <Button
                     size="lg"
-                    className="w-full rounded-full"
+                    className="w-full rounded-full max-md:order-10"
                     disabled={!variant || !variant.availableForSale || isAdding}
                     onClick={async () => {
                       if (!variant) return;
@@ -414,10 +414,10 @@ function ProductPage() {
                   >
                     {isAdding ? <Loader2 className="w-4 h-4 animate-spin" /> : variant?.availableForSale ? "Add to bag" : "Sold out"}
                   </Button>
-                  <div className="mt-4">
+                  <div className="mt-4 max-md:order-11">
                     <PromoBox />
                   </div>
-                  <div className="mt-3 flex flex-wrap items-center justify-center gap-3 text-[11px] uppercase tracking-wider text-muted-foreground">
+                  <div className="mt-3 flex flex-wrap items-center justify-center gap-3 text-[11px] uppercase tracking-wider text-muted-foreground max-md:order-12">
                     <span className="flex items-center gap-1.5"><Headphones className="w-3.5 h-3.5" /> 24/7 Customer Support</span>
                     <span className="flex items-center gap-1.5"><Truck className="w-3.5 h-3.5" /> Free Shipping</span>
                     <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> Secure Payment</span>
