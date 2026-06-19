@@ -231,8 +231,8 @@ function ProductPage() {
                   )}
                 </div>
 
-                <div className="md:py-8">
-                  <div className="flex items-start justify-between gap-4 mb-4">
+                <div className="md:py-8 max-md:contents">
+                  <div className="flex items-start justify-between gap-4 mb-4 max-md:order-3">
                     <h1 className="font-display text-4xl md:text-5xl">{product.title}</h1>
                     <button
                       type="button"
