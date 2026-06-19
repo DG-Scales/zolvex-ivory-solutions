@@ -276,7 +276,7 @@ function ProductPage() {
                   <div
                     key={`jdgm-${handle}`}
                     id="judgeme_product_reviews"
-                    className="jdgm-widget jdgm-review-widget jdgm-outside-widget mb-10"
+                    className="jdgm-widget jdgm-review-widget jdgm-outside-widget mb-10 max-md:order-8"
                     data-id={product.id.split("/").pop()}
                     data-handle={handle}
                     data-product-title={product.title}
