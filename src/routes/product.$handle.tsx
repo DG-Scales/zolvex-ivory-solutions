@@ -203,7 +203,7 @@ function ProductPage() {
                   </div>
 
                   {images.length > 1 && (
-                    <div className="grid grid-cols-5 gap-2">
+                    <div className="grid grid-cols-5 gap-2 max-md:order-2">
                       {images.map((img, i) => (
                         <button
                           key={i}
