@@ -143,9 +143,9 @@ function ProductPage() {
             };
 
             return (
-              <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
-                <div>
-                  <div className="relative">
+              <div className="grid md:grid-cols-2 gap-12 lg:gap-20 max-md:gap-0">
+                <div className="max-md:contents">
+                  <div className="relative max-md:order-1">
                     <div
                       className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative touch-pan-y select-none"
                       onTouchStart={handleTouchStart}
@@ -203,7 +203,7 @@ function ProductPage() {
                   </div>
 
                   {images.length > 1 && (
-                    <div className="grid grid-cols-5 gap-2">
+                    <div className="grid grid-cols-5 gap-2 max-md:order-2">
                       {images.map((img, i) => (
                         <button
                           key={i}
@@ -217,7 +217,7 @@ function ProductPage() {
                   )}
 
                   {specs.length > 0 && (
-                    <div className="mt-8 border border-border rounded-md p-6 bg-muted/30">
+                    <div className="mt-8 border border-border rounded-md p-6 bg-muted/30 max-md:order-7">
                       <h2 className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">Specifications</h2>
                       <ul className="space-y-2 text-sm">
                         {specs.map((s, i) => (
@@ -231,8 +231,8 @@ function ProductPage() {
                   )}
                 </div>
 
-                <div className="md:py-8">
-                  <div className="flex items-start justify-between gap-4 mb-4">
+                <div className="md:py-8 max-md:contents">
+                  <div className="flex items-start justify-between gap-4 mb-4 max-md:order-3">
                     <h1 className="font-display text-4xl md:text-5xl">{product.title}</h1>
                     <button
                       type="button"
@@ -248,13 +248,13 @@ function ProductPage() {
                       <Share2 className="w-4 h-4" />
                     </button>
                   </div>
-                  <p className="text-2xl font-display mb-3 flex items-center gap-3 flex-wrap">
+                  <p className="text-2xl font-display mb-3 flex items-center gap-3 flex-wrap max-md:order-4">
                     <span>{variant?.price.currencyCode} {currentAmt.toFixed(2)}</span>
                     <span className="text-foreground line-through opacity-70 text-lg">{variant?.price.currencyCode} {beforeAmt.toFixed(2)}</span>
                     <span className="inline-flex items-center justify-center bg-black text-white text-xs font-semibold px-2 py-1 rounded">-{discountPct}%</span>
                   </p>
                   <div
-                    className="mb-8 flex items-center gap-0 text-[11px] overflow-hidden rounded-sm border border-border w-fit cursor-pointer hover:opacity-80 transition-opacity"
+                    className="mb-8 flex items-center gap-0 text-[11px] overflow-hidden rounded-sm border border-border w-fit cursor-pointer hover:opacity-80 transition-opacity max-md:order-5"
                     onClick={() => {
                       navigator.clipboard.writeText("SMRDLZ20").then(() => {
                         toast.success("Code copied to clipboard");
@@ -269,14 +269,14 @@ function ProductPage() {
                     </span>
                   </div>
 
-                  <div className="prose prose-sm text-muted-foreground mb-10 whitespace-pre-line leading-relaxed">
+                  <div className="prose prose-sm text-muted-foreground mb-10 whitespace-pre-line leading-relaxed max-md:order-6">
                     {prose || "A considered solution. More details coming soon."}
                   </div>
 
                   <div
                     key={`jdgm-${handle}`}
                     id="judgeme_product_reviews"
-                    className="jdgm-widget jdgm-review-widget jdgm-outside-widget mb-10"
+                    className="jdgm-widget jdgm-review-widget jdgm-outside-widget mb-10 max-md:order-8"
                     data-id={product.id.split("/").pop()}
                     data-handle={handle}
                     data-product-title={product.title}
@@ -356,7 +356,7 @@ function ProductPage() {
                     };
 
                     return (
-                      <div className="mb-8 space-y-5">
+                      <div className="mb-8 space-y-5 max-md:order-9">
                         {options.map((opt) => {
                           const selected = currentSel[opt.name];
                           return (
@@ -397,7 +397,7 @@ function ProductPage() {
 
                   <Button
                     size="lg"
-                    className="w-full rounded-full"
+                    className="w-full rounded-full max-md:order-10"
                     disabled={!variant || !variant.availableForSale || isAdding}
                     onClick={async () => {
                       if (!variant) return;
@@ -414,10 +414,10 @@ function ProductPage() {
                   >
                     {isAdding ? <Loader2 className="w-4 h-4 animate-spin" /> : variant?.availableForSale ? "Add to bag" : "Sold out"}
                   </Button>
-                  <div className="mt-4">
+                  <div className="mt-4 max-md:order-11">
                     <PromoBox />
                   </div>
-                  <div className="mt-3 flex flex-wrap items-center justify-center gap-3 text-[11px] uppercase tracking-wider text-muted-foreground">
+                  <div className="mt-3 flex flex-wrap items-center justify-center gap-3 text-[11px] uppercase tracking-wider text-muted-foreground max-md:order-12">
                     <span className="flex items-center gap-1.5"><Headphones className="w-3.5 h-3.5" /> 24/7 Customer Support</span>
                     <span className="flex items-center gap-1.5"><Truck className="w-3.5 h-3.5" /> Free Shipping</span>
                     <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> Secure Payment</span>
