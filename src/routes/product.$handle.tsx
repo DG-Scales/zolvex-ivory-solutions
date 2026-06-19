@@ -273,7 +273,14 @@ function ProductPage() {
                     {prose || "A considered solution. More details coming soon."}
                   </div>
 
-                  <div id="judgeme_product_reviews" data-handle={handle} className="mb-10" />
+                  <div
+                    key={`jdgm-${handle}`}
+                    id="judgeme_product_reviews"
+                    className="jdgm-widget jdgm-review-widget jdgm-outside-widget mb-10"
+                    data-id={product.id.split("/").pop()}
+                    data-handle={handle}
+                    data-product-title={product.title}
+                  />
 
                   {(() => {
                     const allVariants = product.variants.edges.map((e) => e.node);
