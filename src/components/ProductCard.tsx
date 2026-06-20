@@ -25,7 +25,7 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
   const isLoading = useCartStore((s) => s.isLoading);
 
   const discountPct = 20;
-  const beforePrice = parseFloat(price.amount) * 1.2;
+  const beforePrice = getBeforePrice(parseFloat(price.amount));
 
 
   const [imgIndex, setImgIndex] = useState(0);

@@ -93,7 +93,7 @@ function ProductPage() {
 
             const discountPct = 20;
             const currentAmt = parseFloat(variant?.price.amount || "0");
-            const beforeAmt = currentAmt * 1.2;
+            const beforeAmt = getBeforePrice(currentAmt);
 
 
             const scrollToIndex = (i: number) => {
