@@ -88,25 +88,25 @@ export const CartIconLink = () => {
       <HoverCardContent
         align="end"
         sideOffset={10}
-        className="w-[420px] p-0 hidden md:block overflow-hidden rounded-2xl border border-border shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]"
+        className="w-[460px] p-0 hidden md:block overflow-hidden rounded-2xl border border-border shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]"
       >
-        <div className="px-5 py-4 border-b bg-card">
+        <div className="px-6 py-5 border-b bg-card">
           <p className="font-display text-xl tracking-tight">Your Bag</p>
           <p className="text-sm text-muted-foreground mt-0.5">
             {totalItems === 0 ? "Your bag is empty" : `${totalItems} item${totalItems !== 1 ? "s" : ""}`}
           </p>
         </div>
         {items.length === 0 ? (
-          <div className="px-5 py-10 text-center">
+          <div className="px-6 py-12 text-center">
             <ShoppingBag className="h-8 w-8 mx-auto text-muted-foreground/40 mb-2" />
             <p className="text-sm text-muted-foreground">Nothing here yet — go add something you love.</p>
           </div>
         ) : (
           <>
-            <div className="max-h-[260px] overflow-y-auto px-5 py-4 space-y-5">
+            <div className="max-h-[300px] overflow-y-auto px-6 py-5 space-y-6">
               {items.map((item) => (
-                <div key={item.variantId} className="flex gap-3.5 items-start">
-                  <div className="w-16 h-16 bg-muted rounded-lg overflow-hidden flex-shrink-0 ring-1 ring-black/5">
+                <div key={item.variantId} className="flex gap-4 items-start">
+                  <div className="w-20 h-20 bg-muted rounded-lg overflow-hidden flex-shrink-0 ring-1 ring-black/5">
                     {item.product.node.images?.edges?.[0]?.node && (
                       <img
                         src={item.product.node.images.edges[0].node.url}
@@ -141,11 +141,11 @@ export const CartIconLink = () => {
           </>
         )}
         {upsells.length > 0 && (
-          <div className="border-t bg-muted/30 px-5 py-3">
-            <p className="text-[10px] font-medium uppercase tracking-[0.15em] text-muted-foreground mb-2">
+          <div className="border-t bg-muted/30 px-6 py-4">
+            <p className="text-[11px] font-medium uppercase tracking-[0.15em] text-muted-foreground mb-3">
               You may also like
             </p>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               {upsells.map((product) => {
                 const variant = product.node.variants.edges[0]?.node;
                 const price = product.node.priceRange.minVariantPrice;
@@ -168,22 +168,22 @@ export const CartIconLink = () => {
                         />
                       )}
                     </Link>
-                    <div className="p-2">
+                    <div className="p-2.5">
                       <Link
                         to="/product/$handle"
                         params={{ handle: product.node.handle }}
-                        className="text-[10px] font-medium leading-snug block hover:underline underline-offset-2 line-clamp-2"
+                        className="text-[11px] font-medium leading-snug block hover:underline underline-offset-2 line-clamp-2"
                       >
                         {product.node.title}
                       </Link>
-                      <div className="flex items-center justify-between mt-1">
-                        <p className="text-[10px] text-muted-foreground font-medium">
+                      <div className="flex items-center justify-between mt-1.5">
+                        <p className="text-[11px] text-muted-foreground font-medium">
                           {price.currencyCode} {parseFloat(price.amount).toFixed(2)}
                         </p>
                         <Button
                           size="icon"
                           variant="secondary"
-                          className="h-5 w-5 rounded-full"
+                          className="h-6 w-6 rounded-full"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleQuickAdd(product);
@@ -191,9 +191,9 @@ export const CartIconLink = () => {
                           disabled={cartLoading || !variant}
                         >
                           {cartLoading ? (
-                            <Loader2 className="h-2.5 w-2.5 animate-spin" />
+                            <Loader2 className="h-3 w-3 animate-spin" />
                           ) : (
-                            <Plus className="h-2.5 w-2.5" />
+                            <Plus className="h-3 w-3" />
                           )}
                         </Button>
                       </div>
@@ -205,7 +205,7 @@ export const CartIconLink = () => {
           </div>
         )}
         {upsellLoading && upsells.length === 0 && (
-          <div className="border-t bg-muted/30 px-5 py-4">
+          <div className="border-t bg-muted/30 px-6 py-4">
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-3">
               You may also like
             </p>
@@ -229,7 +229,7 @@ export const CartIconLink = () => {
         )}
 
         {items.length > 0 && (
-          <div className="px-5 py-3 border-t bg-muted/30">
+          <div className="px-6 py-4 border-t bg-muted/30">
             <div className="flex justify-between items-baseline">
               <span className="text-sm text-muted-foreground">Subtotal</span>
               <span className="font-display text-xl tracking-tight">
@@ -239,7 +239,7 @@ export const CartIconLink = () => {
           </div>
         )}
 
-        <div className="px-5 pb-5 pt-2 bg-card">
+        <div className="px-6 pb-6 pt-3 bg-card">
           <Button asChild className="w-full rounded-full h-11 text-sm font-semibold">
             <Link to="/cart">{items.length === 0 ? "Start Shopping" : "Go to Checkout"}</Link>
           </Button>
