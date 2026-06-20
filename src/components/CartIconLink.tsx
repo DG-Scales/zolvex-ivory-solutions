@@ -90,15 +90,15 @@ export const CartIconLink = () => {
         sideOffset={10}
         className="w-[420px] p-0 hidden md:block overflow-hidden rounded-2xl border border-border shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]"
       >
-        <div className="px-6 py-5 border-b bg-card">
-          <p className="font-display text-2xl tracking-tight">Your Bag</p>
-          <p className="text-sm text-muted-foreground mt-1">
+        <div className="px-5 py-4 border-b bg-card">
+          <p className="font-display text-xl tracking-tight">Your Bag</p>
+          <p className="text-sm text-muted-foreground mt-0.5">
             {totalItems === 0 ? "Your bag is empty" : `${totalItems} item${totalItems !== 1 ? "s" : ""}`}
           </p>
         </div>
         {items.length === 0 ? (
-          <div className="px-6 py-14 text-center">
-            <ShoppingBag className="h-10 w-10 mx-auto text-muted-foreground/40 mb-3" />
+          <div className="px-5 py-10 text-center">
+            <ShoppingBag className="h-8 w-8 mx-auto text-muted-foreground/40 mb-2" />
             <p className="text-sm text-muted-foreground">Nothing here yet — go add something you love.</p>
           </div>
         ) : (
