@@ -73,8 +73,10 @@ const CART_LINES_REMOVE_MUTATION = `
 `;
 
 function formatCheckoutUrl(checkoutUrl: string): string {
-  // Return the checkoutUrl exactly as Shopify returns it — do NOT rewrite the host.
-  return checkoutUrl;
+  // Keep Shopify's host intact; only add visitor/session tracking params so
+  // the checkout session is attributed to the same visitor that browsed the
+  // Lovable-hosted storefront.
+  return appendShopifyTrackingToCheckoutUrl(checkoutUrl);
 }
 
 function isCartNotFoundError(userErrors: Array<{ field: string[] | null; message: string }>): boolean {
