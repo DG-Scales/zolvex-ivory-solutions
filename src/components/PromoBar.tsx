@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const MESSAGES = [
   "Free shipping on all U.S. orders · Worldwide delivery",
-  "Limited summer discount — All orders 20% off with code SMRDLZ20",
+  "STOREWIDE SALE — 20% OFF EVERYTHING",
 ];
 
 export function PromoBar() {
