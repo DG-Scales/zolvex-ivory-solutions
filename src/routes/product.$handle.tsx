@@ -442,7 +442,7 @@ function ProductPage() {
                   })
                   .sort((a, b) => a.h - b.h)
                   .slice(0, 4);
-                return scored.map(({ p }) => <ProductCard key={p.node.id} product={p} />);
+                return scored.map(({ p }) => <ProductCard key={p.node.id} product={p} smallBadge />);
               })()}
             </div>
           </section>
