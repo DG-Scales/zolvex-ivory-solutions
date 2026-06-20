@@ -103,10 +103,10 @@ export const CartIconLink = () => {
           </div>
         ) : (
           <>
-            <div className="max-h-[220px] overflow-y-auto px-5 py-4 space-y-4">
+            <div className="max-h-[260px] overflow-y-auto px-5 py-4 space-y-5">
               {items.map((item) => (
-                <div key={item.variantId} className="flex gap-3 items-start">
-                  <div className="w-14 h-14 bg-muted rounded-lg overflow-hidden flex-shrink-0 ring-1 ring-black/5">
+                <div key={item.variantId} className="flex gap-3.5 items-start">
+                  <div className="w-16 h-16 bg-muted rounded-lg overflow-hidden flex-shrink-0 ring-1 ring-black/5">
                     {item.product.node.images?.edges?.[0]?.node && (
                       <img
                         src={item.product.node.images.edges[0].node.url}
@@ -141,11 +141,11 @@ export const CartIconLink = () => {
           </>
         )}
         {upsells.length > 0 && (
-          <div className="border-t bg-muted/30 px-5 py-4">
-            <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-3">
+          <div className="border-t bg-muted/30 px-5 py-3">
+            <p className="text-[10px] font-medium uppercase tracking-[0.15em] text-muted-foreground mb-2">
               You may also like
             </p>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
               {upsells.map((product) => {
                 const variant = product.node.variants.edges[0]?.node;
                 const price = product.node.priceRange.minVariantPrice;
@@ -153,7 +153,7 @@ export const CartIconLink = () => {
                 return (
                   <div
                     key={product.node.id}
-                    className="group relative bg-card rounded-xl overflow-hidden ring-1 ring-black/5 hover:ring-black/10 transition-all"
+                    className="group relative bg-card rounded-lg overflow-hidden ring-1 ring-black/5 hover:ring-black/10 transition-all"
                   >
                     <Link
                       to="/product/$handle"
@@ -168,22 +168,22 @@ export const CartIconLink = () => {
                         />
                       )}
                     </Link>
-                    <div className="p-2.5">
+                    <div className="p-2">
                       <Link
                         to="/product/$handle"
                         params={{ handle: product.node.handle }}
-                        className="text-[11px] font-medium leading-snug block hover:underline underline-offset-2 line-clamp-2"
+                        className="text-[10px] font-medium leading-snug block hover:underline underline-offset-2 line-clamp-2"
                       >
                         {product.node.title}
                       </Link>
-                      <div className="flex items-center justify-between mt-1.5">
-                        <p className="text-[11px] text-muted-foreground font-medium">
+                      <div className="flex items-center justify-between mt-1">
+                        <p className="text-[10px] text-muted-foreground font-medium">
                           {price.currencyCode} {parseFloat(price.amount).toFixed(2)}
                         </p>
                         <Button
                           size="icon"
                           variant="secondary"
-                          className="h-6 w-6 rounded-full"
+                          className="h-5 w-5 rounded-full"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleQuickAdd(product);
@@ -191,9 +191,9 @@ export const CartIconLink = () => {
                           disabled={cartLoading || !variant}
                         >
                           {cartLoading ? (
-                            <Loader2 className="h-3 w-3 animate-spin" />
+                            <Loader2 className="h-2.5 w-2.5 animate-spin" />
                           ) : (
-                            <Plus className="h-3 w-3" />
+                            <Plus className="h-2.5 w-2.5" />
                           )}
                         </Button>
                       </div>
