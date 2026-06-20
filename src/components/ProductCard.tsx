@@ -11,6 +11,7 @@ interface ProductCardProps {
   product: ShopifyProduct;
   variant?: "default" | "featured";
   fromCategory?: string;
+  smallBadge?: boolean;
 }
 
 export function ProductCard({ product, variant = "default", fromCategory }: ProductCardProps) {
