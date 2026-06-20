@@ -256,10 +256,10 @@ export function TrendingCarousel() {
                 {/* always-visible price + discount pill */}
                 <div className="absolute top-4 left-4 flex items-center bg-black/60 backdrop-blur rounded-sm overflow-hidden text-[10px] uppercase tracking-[0.25em]">
                   <span className="px-3 py-2 text-background/70 line-through">
-                    ${priceNum.toFixed(0)}
+                    ${(priceNum * 1.2).toFixed(0)}
                   </span>
                   <span className="px-3 py-2 bg-background text-black font-semibold">
-                    ${discounted.toFixed(0)}
+                    ${priceNum.toFixed(0)}
                   </span>
                 </div>
 
