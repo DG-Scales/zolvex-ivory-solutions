@@ -122,8 +122,10 @@ function RootShell({ children }: { children: ReactNode }) {
   <script dangerouslySetInnerHTML={{__html: `
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
     gtag('js', new Date());
-    gtag('config', 'G-NJD4V4K981');
+    // send_page_view:false — SPA route changes fire page_view manually in RootComponent.
+    gtag('config', 'G-NJD4V4K981', { send_page_view: false });
   `}} />
 </head>
       <body>
@@ -136,6 +138,32 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // Import lazily to avoid SSR touching window.
+    let cancelled = false;
+    void import("../lib/analytics").then(({ trackPageView, ensureShopifyVisitor, ensureShopifySession }) => {
+      if (cancelled) return;
+      ensureShopifyVisitor();
+      ensureShopifySession();
+      // Initial load page_view (gtag config has send_page_view:false).
+      trackPageView(window.location.pathname + window.location.search);
+      const unsub = router.subscribe("onResolved", () => {
+        const loc = router.state.location;
+        trackPageView(loc.pathname + loc.searchStr);
+      });
+      // Store unsubscribe on window so the cleanup below can call it.
+      (window as unknown as { __zolvexRouterUnsub?: () => void }).__zolvexRouterUnsub = unsub;
+    });
+    return () => {
+      cancelled = true;
+      const w = window as unknown as { __zolvexRouterUnsub?: () => void };
+      w.__zolvexRouterUnsub?.();
+      w.__zolvexRouterUnsub = undefined;
+    };
+  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>

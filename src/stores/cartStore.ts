@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { storefrontApiRequest, type ShopifyProduct } from "@/lib/shopify";
+import { appendShopifyTrackingToCheckoutUrl } from "@/lib/analytics";
 
 export interface CartItem {
   lineId: string | null;
@@ -72,8 +73,10 @@ const CART_LINES_REMOVE_MUTATION = `
 `;
 
 function formatCheckoutUrl(checkoutUrl: string): string {
-  // Return the checkoutUrl exactly as Shopify returns it — do NOT rewrite the host.
-  return checkoutUrl;
+  // Keep Shopify's host intact; only add visitor/session tracking params so
+  // the checkout session is attributed to the same visitor that browsed the
+  // Lovable-hosted storefront.
+  return appendShopifyTrackingToCheckoutUrl(checkoutUrl);
 }
 
 function isCartNotFoundError(userErrors: Array<{ field: string[] | null; message: string }>): boolean {
@@ -134,6 +137,7 @@ export const useCartStore = create<CartStore>()(
         const { items, cartId, clearCart } = get();
         const existingItem = items.find((i) => i.variantId === item.variantId);
 
+        let added = false;
         set({ isLoading: true });
         try {
           if (!cartId) {
@@ -144,6 +148,7 @@ export const useCartStore = create<CartStore>()(
                 checkoutUrl: result.checkoutUrl,
                 items: [{ ...item, lineId: result.lineId }],
               });
+              added = true;
             }
           } else if (existingItem) {
             const newQuantity = existingItem.quantity + item.quantity;
@@ -152,6 +157,7 @@ export const useCartStore = create<CartStore>()(
             if (result.success) {
               const currentItems = get().items;
               set({ items: currentItems.map((i) => (i.variantId === item.variantId ? { ...i, quantity: newQuantity } : i)) });
+              added = true;
             } else if (result.cartNotFound) {
               clearCart();
             }
@@ -160,6 +166,7 @@ export const useCartStore = create<CartStore>()(
             if (result.success) {
               const currentItems = get().items;
               set({ items: [...currentItems, { ...item, lineId: result.lineId ?? null }] });
+              added = true;
             } else if (result.cartNotFound) {
               clearCart();
             }
@@ -168,6 +175,18 @@ export const useCartStore = create<CartStore>()(
           console.error("Failed to add item:", error);
         } finally {
           set({ isLoading: false });
+        }
+
+        if (added && typeof window !== "undefined") {
+          void import("@/lib/analytics").then(({ trackAddToCart }) => {
+            trackAddToCart({
+              id: item.variantId,
+              title: item.product.node.title,
+              price: parseFloat(item.price.amount),
+              currency: item.price.currencyCode,
+              quantity: item.quantity,
+            });
+          });
         }
       },
 

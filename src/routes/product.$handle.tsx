@@ -45,6 +45,7 @@ function ProductPage() {
       script.remove();
     };
   }, [handle]);
+
   const fromCategory = new URLSearchParams(location.search).get("from");
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", handle],
@@ -54,6 +55,19 @@ function ProductPage() {
     queryKey: ["products", "related"],
     queryFn: () => fetchProducts(24),
   });
+
+  // Fire GA4 view_item once the product loads.
+  useEffect(() => {
+    if (!product) return;
+    void import("@/lib/analytics").then(({ trackProductView }) => {
+      trackProductView({
+        id: product.id,
+        title: product.title,
+        price: parseFloat(product.priceRange.minVariantPrice.amount),
+        currency: product.priceRange.minVariantPrice.currencyCode,
+      });
+    });
+  }, [product]);
 
   const [variantIndex, setVariantIndex] = useState(0);
   const addItem = useCartStore((s) => s.addItem);
