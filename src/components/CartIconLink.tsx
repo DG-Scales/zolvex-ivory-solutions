@@ -88,24 +88,24 @@ export const CartIconLink = () => {
       <HoverCardContent
         align="end"
         sideOffset={10}
-        className="w-[420px] p-0 hidden md:block overflow-hidden"
+        className="w-[460px] p-0 hidden md:block overflow-hidden rounded-xl border border-border shadow-2xl"
       >
-        <div className="px-4 py-3 border-b">
-          <p className="font-display text-lg">Your Bag</p>
-          <p className="text-xs text-muted-foreground">
+        <div className="px-5 py-4 border-b bg-card">
+          <p className="font-display text-xl tracking-tight">Your Bag</p>
+          <p className="text-xs text-muted-foreground mt-0.5">
             {totalItems === 0 ? "Empty" : `${totalItems} item${totalItems !== 1 ? "s" : ""}`}
           </p>
         </div>
         {items.length === 0 ? (
-          <div className="px-4 py-8 text-center text-sm text-muted-foreground">
+          <div className="px-5 py-10 text-center text-sm text-muted-foreground">
             Your bag is empty.
           </div>
         ) : (
           <>
-            <div className="max-h-80 overflow-y-auto px-4 py-3 space-y-3">
+            <div className="max-h-72 overflow-y-auto px-5 py-4 space-y-4">
               {items.map((item) => (
-                <div key={item.variantId} className="flex gap-3 items-start">
-                  <div className="w-14 h-14 bg-muted rounded-md overflow-hidden flex-shrink-0">
+                <div key={item.variantId} className="flex gap-4 items-start">
+                  <div className="w-16 h-16 bg-muted rounded-lg overflow-hidden flex-shrink-0 ring-1 ring-black/5">
                     {item.product.node.images?.edges?.[0]?.node && (
                       <img
                         src={item.product.node.images.edges[0].node.url}
@@ -115,11 +115,11 @@ export const CartIconLink = () => {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">{item.product.node.title}</p>
-                    <p className="text-[11px] text-muted-foreground truncate">
+                    <p className="text-sm font-medium truncate leading-tight">{item.product.node.title}</p>
+                    <p className="text-[11px] text-muted-foreground truncate mt-0.5">
                       {formatVariantTitle({ title: item.variantTitle, selectedOptions: item.selectedOptions })}
                     </p>
-                    <p className="text-xs mt-0.5">
+                    <p className="text-xs mt-1.5 font-medium">
                       {item.quantity} × {item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}
                     </p>
                   </div>
@@ -128,7 +128,7 @@ export const CartIconLink = () => {
                       e.stopPropagation();
                       removeItem(item.variantId);
                     }}
-                    className="text-muted-foreground hover:text-destructive transition-colors p-1 -mr-1"
+                    className="text-muted-foreground hover:text-destructive transition-colors p-1 -mr-1 mt-0.5"
                     aria-label="Remove item"
                     title="Remove"
                   >
@@ -137,76 +137,81 @@ export const CartIconLink = () => {
                 </div>
               ))}
             </div>
-            <div className="px-4 py-3 border-t space-y-3">
+            <div className="px-5 py-4 border-t bg-card">
               <div className="flex justify-between items-center text-sm">
                 <span className="text-muted-foreground">Subtotal</span>
-                <span className="font-display text-base">
+                <span className="font-display text-lg">
                   {currency} {totalPrice.toFixed(2)}
                 </span>
               </div>
             </div>
           </>
         )}
-        <div className="px-4 pb-3">
-          <Button asChild size="sm" className="w-full rounded-full">
+        <div className="px-5 pb-5 pt-1 bg-card">
+          <Button asChild size="sm" className="w-full rounded-full h-11 text-sm">
             <Link to="/cart">Go to cart</Link>
           </Button>
         </div>
 
         {/* Upsells */}
         {upsells.length > 0 && (
-          <div className="border-t bg-muted/30 px-4 py-3">
-            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2.5">
+          <div className="border-t bg-muted/40 px-5 py-5">
+            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground mb-4">
               You may also like
             </p>
-            <div className="space-y-2.5">
+            <div className="grid grid-cols-2 gap-3">
               {upsells.map((product) => {
                 const variant = product.node.variants.edges[0]?.node;
                 const price = product.node.priceRange.minVariantPrice;
                 const img = product.node.images.edges[0]?.node;
                 return (
-                  <div key={product.node.id} className="flex gap-2.5 items-center">
+                  <div
+                    key={product.node.id}
+                    className="group relative bg-card rounded-lg overflow-hidden ring-1 ring-black/5 hover:ring-black/15 transition-all"
+                  >
                     <Link
                       to="/product/$handle"
                       params={{ handle: product.node.handle }}
-                      className="w-12 h-12 bg-muted rounded-md overflow-hidden flex-shrink-0 hover:opacity-80 transition-opacity"
+                      className="block aspect-[4/3] bg-muted overflow-hidden"
                     >
                       {img && (
                         <img
                           src={img.url}
                           alt={img.altText || product.node.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       )}
                     </Link>
-                    <div className="flex-1 min-w-0">
+                    <div className="p-3">
                       <Link
                         to="/product/$handle"
                         params={{ handle: product.node.handle }}
-                        className="text-xs font-medium truncate block hover:underline underline-offset-2"
+                        className="text-xs font-medium leading-tight block hover:underline underline-offset-2 line-clamp-2"
                       >
                         {product.node.title}
                       </Link>
-                      <p className="text-[11px] text-muted-foreground mt-0.5">
-                        {price.currencyCode} {parseFloat(price.amount).toFixed(2)}
-                      </p>
+                      <div className="flex items-center justify-between mt-2">
+                        <p className="text-[11px] text-muted-foreground">
+                          {price.currencyCode} {parseFloat(price.amount).toFixed(2)}
+                        </p>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7 rounded-full -mr-1.5"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleQuickAdd(product);
+                          }}
+                          disabled={cartLoading || !variant}
+                        >
+                          {cartLoading ? (
+                            <Loader2 className="h-3 w-3 animate-spin" />
+                          ) : (
+                            <Plus className="h-3.5 w-3.5" />
+                          )}
+                        </Button>
+                      </div>
                     </div>
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      className="h-7 w-7 rounded-full"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleQuickAdd(product);
-                      }}
-                      disabled={cartLoading || !variant}
-                    >
-                      {cartLoading ? (
-                        <Loader2 className="h-3 w-3 animate-spin" />
-                      ) : (
-                        <Plus className="h-3.5 w-3.5" />
-                      )}
-                    </Button>
                   </div>
                 );
               })}
@@ -214,15 +219,24 @@ export const CartIconLink = () => {
           </div>
         )}
         {upsellLoading && upsells.length === 0 && (
-          <div className="border-t bg-muted/30 px-4 py-3">
-            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">
+          <div className="border-t bg-muted/40 px-5 py-5">
+            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground mb-4">
               You may also like
             </p>
-            <div className="flex gap-2 animate-pulse">
-              <div className="w-12 h-12 bg-muted rounded-md" />
-              <div className="flex-1 space-y-1.5 py-1">
-                <div className="h-3 bg-muted rounded w-3/4" />
-                <div className="h-2.5 bg-muted rounded w-1/2" />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-card rounded-lg overflow-hidden ring-1 ring-black/5 animate-pulse">
+                <div className="aspect-[4/3] bg-muted" />
+                <div className="p-3 space-y-2">
+                  <div className="h-3 bg-muted rounded w-4/5" />
+                  <div className="h-2.5 bg-muted rounded w-1/2" />
+                </div>
+              </div>
+              <div className="bg-card rounded-lg overflow-hidden ring-1 ring-black/5 animate-pulse">
+                <div className="aspect-[4/3] bg-muted" />
+                <div className="p-3 space-y-2">
+                  <div className="h-3 bg-muted rounded w-4/5" />
+                  <div className="h-2.5 bg-muted rounded w-1/2" />
+                </div>
               </div>
             </div>
           </div>
