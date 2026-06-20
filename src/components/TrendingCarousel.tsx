@@ -254,24 +254,12 @@ export function TrendingCarousel() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
 
                 {/* always-visible price + discount pill */}
-                <div
-                  className="absolute top-4 left-4 flex items-center bg-black/60 backdrop-blur rounded-sm overflow-hidden text-[10px] uppercase tracking-[0.25em] cursor-pointer hover:bg-black/70 transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    navigator.clipboard.writeText(TRENDING_DISCOUNT_CODE).then(() => {
-                      toast.success("Code copied to clipboard");
-                    });
-                  }}
-                >
+                <div className="absolute top-4 left-4 flex items-center bg-black/60 backdrop-blur rounded-sm overflow-hidden text-[10px] uppercase tracking-[0.25em]">
                   <span className="px-3 py-2 text-background/70 line-through">
                     ${priceNum.toFixed(0)}
                   </span>
                   <span className="px-3 py-2 bg-background text-black font-semibold">
                     ${discounted.toFixed(0)}
-                  </span>
-                  <span className="px-3 py-2 text-background/80 border-l border-background/20">
-                    Code: {TRENDING_DISCOUNT_CODE}
                   </span>
                 </div>
 
