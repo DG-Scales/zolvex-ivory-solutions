@@ -88,7 +88,7 @@ export const CartIconLink = () => {
       <HoverCardContent
         align="end"
         sideOffset={10}
-        className="w-[520px] p-0 hidden md:block overflow-hidden rounded-2xl border border-border shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]"
+        className="w-[420px] p-0 hidden md:block overflow-hidden rounded-2xl border border-border shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]"
       >
         <div className="px-6 py-5 border-b bg-card">
           <p className="font-display text-2xl tracking-tight">Your Bag</p>
