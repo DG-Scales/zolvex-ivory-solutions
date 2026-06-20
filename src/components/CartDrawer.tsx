@@ -65,7 +65,10 @@ export const CartDrawer = () => {
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
                 <ShoppingBag className="h-12 w-12 text-muted-foreground mx-auto mb-4" strokeWidth={1} />
-                <p className="text-muted-foreground">Your bag is empty</p>
+                <p className="text-muted-foreground mb-4">Your bag is empty</p>
+                <Link to="/categories" onClick={() => setIsOpen(false)}>
+                  <Button size="lg" className="rounded-full px-8">Start Shopping</Button>
+                </Link>
               </div>
             </div>
           ) : (
