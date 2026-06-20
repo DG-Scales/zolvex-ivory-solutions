@@ -103,10 +103,10 @@ export const CartIconLink = () => {
           </div>
         ) : (
           <>
-            <div className="max-h-[340px] overflow-y-auto px-6 py-5 space-y-5">
+            <div className="max-h-[220px] overflow-y-auto px-5 py-4 space-y-4">
               {items.map((item) => (
-                <div key={item.variantId} className="flex gap-4 items-start">
-                  <div className="w-20 h-20 bg-muted rounded-xl overflow-hidden flex-shrink-0 ring-1 ring-black/5">
+                <div key={item.variantId} className="flex gap-3 items-start">
+                  <div className="w-14 h-14 bg-muted rounded-lg overflow-hidden flex-shrink-0 ring-1 ring-black/5">
                     {item.product.node.images?.edges?.[0]?.node && (
                       <img
                         src={item.product.node.images.edges[0].node.url}
@@ -117,10 +117,10 @@ export const CartIconLink = () => {
                   </div>
                   <div className="flex-1 min-w-0 pt-0.5">
                     <p className="text-sm font-semibold leading-snug">{item.product.node.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {formatVariantTitle({ title: item.variantTitle, selectedOptions: item.selectedOptions })}
                     </p>
-                    <p className="text-sm mt-2 font-medium">
+                    <p className="text-sm mt-1.5 font-medium">
                       {item.quantity} × {item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}
                     </p>
                   </div>
@@ -137,14 +137,6 @@ export const CartIconLink = () => {
                   </button>
                 </div>
               ))}
-            </div>
-            <div className="px-6 py-5 border-t bg-muted/30">
-              <div className="flex justify-between items-baseline">
-                <span className="text-sm text-muted-foreground">Subtotal</span>
-                <span className="font-display text-2xl tracking-tight">
-                  {currency} {totalPrice.toFixed(2)}
-                </span>
-              </div>
             </div>
           </>
         )}
