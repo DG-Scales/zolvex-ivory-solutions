@@ -160,7 +160,7 @@ export const CartIconLink = () => {
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-4">
               You may also like
             </p>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               {upsells.map((product) => {
                 const variant = product.node.variants.edges[0]?.node;
                 const price = product.node.priceRange.minVariantPrice;
@@ -183,22 +183,22 @@ export const CartIconLink = () => {
                         />
                       )}
                     </Link>
-                    <div className="p-3">
+                    <div className="p-2.5">
                       <Link
                         to="/product/$handle"
                         params={{ handle: product.node.handle }}
-                        className="text-xs font-medium leading-snug block hover:underline underline-offset-2 line-clamp-2"
+                        className="text-[11px] font-medium leading-snug block hover:underline underline-offset-2 line-clamp-2"
                       >
                         {product.node.title}
                       </Link>
-                      <div className="flex items-center justify-between mt-2.5">
-                        <p className="text-xs text-muted-foreground font-medium">
+                      <div className="flex items-center justify-between mt-1.5">
+                        <p className="text-[11px] text-muted-foreground font-medium">
                           {price.currencyCode} {parseFloat(price.amount).toFixed(2)}
                         </p>
                         <Button
                           size="icon"
                           variant="secondary"
-                          className="h-7 w-7 rounded-full"
+                          className="h-6 w-6 rounded-full"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleQuickAdd(product);
@@ -208,7 +208,7 @@ export const CartIconLink = () => {
                           {cartLoading ? (
                             <Loader2 className="h-3 w-3 animate-spin" />
                           ) : (
-                            <Plus className="h-3.5 w-3.5" />
+                            <Plus className="h-3 w-3" />
                           )}
                         </Button>
                       </div>
