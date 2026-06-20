@@ -137,6 +137,7 @@ export const useCartStore = create<CartStore>()(
         const { items, cartId, clearCart } = get();
         const existingItem = items.find((i) => i.variantId === item.variantId);
 
+        let added = false;
         set({ isLoading: true });
         try {
           if (!cartId) {
@@ -147,6 +148,7 @@ export const useCartStore = create<CartStore>()(
                 checkoutUrl: result.checkoutUrl,
                 items: [{ ...item, lineId: result.lineId }],
               });
+              added = true;
             }
           } else if (existingItem) {
             const newQuantity = existingItem.quantity + item.quantity;
@@ -155,6 +157,7 @@ export const useCartStore = create<CartStore>()(
             if (result.success) {
               const currentItems = get().items;
               set({ items: currentItems.map((i) => (i.variantId === item.variantId ? { ...i, quantity: newQuantity } : i)) });
+              added = true;
             } else if (result.cartNotFound) {
               clearCart();
             }
@@ -163,6 +166,7 @@ export const useCartStore = create<CartStore>()(
             if (result.success) {
               const currentItems = get().items;
               set({ items: [...currentItems, { ...item, lineId: result.lineId ?? null }] });
+              added = true;
             } else if (result.cartNotFound) {
               clearCart();
             }
@@ -171,6 +175,18 @@ export const useCartStore = create<CartStore>()(
           console.error("Failed to add item:", error);
         } finally {
           set({ isLoading: false });
+        }
+
+        if (added && typeof window !== "undefined") {
+          void import("@/lib/analytics").then(({ trackAddToCart }) => {
+            trackAddToCart({
+              id: item.variantId,
+              title: item.product.node.title,
+              price: parseFloat(item.price.amount),
+              currency: item.price.currencyCode,
+              quantity: item.quantity,
+            });
+          });
         }
       },
 
