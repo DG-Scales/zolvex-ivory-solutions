@@ -93,26 +93,14 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                     <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">Browse</p>
                     <ul className="space-y-3">
                       <li><Link to="/shop" onClick={close} className="text-base text-foreground">Shop all</Link></li>
-                      <li><Link to="/categories" onClick={close} className="text-base text-foreground">Collections</Link></li>
                       <li><Link to="/categories/$slug" params={{ slug: "trending" }} onClick={close} className="text-base text-foreground">Trending</Link></li>
+                      <li><Link to="/socials" onClick={close} className="text-base text-foreground">Socials</Link></li>
                     </ul>
                   </div>
                   <div>
                     <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">Featured</p>
                     <ul className="space-y-3">
                       {featured.map((c) => (
-                        <li key={c.slug}>
-                          <Link to="/categories/$slug" params={{ slug: c.slug }} onClick={close} className="text-sm text-foreground/80">
-                            {c.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">Collections</p>
-                    <ul className="space-y-3">
-                      {collections.map((c) => (
                         <li key={c.slug}>
                           <Link to="/categories/$slug" params={{ slug: c.slug }} onClick={close} className="text-sm text-foreground/80">
                             {c.name}
@@ -168,7 +156,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                 </div>
               </div>
             </div>
-            <Link to="/categories" className={linkBase}>Collections</Link>
+            <Link to="/socials" className={linkBase}>Socials</Link>
             <Link to="/categories/$slug" params={{ slug: "trending" }} className={linkBase}>Trending</Link>
             <Link to="/about" className={linkBase}>About</Link>
             <Link to="/contact" className={linkBase}>Contact</Link>
