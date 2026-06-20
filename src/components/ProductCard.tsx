@@ -223,10 +223,10 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
               : "text-sm font-medium flex items-center gap-2 flex-wrap"
           }
         >
-          <span>{price.currencyCode} {parseFloat(price.amount).toFixed(2)}</span>
           <span className={isFeatured ? "line-through opacity-50" : "text-foreground line-through opacity-70"}>
             {price.currencyCode} {beforePrice.toFixed(2)}
           </span>
+          <span>{price.currencyCode} {parseFloat(price.amount).toFixed(2)}</span>
           <span className="inline-flex items-center justify-center bg-black text-white text-[10px] font-semibold px-1.5 py-0.5 rounded">
             -{discountPct}%
           </span>
