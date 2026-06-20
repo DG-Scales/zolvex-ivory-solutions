@@ -86,8 +86,8 @@ function CartPage() {
             <p className="text-sm text-muted-foreground max-w-sm mb-8">
               Explore our curated collection of lighting and discover pieces made to last.
             </p>
-            <Button onClick={() => navigate({ to: "/shop" })} size="lg" className="rounded-full px-8">
-              Browse the catalog
+            <Button onClick={() => navigate({ to: "/categories" })} size="lg" className="rounded-full px-8">
+              Start Shopping
             </Button>
           </div>
         ) : (
