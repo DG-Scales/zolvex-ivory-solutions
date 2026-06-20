@@ -6,9 +6,9 @@ export const Route = createFileRoute("/socials")({
   head: () => ({
     meta: [
       { title: "Socials — Zolvex" },
-      { name: "description", content: "Follow Zolvex on Instagram and TikTok for new arrivals, room inspiration, and behind-the-scenes looks." },
-      { property: "og:title", content: "Socials — Zolvex" },
-      { property: "og:description", content: "Follow Zolvex on Instagram and TikTok for new arrivals, room inspiration, and behind-the-scenes looks." },
+    { name: "description", content: "Follow Zolvex on Instagram and TikTok for new products, sales, and updates." },
+    { property: "og:title", content: "Socials — Zolvex" },
+    { property: "og:description", content: "Follow Zolvex on Instagram and TikTok for new products, sales, and updates." },
     ],
   }),
   component: SocialsPage,
@@ -26,7 +26,7 @@ function SocialsPage() {
               Follow the light.
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              New arrivals, room inspiration, and behind-the-scenes looks — posted first on our socials.
+              Be the first to see new products, exclusive sales, and what we are building next — follow and like to stay along for the journey.
             </p>
           </div>
         </section>
@@ -49,7 +49,7 @@ function SocialsPage() {
                   <h3 className="font-display text-2xl">Instagram</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  Styled interiors, product close-ups, and lighting ideas for every room. See how our fixtures look in real homes.
+                  Get the first look at new products and exclusive sales. Follow and like to stay updated on everything we are dropping next.
                 </p>
                 <span className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-foreground group-hover:opacity-60 transition-opacity">
                   @zolvex.lighting <span aria-hidden="true">→</span>
@@ -69,7 +69,7 @@ function SocialsPage() {
                   <h3 className="font-display text-2xl">TikTok</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  Short videos of installs, unboxings, and quick tips. The fastest way to see a fixture in action before you buy.
+                  Catch new releases, flash sales, and behind-the-scenes updates. Follow and like to see the journey as it happens.
                 </p>
                 <span className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-foreground group-hover:opacity-60 transition-opacity">
                   @zolvex.org <span aria-hidden="true">→</span>
