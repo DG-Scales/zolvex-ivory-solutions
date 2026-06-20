@@ -140,16 +140,9 @@ export const CartIconLink = () => {
             </div>
           </>
         )}
-        <div className="px-6 pb-6 pt-2 bg-card">
-          <Button asChild className="w-full rounded-full h-12 text-sm font-semibold">
-            <Link to="/cart">{items.length === 0 ? "Start Shopping" : "Go to Checkout"}</Link>
-          </Button>
-        </div>
-
-        {/* Upsells */}
         {upsells.length > 0 && (
-          <div className="border-t bg-muted/30 px-6 py-6">
-            <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-4">
+          <div className="border-t bg-muted/30 px-5 py-4">
+            <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-3">
               You may also like
             </p>
             <div className="grid grid-cols-2 gap-3">
@@ -212,7 +205,7 @@ export const CartIconLink = () => {
           </div>
         )}
         {upsellLoading && upsells.length === 0 && (
-          <div className="border-t bg-muted/30 px-6 py-5">
+          <div className="border-t bg-muted/30 px-5 py-4">
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-3">
               You may also like
             </p>
@@ -234,6 +227,23 @@ export const CartIconLink = () => {
             </div>
           </div>
         )}
+
+        {items.length > 0 && (
+          <div className="px-5 py-3 border-t bg-muted/30">
+            <div className="flex justify-between items-baseline">
+              <span className="text-sm text-muted-foreground">Subtotal</span>
+              <span className="font-display text-xl tracking-tight">
+                {currency} {totalPrice.toFixed(2)}
+              </span>
+            </div>
+          </div>
+        )}
+
+        <div className="px-5 pb-5 pt-2 bg-card">
+          <Button asChild className="w-full rounded-full h-11 text-sm font-semibold">
+            <Link to="/cart">{items.length === 0 ? "Start Shopping" : "Go to Checkout"}</Link>
+          </Button>
+        </div>
       </HoverCardContent>
     </HoverCard>
   );
