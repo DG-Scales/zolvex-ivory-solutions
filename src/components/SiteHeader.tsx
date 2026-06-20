@@ -5,6 +5,7 @@ import { Logo } from "./Logo";
 import { SearchDialog } from "./SearchDialog";
 import { PromoBar } from "./PromoBar";
 import { AccountMenu } from "./AccountMenu";
+import { GoogleTranslateWidget } from "./GoogleTranslate";
 import { categoriesByGroup } from "@/lib/categories";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
