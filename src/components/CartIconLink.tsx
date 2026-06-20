@@ -173,7 +173,7 @@ export const CartIconLink = () => {
                     <Link
                       to="/product/$handle"
                       params={{ handle: product.node.handle }}
-                      className="block aspect-square bg-muted overflow-hidden"
+                      className="block aspect-[4/3] bg-muted overflow-hidden"
                     >
                       {img && (
                         <img
