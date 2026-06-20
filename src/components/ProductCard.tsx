@@ -11,9 +11,10 @@ interface ProductCardProps {
   product: ShopifyProduct;
   variant?: "default" | "featured";
   fromCategory?: string;
+  smallBadge?: boolean;
 }
 
-export function ProductCard({ product, variant = "default", fromCategory }: ProductCardProps) {
+export function ProductCard({ product, variant = "default", fromCategory, smallBadge }: ProductCardProps) {
   const node = product.node;
   const selectedVariant = node.variants.edges[0]?.node;
   const images = node.images.edges;
@@ -117,7 +118,7 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
         onTouchCancel={onTouchEnd}
       >
         <div className="absolute top-3 left-3 z-20 flex flex-col gap-1.5 items-start">
-          <span className="bg-black text-white text-[10px] font-bold tracking-wider px-2 py-1 rounded-sm uppercase leading-none">
+          <span className={`bg-black text-white font-bold tracking-wider rounded-sm uppercase leading-none ${smallBadge ? "text-[10px] px-2 py-1" : "text-[11px] px-2.5 py-1"}`}>
             20% Off
           </span>
           {isSoldOut && (
