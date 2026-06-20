@@ -5,7 +5,6 @@ import { Logo } from "./Logo";
 import { SearchDialog } from "./SearchDialog";
 import { PromoBar } from "./PromoBar";
 import { AccountMenu } from "./AccountMenu";
-import { GoogleTranslateWidget } from "./GoogleTranslate";
 import { categoriesByGroup } from "@/lib/categories";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -126,10 +125,6 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                     <Link to="/about" onClick={close} className="block text-sm text-foreground/80">About</Link>
                     <Link to="/contact" onClick={close} className="block text-sm text-foreground/80">Contact</Link>
                   </div>
-                  <div className="pt-4 border-t">
-                    <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">Language</p>
-                    <GoogleTranslateWidget />
-                  </div>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -179,9 +174,6 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
             <Link to="/contact" className={linkBase}>Contact</Link>
           </nav>
           <div className="flex items-center justify-end gap-0.5 sm:gap-1">
-            <div className="hidden sm:block">
-              <GoogleTranslateWidget />
-            </div>
             <SearchDialog overlay={overlay} />
             <AccountMenu overlay={overlay} />
             <CartIconLink />

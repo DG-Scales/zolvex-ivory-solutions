@@ -129,11 +129,6 @@ function RootShell({ children }: { children: ReactNode }) {
       <body>
         {children}
         <Scripts />
-        <script dangerouslySetInnerHTML={{__html: `
-          function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-          }
-        `}} />
       </body>
     </html>
   );
