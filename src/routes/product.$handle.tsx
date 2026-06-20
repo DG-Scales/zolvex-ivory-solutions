@@ -13,6 +13,7 @@ import { parseDescription } from "@/lib/parseSpecs";
 import { toast } from "sonner";
 import { PromoBox } from "@/components/PromoBox";
 import { ProductCard } from "@/components/ProductCard";
+import { getBeforePrice } from "@/lib/utils";
 
 export const Route = createFileRoute("/product/$handle")({
   component: ProductPage,

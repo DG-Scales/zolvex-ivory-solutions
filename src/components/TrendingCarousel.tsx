@@ -4,6 +4,7 @@ import { fetchProductByHandle } from "@/lib/shopify";
 import { ArrowRight, ArrowLeft, Share2 } from "lucide-react";
 import { useRef, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
+import { getBeforePrice } from "@/lib/utils";
 
 const TRENDING_DISCOUNT_CODE = "SMRDLZ20";
 const TRENDING_DISCOUNT_PCT = 20;

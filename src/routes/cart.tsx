@@ -133,7 +133,7 @@ function CartPage() {
                             {formatVariantTitle({ title: item.variantTitle, selectedOptions: item.selectedOptions })}
                           </p>
                           <p className="text-sm mt-1 flex items-center gap-2 flex-wrap">
-                            <span className="line-through opacity-60">{fmt(parseFloat(item.price.amount) * 1.2)}</span>
+                            <span className="line-through opacity-60">{fmt(getBeforePrice(parseFloat(item.price.amount)))}</span>
                             <span className="font-medium">{fmt(parseFloat(item.price.amount))}</span>
                             <span className="inline-flex items-center justify-center bg-black text-white text-[10px] font-semibold px-1.5 py-0.5 rounded">-20%</span>
                           </p>
