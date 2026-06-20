@@ -60,6 +60,9 @@ function Index() {
             <Button asChild variant="outline" size="lg" className="rounded-full px-7 bg-transparent text-background border-background/60 hover:bg-background hover:text-foreground">
               <Link to="/story">How Zolvex began</Link>
             </Button>
+            <Button asChild variant="outline" size="lg" className="rounded-full px-7 bg-transparent text-background border-background/60 hover:bg-background hover:text-foreground">
+              <Link to="/socials">Check out our socials</Link>
+            </Button>
           </div>
         </div>
       </section>
