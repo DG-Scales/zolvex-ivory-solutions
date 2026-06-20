@@ -6,6 +6,7 @@ import { useState, useRef } from "react";
 import { toast } from "sonner";
 import type { ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
+import { getBeforePrice } from "@/lib/utils";
 
 interface ProductCardProps {
   product: ShopifyProduct;
