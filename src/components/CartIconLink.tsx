@@ -88,25 +88,25 @@ export const CartIconLink = () => {
       <HoverCardContent
         align="end"
         sideOffset={10}
-        className="w-[520px] p-0 hidden md:block overflow-hidden rounded-2xl border border-border shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]"
+        className="w-[420px] p-0 hidden md:block overflow-hidden rounded-2xl border border-border shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]"
       >
-        <div className="px-6 py-5 border-b bg-card">
-          <p className="font-display text-2xl tracking-tight">Your Bag</p>
-          <p className="text-sm text-muted-foreground mt-1">
+        <div className="px-5 py-4 border-b bg-card">
+          <p className="font-display text-xl tracking-tight">Your Bag</p>
+          <p className="text-sm text-muted-foreground mt-0.5">
             {totalItems === 0 ? "Your bag is empty" : `${totalItems} item${totalItems !== 1 ? "s" : ""}`}
           </p>
         </div>
         {items.length === 0 ? (
-          <div className="px-6 py-14 text-center">
-            <ShoppingBag className="h-10 w-10 mx-auto text-muted-foreground/40 mb-3" />
+          <div className="px-5 py-10 text-center">
+            <ShoppingBag className="h-8 w-8 mx-auto text-muted-foreground/40 mb-2" />
             <p className="text-sm text-muted-foreground">Nothing here yet — go add something you love.</p>
           </div>
         ) : (
           <>
-            <div className="max-h-[340px] overflow-y-auto px-6 py-5 space-y-5">
+            <div className="max-h-[220px] overflow-y-auto px-5 py-4 space-y-4">
               {items.map((item) => (
-                <div key={item.variantId} className="flex gap-4 items-start">
-                  <div className="w-20 h-20 bg-muted rounded-xl overflow-hidden flex-shrink-0 ring-1 ring-black/5">
+                <div key={item.variantId} className="flex gap-3 items-start">
+                  <div className="w-14 h-14 bg-muted rounded-lg overflow-hidden flex-shrink-0 ring-1 ring-black/5">
                     {item.product.node.images?.edges?.[0]?.node && (
                       <img
                         src={item.product.node.images.edges[0].node.url}
@@ -117,10 +117,10 @@ export const CartIconLink = () => {
                   </div>
                   <div className="flex-1 min-w-0 pt-0.5">
                     <p className="text-sm font-semibold leading-snug">{item.product.node.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {formatVariantTitle({ title: item.variantTitle, selectedOptions: item.selectedOptions })}
                     </p>
-                    <p className="text-sm mt-2 font-medium">
+                    <p className="text-sm mt-1.5 font-medium">
                       {item.quantity} × {item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}
                     </p>
                   </div>
@@ -138,26 +138,11 @@ export const CartIconLink = () => {
                 </div>
               ))}
             </div>
-            <div className="px-6 py-5 border-t bg-muted/30">
-              <div className="flex justify-between items-baseline">
-                <span className="text-sm text-muted-foreground">Subtotal</span>
-                <span className="font-display text-2xl tracking-tight">
-                  {currency} {totalPrice.toFixed(2)}
-                </span>
-              </div>
-            </div>
           </>
         )}
-        <div className="px-6 pb-6 pt-2 bg-card">
-          <Button asChild className="w-full rounded-full h-12 text-sm font-semibold">
-            <Link to="/cart">{items.length === 0 ? "Start Shopping" : "Go to Checkout"}</Link>
-          </Button>
-        </div>
-
-        {/* Upsells */}
         {upsells.length > 0 && (
-          <div className="border-t bg-muted/30 px-6 py-6">
-            <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-4">
+          <div className="border-t bg-muted/30 px-5 py-4">
+            <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-3">
               You may also like
             </p>
             <div className="grid grid-cols-2 gap-3">
@@ -220,7 +205,7 @@ export const CartIconLink = () => {
           </div>
         )}
         {upsellLoading && upsells.length === 0 && (
-          <div className="border-t bg-muted/30 px-6 py-5">
+          <div className="border-t bg-muted/30 px-5 py-4">
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-3">
               You may also like
             </p>
@@ -242,6 +227,23 @@ export const CartIconLink = () => {
             </div>
           </div>
         )}
+
+        {items.length > 0 && (
+          <div className="px-5 py-3 border-t bg-muted/30">
+            <div className="flex justify-between items-baseline">
+              <span className="text-sm text-muted-foreground">Subtotal</span>
+              <span className="font-display text-xl tracking-tight">
+                {currency} {totalPrice.toFixed(2)}
+              </span>
+            </div>
+          </div>
+        )}
+
+        <div className="px-5 pb-5 pt-2 bg-card">
+          <Button asChild className="w-full rounded-full h-11 text-sm font-semibold">
+            <Link to="/cart">{items.length === 0 ? "Start Shopping" : "Go to Checkout"}</Link>
+          </Button>
+        </div>
       </HoverCardContent>
     </HoverCard>
   );
