@@ -91,11 +91,9 @@ function ProductPage() {
             const variant = product.variants.edges[variantIndex]?.node;
             const { prose, specs } = parseDescription(product.description);
 
-            let _h = 0;
-            for (let i = 0; i < product.id.length; i++) _h = (_h * 31 + product.id.charCodeAt(i)) >>> 0;
-            const discountPct = 10 + (_h % 16);
+            const discountPct = 20;
             const currentAmt = parseFloat(variant?.price.amount || "0");
-            const beforeAmt = currentAmt / (1 - discountPct / 100);
+            const beforeAmt = currentAmt * 1.2;
 
 
             const scrollToIndex = (i: number) => {

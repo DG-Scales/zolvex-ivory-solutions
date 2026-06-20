@@ -23,10 +23,8 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
   const addItem = useCartStore((s) => s.addItem);
   const isLoading = useCartStore((s) => s.isLoading);
 
-  let h = 0;
-  for (let i = 0; i < node.id.length; i++) h = (h * 31 + node.id.charCodeAt(i)) >>> 0;
-  const discountPct = 10 + (h % 16);
-  const beforePrice = parseFloat(price.amount) / (1 - discountPct / 100);
+  const discountPct = 20;
+  const beforePrice = parseFloat(price.amount) * 1.2;
 
 
   const [imgIndex, setImgIndex] = useState(0);
