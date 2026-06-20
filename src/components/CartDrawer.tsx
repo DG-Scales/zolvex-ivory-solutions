@@ -99,8 +99,10 @@ export const CartDrawer = () => {
                         <p className="text-xs text-muted-foreground mt-0.5">
                           {formatVariantTitle({ title: item.variantTitle, selectedOptions: item.selectedOptions })}
                         </p>
-                        <p className="font-medium mt-2">
-                          {item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}
+                        <p className="mt-2 flex items-center gap-2 flex-wrap">
+                          <span className="line-through opacity-60 text-sm">{item.price.currencyCode} {(parseFloat(item.price.amount) * 1.2).toFixed(2)}</span>
+                          <span className="font-medium">{item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}</span>
+                          <span className="inline-flex items-center justify-center bg-black text-white text-[10px] font-semibold px-1.5 py-0.5 rounded">-20%</span>
                         </p>
                       </div>
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
