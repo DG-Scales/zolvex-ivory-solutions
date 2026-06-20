@@ -235,8 +235,8 @@ export const CartIconLink = () => {
               <div className="bg-card rounded-xl overflow-hidden ring-1 ring-black/5 animate-pulse">
                 <div className="aspect-square bg-muted" />
                 <div className="p-3 space-y-2">
-                  <div class="h-3 bg-muted rounded w-4/5" />
-                  <div class="h-2.5 bg-muted rounded w-1/2" />
+                  <div className="h-3 bg-muted rounded w-4/5" />
+                  <div className="h-2.5 bg-muted rounded w-1/2" />
                 </div>
               </div>
             </div>
