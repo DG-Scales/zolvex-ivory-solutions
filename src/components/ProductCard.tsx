@@ -116,13 +116,16 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
         onTouchEnd={onTouchEnd}
         onTouchCancel={onTouchEnd}
       >
-        {isSoldOut && (
-          <div className="absolute top-3 left-3 z-20">
+        <div className="absolute top-3 left-3 z-20 flex flex-col gap-1.5 items-start">
+          <span className="bg-black text-white text-[10px] font-bold tracking-wider px-2 py-1 rounded-sm uppercase leading-none">
+            20% Off
+          </span>
+          {isSoldOut && (
             <Badge variant="destructive" className="uppercase tracking-wider text-[10px]">
               Sold Out
             </Badge>
-          </div>
-        )}
+          )}
+        </div>
         {images.length > 0 ? (
           <div
             className="flex h-full will-change-transform"
