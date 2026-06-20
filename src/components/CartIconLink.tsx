@@ -220,21 +220,21 @@ export const CartIconLink = () => {
           </div>
         )}
         {upsellLoading && upsells.length === 0 && (
-          <div className="border-t bg-muted/30 px-6 py-6">
-            <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-4">
+          <div className="border-t bg-muted/30 px-6 py-5">
+            <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-3">
               You may also like
             </p>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <div className="bg-card rounded-xl overflow-hidden ring-1 ring-black/5 animate-pulse">
-                <div className="aspect-square bg-muted" />
-                <div className="p-3 space-y-2">
+                <div className="aspect-[4/3] bg-muted" />
+                <div className="p-2.5 space-y-2">
                   <div className="h-3 bg-muted rounded w-4/5" />
                   <div className="h-2.5 bg-muted rounded w-1/2" />
                 </div>
               </div>
               <div className="bg-card rounded-xl overflow-hidden ring-1 ring-black/5 animate-pulse">
-                <div className="aspect-square bg-muted" />
-                <div className="p-3 space-y-2">
+                <div className="aspect-[4/3] bg-muted" />
+                <div className="p-2.5 space-y-2">
                   <div className="h-3 bg-muted rounded w-4/5" />
                   <div className="h-2.5 bg-muted rounded w-1/2" />
                 </div>
