@@ -122,8 +122,10 @@ function RootShell({ children }: { children: ReactNode }) {
   <script dangerouslySetInnerHTML={{__html: `
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
     gtag('js', new Date());
-    gtag('config', 'G-NJD4V4K981');
+    // send_page_view:false — SPA route changes fire page_view manually in RootComponent.
+    gtag('config', 'G-NJD4V4K981', { send_page_view: false });
   `}} />
 </head>
       <body>
