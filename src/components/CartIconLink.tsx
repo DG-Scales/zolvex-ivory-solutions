@@ -41,7 +41,7 @@ export const CartIconLink = () => {
         if (cancelled) return;
         const cartIds = new Set(items.map((i) => i.product.node.id));
         const candidates = products.filter((p) => !cartIds.has(p.node.id));
-        setUpsells(shuffleArray(candidates).slice(0, 3));
+        setUpsells(shuffleArray(candidates).slice(0, 2));
       })
       .catch(() => {
         // silently ignore upsell fetch errors
