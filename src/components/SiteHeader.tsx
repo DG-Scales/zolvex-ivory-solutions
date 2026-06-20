@@ -93,8 +93,8 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                     <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">Browse</p>
                     <ul className="space-y-3">
                       <li><Link to="/shop" onClick={close} className="text-base text-foreground">Shop all</Link></li>
-                      <li><Link to="/categories" onClick={close} className="text-base text-foreground">Collections</Link></li>
                       <li><Link to="/categories/$slug" params={{ slug: "trending" }} onClick={close} className="text-base text-foreground">Trending</Link></li>
+                      <li><Link to="/socials" onClick={close} className="text-base text-foreground">Socials</Link></li>
                     </ul>
                   </div>
                   <div>
