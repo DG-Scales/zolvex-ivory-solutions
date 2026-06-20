@@ -247,7 +247,7 @@ export function TrendingCarousel() {
                     className="absolute inset-0 h-full w-full object-cover transition-all duration-[900ms] ease-out group-hover:scale-110 group-hover:brightness-90 pointer-events-none"
                   />
                 )}
-                <span className="absolute top-4 right-4 z-10 bg-black text-white text-[10px] font-bold tracking-wider px-2 py-1 rounded-sm uppercase leading-none">
+                <span className="absolute top-4 right-4 z-10 bg-black text-white text-[11px] font-bold tracking-wider px-2.5 py-1 rounded-sm uppercase leading-none">
                   20% Off
                 </span>
                 {/* gradient base */}
