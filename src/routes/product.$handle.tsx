@@ -45,6 +45,9 @@ function ProductPage() {
       script.remove();
     };
   }, [handle]);
+
+  // Fire GA4 view_item once the product loads.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fromCategory = new URLSearchParams(location.search).get("from");
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", handle],
