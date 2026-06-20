@@ -232,27 +232,6 @@ export function ProductCard({ product, variant = "default", fromCategory }: Prod
             -{discountPct}%
           </span>
         </p>
-        <div
-          className={
-            isFeatured
-              ? "mt-1 flex items-center gap-0 text-[11px] text-black overflow-hidden rounded-sm border border-black/80 cursor-pointer hover:opacity-80 transition-opacity"
-              : "mt-1 flex items-center gap-0 text-[11px] overflow-hidden rounded-sm border border-border cursor-pointer hover:opacity-80 transition-opacity"
-          }
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            navigator.clipboard.writeText("SMRDLZ20").then(() => {
-              toast.success("Code copied to clipboard");
-            });
-          }}
-        >
-          <span className={isFeatured ? "px-2.5 py-1.5 bg-black text-[#F5F1E8] uppercase tracking-[0.18em] font-medium" : "px-2.5 py-1.5 bg-foreground text-background uppercase tracking-[0.18em] font-medium"}>
-            Code: SMRDLZ20
-          </span>
-          <span className={isFeatured ? "px-2.5 py-1.5 font-semibold tabular-nums" : "px-2.5 py-1.5 font-semibold tabular-nums"}>
-            {price.currencyCode} {(parseFloat(price.amount) * 0.8).toFixed(2)}
-          </span>
-        </div>
       </div>
 
     </Link>
