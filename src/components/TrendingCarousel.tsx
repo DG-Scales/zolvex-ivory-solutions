@@ -251,11 +251,8 @@ export function TrendingCarousel() {
                 {/* gradient base */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
 
-                {/* always-visible discount badge + price pill */}
+                {/* always-visible price pill + discount badge */}
                 <div className="absolute top-4 left-4 flex items-center gap-2">
-                  <span className="bg-black text-white text-[11px] font-bold tracking-wider px-2.5 py-1 rounded-sm uppercase leading-none">
-                    20% Off
-                  </span>
                   <div className="flex items-center bg-black/60 backdrop-blur rounded-sm overflow-hidden text-[10px] uppercase tracking-[0.25em]">
                     <span className="px-3 py-2 text-background/70 line-through">
                       ${getBeforePrice(priceNum).toFixed(0)}
@@ -264,6 +261,9 @@ export function TrendingCarousel() {
                       ${priceNum.toFixed(0)}
                     </span>
                   </div>
+                  <span className="bg-black text-white text-[11px] font-bold tracking-wider px-2.5 py-1 rounded-sm uppercase leading-none">
+                    20% Off
+                  </span>
                 </div>
 
                 {/* share chip */}
