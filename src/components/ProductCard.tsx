@@ -14,7 +14,7 @@ interface ProductCardProps {
   smallBadge?: boolean;
 }
 
-export function ProductCard({ product, variant = "default", fromCategory }: ProductCardProps) {
+export function ProductCard({ product, variant = "default", fromCategory, smallBadge }: ProductCardProps) {
   const node = product.node;
   const selectedVariant = node.variants.edges[0]?.node;
   const images = node.images.edges;
