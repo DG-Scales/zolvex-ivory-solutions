@@ -126,6 +126,10 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                     <Link to="/about" onClick={close} className="block text-sm text-foreground/80">About</Link>
                     <Link to="/contact" onClick={close} className="block text-sm text-foreground/80">Contact</Link>
                   </div>
+                  <div className="pt-4 border-t">
+                    <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">Language</p>
+                    <GoogleTranslateWidget />
+                  </div>
                 </nav>
               </SheetContent>
             </Sheet>
