@@ -1,20 +1,75 @@
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { ShoppingBag, X } from "lucide-react";
+import { ShoppingBag, X, Plus, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
+import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
+import { toast } from "sonner";
+
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
 export const CartIconLink = () => {
   const items = useCartStore((s) => s.items);
   const removeItem = useCartStore((s) => s.removeItem);
+  const addItem = useCartStore((s) => s.addItem);
+  const cartLoading = useCartStore((s) => s.isLoading);
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce(
     (sum, item) => sum + parseFloat(item.price.amount) * item.quantity,
     0,
   );
   const currency = items[0]?.price.currencyCode || "$";
+
+  const [upsells, setUpsells] = useState<ShopifyProduct[]>([]);
+  const [upsellLoading, setUpsellLoading] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    setUpsellLoading(true);
+    fetchProducts(20)
+      .then((products) => {
+        if (cancelled) return;
+        const cartIds = new Set(items.map((i) => i.product.node.id));
+        const candidates = products.filter((p) => !cartIds.has(p.node.id));
+        setUpsells(shuffleArray(candidates).slice(0, 3));
+      })
+      .catch(() => {
+        // silently ignore upsell fetch errors
+      })
+      .finally(() => {
+        if (!cancelled) setUpsellLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [items]);
+
+  const handleQuickAdd = useCallback(
+    async (product: ShopifyProduct) => {
+      const variant = product.node.variants.edges[0]?.node;
+      if (!variant) return;
+      await addItem({
+        product,
+        variantId: variant.id,
+        variantTitle: variant.title,
+        price: variant.price,
+        quantity: 1,
+        selectedOptions: variant.selectedOptions || [],
+      });
+      toast.success("Added to bag", { description: product.node.title });
+    },
+    [addItem],
+  );
 
   return (
     <HoverCard openDelay={120} closeDelay={120}>
@@ -30,7 +85,11 @@ export const CartIconLink = () => {
           </Link>
         </Button>
       </HoverCardTrigger>
-      <HoverCardContent align="end" sideOffset={10} className="w-80 p-0 hidden md:block">
+      <HoverCardContent
+        align="end"
+        sideOffset={10}
+        className="w-[420px] p-0 hidden md:block overflow-hidden"
+      >
         <div className="px-4 py-3 border-b">
           <p className="font-display text-lg">Your Bag</p>
           <p className="text-xs text-muted-foreground">
@@ -43,10 +102,10 @@ export const CartIconLink = () => {
           </div>
         ) : (
           <>
-            <div className="max-h-72 overflow-y-auto px-4 py-3 space-y-3">
-              {items.slice(0, 4).map((item) => (
+            <div className="max-h-80 overflow-y-auto px-4 py-3 space-y-3">
+              {items.map((item) => (
                 <div key={item.variantId} className="flex gap-3 items-start">
-                  <div className="w-12 h-12 bg-muted rounded-md overflow-hidden flex-shrink-0">
+                  <div className="w-14 h-14 bg-muted rounded-md overflow-hidden flex-shrink-0">
                     {item.product.node.images?.edges?.[0]?.node && (
                       <img
                         src={item.product.node.images.edges[0].node.url}
@@ -77,11 +136,6 @@ export const CartIconLink = () => {
                   </button>
                 </div>
               ))}
-              {items.length > 4 && (
-                <p className="text-[11px] text-muted-foreground text-center">
-                  +{items.length - 4} more item{items.length - 4 !== 1 ? "s" : ""}
-                </p>
-              )}
             </div>
             <div className="px-4 py-3 border-t space-y-3">
               <div className="flex justify-between items-center text-sm">
@@ -93,11 +147,86 @@ export const CartIconLink = () => {
             </div>
           </>
         )}
-        <div className="px-4 pb-4">
+        <div className="px-4 pb-3">
           <Button asChild size="sm" className="w-full rounded-full">
             <Link to="/cart">Go to cart</Link>
           </Button>
         </div>
+
+        {/* Upsells */}
+        {upsells.length > 0 && (
+          <div className="border-t bg-muted/30 px-4 py-3">
+            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2.5">
+              You may also like
+            </p>
+            <div className="space-y-2.5">
+              {upsells.map((product) => {
+                const variant = product.node.variants.edges[0]?.node;
+                const price = product.node.priceRange.minVariantPrice;
+                const img = product.node.images.edges[0]?.node;
+                return (
+                  <div key={product.node.id} className="flex gap-2.5 items-center">
+                    <Link
+                      to="/product/$handle"
+                      params={{ handle: product.node.handle }}
+                      className="w-12 h-12 bg-muted rounded-md overflow-hidden flex-shrink-0 hover:opacity-80 transition-opacity"
+                    >
+                      {img && (
+                        <img
+                          src={img.url}
+                          alt={img.altText || product.node.title}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
+                    </Link>
+                    <div className="flex-1 min-w-0">
+                      <Link
+                        to="/product/$handle"
+                        params={{ handle: product.node.handle }}
+                        className="text-xs font-medium truncate block hover:underline underline-offset-2"
+                      >
+                        {product.node.title}
+                      </Link>
+                      <p className="text-[11px] text-muted-foreground mt-0.5">
+                        {price.currencyCode} {parseFloat(price.amount).toFixed(2)}
+                      </p>
+                    </div>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="h-7 w-7 rounded-full"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleQuickAdd(product);
+                      }}
+                      disabled={cartLoading || !variant}
+                    >
+                      {cartLoading ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : (
+                        <Plus className="h-3.5 w-3.5" />
+                      )}
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        {upsellLoading && upsells.length === 0 && (
+          <div className="border-t bg-muted/30 px-4 py-3">
+            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">
+              You may also like
+            </p>
+            <div className="flex gap-2 animate-pulse">
+              <div className="w-12 h-12 bg-muted rounded-md" />
+              <div className="flex-1 space-y-1.5 py-1">
+                <div className="h-3 bg-muted rounded w-3/4" />
+                <div className="h-2.5 bg-muted rounded w-1/2" />
+              </div>
+            </div>
+          </div>
+        )}
       </HoverCardContent>
     </HoverCard>
   );
