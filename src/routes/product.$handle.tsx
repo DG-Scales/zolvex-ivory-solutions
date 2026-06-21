@@ -17,6 +17,45 @@ import { getBeforePrice } from "@/lib/utils";
 
 export const Route = createFileRoute("/product/$handle")({
   component: ProductPage,
+  loader: async ({ params }) => {
+    const product = await fetchProductByHandle(params.handle);
+    return { product };
+  },
+  head: ({ params, loaderData }) => {
+    const product = loaderData?.product;
+    const url = `https://zolvex.org/product/${params.handle}`;
+    if (!product) {
+      return {
+        meta: [
+          { property: "og:url", content: url },
+          { property: "og:type", content: "product" },
+        ],
+        links: [{ rel: "canonical", href: url }],
+      };
+    }
+    const image = product.images?.edges?.[0]?.node?.url;
+    const title = `${product.title} — Zolvex`;
+    const description = (product.description || "").slice(0, 160);
+    const meta: Array<Record<string, string>> = [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:url", content: url },
+      { property: "og:type", content: "product" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
+    ];
+    if (image) {
+      meta.push({ property: "og:image", content: image });
+      meta.push({ name: "twitter:image", content: image });
+    }
+    return {
+      meta,
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
 });
 
 function ProductPage() {
