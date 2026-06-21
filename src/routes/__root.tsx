@@ -123,6 +123,7 @@ function RootShell({ children }: { children: ReactNode }) {
     // send_page_view:false — SPA route changes fire page_view manually in RootComponent.
     gtag('config', 'G-NJD4V4K981', { send_page_view: false });
   `}} />
+  <script type="text/javascript" src="https://onsite.optimonk.com/script.js?account=271410" async />
 </head>
       <body>
         {children}
