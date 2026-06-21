@@ -15,6 +15,13 @@ import { PromoBox } from "@/components/PromoBox";
 import { ProductCard } from "@/components/ProductCard";
 import { getBeforePrice } from "@/lib/utils";
 
+function getSocialPreviewImageUrl(url: string) {
+  const imageUrl = new URL(url);
+  imageUrl.searchParams.set("width", "1200");
+  imageUrl.searchParams.set("format", "jpg");
+  return imageUrl.toString();
+}
+
 export const Route = createFileRoute("/product/$handle")({
   component: ProductPage,
   loader: async ({ params }) => {
@@ -34,6 +41,7 @@ export const Route = createFileRoute("/product/$handle")({
       };
     }
     const image = product.images?.edges?.[0]?.node?.url;
+    const socialImage = image ? getSocialPreviewImageUrl(image) : undefined;
     const title = `${product.title} — Zolvex`;
     const description = (product.description || "").slice(0, 160);
     const meta: Array<Record<string, string>> = [
@@ -47,9 +55,14 @@ export const Route = createFileRoute("/product/$handle")({
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
     ];
-    if (image) {
-      meta.push({ property: "og:image", content: image });
-      meta.push({ name: "twitter:image", content: image });
+    if (socialImage) {
+      meta.push({ property: "og:image", content: socialImage });
+      meta.push({ property: "og:image:secure_url", content: socialImage });
+      meta.push({ property: "og:image:type", content: "image/jpeg" });
+      meta.push({ property: "og:image:width", content: "1200" });
+      meta.push({ property: "og:image:alt", content: product.title });
+      meta.push({ name: "twitter:image", content: socialImage });
+      meta.push({ name: "twitter:image:alt", content: product.title });
     }
     return {
       meta,
