@@ -494,19 +494,17 @@ function ProductPage() {
                     className="w-full rounded-full max-md:order-11"
                     disabled={!variant || !variant.availableForSale || isAdding}
                     onClick={async () => {
-                      if (() => {
-                        if (!variant) return;
-                        addItem({
-                          product: { node: product },
-                          variantId: variant.id,
-                          variantTitle: variant.title,
-                          price: variant.price,
-                          quantity: qty,
-                          selectedOptions: variant.selectedOptions || [],
-                        });
-                        toast.success("Added to bag", { description: product.title });
-                        setQty(1);
-                      })();
+                      if (!variant) return;
+                      await addItem({
+                        product: { node: product },
+                        variantId: variant.id,
+                        variantTitle: variant.title,
+                        price: variant.price,
+                        quantity: qty,
+                        selectedOptions: variant.selectedOptions || [],
+                      });
+                      toast.success("Added to bag", { description: product.title });
+                      setQty(1);
                     }}
                   >
                     {isAdding ? <Loader2 className="w-4 h-4 animate-spin" /> : variant?.availableForSale ? "Add to bag" : "Sold out"}
