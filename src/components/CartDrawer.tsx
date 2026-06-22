@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getBeforePrice } from "@/lib/utils";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ShoppingBag, Minus, Plus, Trash2, Lock, Loader2, ShieldCheck, Truck, PackageCheck } from "lucide-react";
+import { ShoppingBag, Trash2, Lock, Loader2, ShieldCheck, Truck, PackageCheck } from "lucide-react";
+import { QuantityControl } from "@/components/QuantityControl";
+
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
 
