@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getBeforePrice } from "@/lib/utils";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ShoppingBag, Minus, Plus, Trash2, Lock, Loader2, ShieldCheck, Truck, PackageCheck } from "lucide-react";
+import { ShoppingBag, Trash2, Lock, Loader2, ShieldCheck, Truck, PackageCheck } from "lucide-react";
+import { QuantityControl } from "@/components/QuantityControl";
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
 
@@ -168,44 +169,3 @@ export const CartDrawer = () => {
     </Sheet>
   );
 };
-
-function QuantityControl({ quantity, onChange }: { quantity: number; onChange: (q: number) => void }) {
-  const [value, setValue] = useState(String(quantity));
-
-  useEffect(() => {
-    setValue(String(quantity));
-  }, [quantity]);
-
-  const commit = () => {
-    const n = Math.max(1, Math.floor(Number(value) || 0));
-    if (n !== quantity) onChange(n);
-    setValue(String(n));
-  };
-
-  return (
-    <div className="flex items-center gap-1 border rounded-full">
-      <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => onChange(Math.max(1, quantity - 1))}>
-        <Minus className="h-3 w-3" />
-      </Button>
-      <input
-        type="text"
-        inputMode="numeric"
-        pattern="[0-9]*"
-        value={value}
-        onChange={(e) => setValue(e.target.value.replace(/[^0-9]/g, ""))}
-        onBlur={commit}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.currentTarget.blur();
-          }
-        }}
-        onFocus={(e) => e.currentTarget.select()}
-        className="w-8 text-center text-sm bg-transparent outline-none focus:ring-1 focus:ring-ring rounded"
-        aria-label="Quantity"
-      />
-      <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => onChange(quantity + 1)}>
-        <Plus className="h-3 w-3" />
-      </Button>
-    </div>
-  );
-}
