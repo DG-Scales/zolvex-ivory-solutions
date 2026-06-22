@@ -130,6 +130,7 @@ function ProductPage() {
   const [imageIndex, setImageIndex] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [qty, setQty] = useState(1);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
