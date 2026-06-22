@@ -4,7 +4,7 @@ import { fetchProductByHandle, fetchProducts } from "@/lib/shopify";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
-import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Share2, Headphones, Truck, ShieldCheck } from "lucide-react";
+import { Loader2, ArrowLeft, ChevronLeft, ChevronRight, Share2, Headphones, Truck, ShieldCheck, Minus, Plus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartSync } from "@/hooks/useCartSync";
@@ -130,6 +130,7 @@ function ProductPage() {
   const [imageIndex, setImageIndex] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [qty, setQty] = useState(1);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -453,9 +454,44 @@ function ProductPage() {
                     );
                   })()}
 
+                  <div className="flex items-center gap-3 mb-6 max-md:order-10">
+                    <span className="text-sm text-muted-foreground">Quantity</span>
+                    <div className="flex items-center gap-1 border rounded-full">
+                      <button
+                        type="button"
+                        className="h-9 w-9 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+                        onClick={() => setQty(Math.max(1, qty - 1))}
+                        aria-label="Decrease quantity"
+                      >
+                        <Minus className="h-4 w-4" />
+                      </button>
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        value={qty}
+                        onChange={(e) => {
+                          const v = e.target.value.replace(/[^0-9]/g, "");
+                          setQty(v ? Math.max(1, Math.floor(Number(v))) : 1);
+                        }}
+                        onFocus={(e) => e.currentTarget.select()}
+                        className="w-10 text-center text-sm bg-transparent outline-none focus:ring-1 focus:ring-ring rounded"
+                        aria-label="Quantity"
+                      />
+                      <button
+                        type="button"
+                        className="h-9 w-9 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+                        onClick={() => setQty(qty + 1)}
+                        aria-label="Increase quantity"
+                      >
+                        <Plus className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+
                   <Button
                     size="lg"
-                    className="w-full rounded-full max-md:order-10"
+                    className="w-full rounded-full max-md:order-11"
                     disabled={!variant || !variant.availableForSale || isAdding}
                     onClick={async () => {
                       if (!variant) return;
@@ -464,10 +500,11 @@ function ProductPage() {
                         variantId: variant.id,
                         variantTitle: variant.title,
                         price: variant.price,
-                        quantity: 1,
+                        quantity: qty,
                         selectedOptions: variant.selectedOptions || [],
                       });
                       toast.success("Added to bag", { description: product.title });
+                      setQty(1);
                     }}
                   >
                     {isAdding ? <Loader2 className="w-4 h-4 animate-spin" /> : variant?.availableForSale ? "Add to bag" : "Sold out"}
