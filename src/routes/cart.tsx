@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ShoppingBag, Minus, Plus, X, Lock, Loader2, ShieldCheck, Truck, PackageCheck, ArrowLeft } from "lucide-react";
+import { ShoppingBag, X, Lock, Loader2, ShieldCheck, Truck, PackageCheck, ArrowLeft } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
 import { getBeforePrice } from "@/lib/utils";
+import { QuantityControl } from "@/components/QuantityControl";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 
@@ -140,23 +141,11 @@ function CartPage() {
 
                           {/* Mobile: qty + remove + total */}
                           <div className="md:hidden flex items-center justify-between mt-3">
-                            <div className="inline-flex items-center border rounded-full">
-                              <button
-                                onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                                className="h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-accent transition-colors"
-                                aria-label="Decrease quantity"
-                              >
-                                <Minus className="h-3 w-3" />
-                              </button>
-                              <span className="w-7 text-center text-sm tabular-nums">{item.quantity}</span>
-                              <button
-                                onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                                className="h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-accent transition-colors"
-                                aria-label="Increase quantity"
-                              >
-                                <Plus className="h-3 w-3" />
-                              </button>
-                            </div>
+                            <QuantityControl
+                              quantity={item.quantity}
+                              onChange={(q) => updateQuantity(item.variantId, q)}
+                              size="md"
+                            />
                             <div className="flex items-center gap-3">
                               <span className="text-sm font-medium tabular-nums">{fmt(lineTotal)}</span>
                               <button
@@ -172,23 +161,11 @@ function CartPage() {
 
                         {/* Desktop qty */}
                         <div className="hidden md:flex w-32 justify-center pt-1">
-                          <div className="inline-flex items-center border rounded-full">
-                            <button
-                              onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                              className="h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-accent transition-colors"
-                              aria-label="Decrease quantity"
-                            >
-                              <Minus className="h-3 w-3" />
-                            </button>
-                            <span className="w-8 text-center text-sm tabular-nums">{item.quantity}</span>
-                            <button
-                              onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                              className="h-8 w-8 inline-flex items-center justify-center rounded-full hover:bg-accent transition-colors"
-                              aria-label="Increase quantity"
-                            >
-                              <Plus className="h-3 w-3" />
-                            </button>
-                          </div>
+                          <QuantityControl
+                            quantity={item.quantity}
+                            onChange={(q) => updateQuantity(item.variantId, q)}
+                            size="md"
+                          />
                         </div>
 
                         {/* Desktop total + remove */}
