@@ -113,15 +113,10 @@ export const CartDrawer = () => {
                         <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => removeItem(item.variantId)}>
                           <Trash2 className="h-3 w-3" />
                         </Button>
-                        <div className="flex items-center gap-1 border rounded-full">
-                          <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => updateQuantity(item.variantId, item.quantity - 1)}>
-                            <Minus className="h-3 w-3" />
-                          </Button>
-                          <span className="w-6 text-center text-sm">{item.quantity}</span>
-                          <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => updateQuantity(item.variantId, item.quantity + 1)}>
-                            <Plus className="h-3 w-3" />
-                          </Button>
-                        </div>
+                        <QuantityControl
+                          quantity={item.quantity}
+                          onChange={(q) => updateQuantity(item.variantId, q)}
+                        />
                       </div>
                     </div>
                   ))}
