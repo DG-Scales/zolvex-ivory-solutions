@@ -113,15 +113,10 @@ export const CartDrawer = () => {
                         <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => removeItem(item.variantId)}>
                           <Trash2 className="h-3 w-3" />
                         </Button>
-                        <div className="flex items-center gap-1 border rounded-full">
-                          <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => updateQuantity(item.variantId, item.quantity - 1)}>
-                            <Minus className="h-3 w-3" />
-                          </Button>
-                          <span className="w-6 text-center text-sm">{item.quantity}</span>
-                          <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => updateQuantity(item.variantId, item.quantity + 1)}>
-                            <Plus className="h-3 w-3" />
-                          </Button>
-                        </div>
+                        <QuantityControl
+                          quantity={item.quantity}
+                          onChange={(q) => updateQuantity(item.variantId, q)}
+                        />
                       </div>
                     </div>
                   ))}
@@ -173,3 +168,44 @@ export const CartDrawer = () => {
     </Sheet>
   );
 };
+
+function QuantityControl({ quantity, onChange }: { quantity: number; onChange: (q: number) => void }) {
+  const [value, setValue] = useState(String(quantity));
+
+  useEffect(() => {
+    setValue(String(quantity));
+  }, [quantity]);
+
+  const commit = () => {
+    const n = Math.max(1, Math.floor(Number(value) || 0));
+    if (n !== quantity) onChange(n);
+    setValue(String(n));
+  };
+
+  return (
+    <div className="flex items-center gap-1 border rounded-full">
+      <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => onChange(Math.max(1, quantity - 1))}>
+        <Minus className="h-3 w-3" />
+      </Button>
+      <input
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        value={value}
+        onChange={(e) => setValue(e.target.value.replace(/[^0-9]/g, ""))}
+        onBlur={commit}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.currentTarget.blur();
+          }
+        }}
+        onFocus={(e) => e.currentTarget.select()}
+        className="w-8 text-center text-sm bg-transparent outline-none focus:ring-1 focus:ring-ring rounded"
+        aria-label="Quantity"
+      />
+      <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => onChange(quantity + 1)}>
+        <Plus className="h-3 w-3" />
+      </Button>
+    </div>
+  );
+}
