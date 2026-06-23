@@ -318,9 +318,7 @@ function ProductPage() {
                     </button>
                   </div>
                   <p className="text-2xl font-display mb-3 flex items-center gap-3 flex-wrap max-md:order-4">
-                    <span className="text-foreground line-through opacity-70 text-lg">{variant?.price.currencyCode} {beforeAmt.toFixed(2)}</span>
                     <span>{variant?.price.currencyCode} {currentAmt.toFixed(2)}</span>
-                    <span className="inline-flex items-center justify-center bg-black text-white text-xs font-semibold px-2 py-1 rounded">-{discountPct}%</span>
                   </p>
                   <div className="mb-8 w-fit overflow-hidden rounded-sm border border-border max-md:order-5">
                     <span className="block px-3 py-1.5 bg-foreground text-background uppercase tracking-[0.18em] font-medium text-[11px]">

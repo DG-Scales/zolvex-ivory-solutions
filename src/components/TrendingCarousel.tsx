@@ -254,9 +254,6 @@ export function TrendingCarousel() {
                 {/* always-visible price pill + discount badge */}
                 <div className="absolute top-4 left-4 flex items-center gap-2">
                   <div className="flex items-center bg-black/60 backdrop-blur rounded-sm overflow-hidden text-[10px] uppercase tracking-[0.25em]">
-                    <span className="px-3 py-2 text-background/70 line-through">
-                      ${getBeforePrice(priceNum).toFixed(0)}
-                    </span>
                     <span className="px-3 py-2 bg-background text-black font-semibold">
                       ${priceNum.toFixed(0)}
                     </span>

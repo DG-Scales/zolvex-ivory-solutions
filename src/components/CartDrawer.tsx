@@ -105,9 +105,7 @@ export const CartDrawer = () => {
                           {formatVariantTitle({ title: item.variantTitle, selectedOptions: item.selectedOptions })}
                         </p>
                         <p className="mt-2 flex items-center gap-2 flex-wrap">
-                          <span className="line-through opacity-60 text-sm">{item.price.currencyCode} {getBeforePrice(parseFloat(item.price.amount)).toFixed(2)}</span>
                           <span className="font-medium">{item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}</span>
-                          <span className="inline-flex items-center justify-center bg-black text-white text-[10px] font-semibold px-1.5 py-0.5 rounded">-20%</span>
                         </p>
                       </div>
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
@@ -130,7 +128,7 @@ export const CartDrawer = () => {
                     {items[0]?.price.currencyCode || "$"} {totalPrice.toFixed(2)}
                   </span>
                 </div>
-                <p className="text-xs text-muted-foreground">Shipping & taxes calculated at checkout.</p>
+                <p className="text-xs text-muted-foreground">Free shipping.</p>
                 <Button onClick={handleCheckout} className="w-full rounded-full" size="lg" disabled={items.length === 0 || isLoading || isSyncing}>
                   {isLoading || isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Lock className="w-4 h-4 mr-2" />Checkout</>}
                 </Button>
