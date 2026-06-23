@@ -226,6 +226,21 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
         >
           <span>{price.currencyCode} {parseFloat(price.amount).toFixed(2)}</span>
         </p>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            navigator.clipboard.writeText("SMRDLZ20").then(() => {
+              toast.success("Code copied", { description: "SMRDLZ20" });
+            });
+          }}
+          aria-label="Copy discount code SMRDLZ20"
+          className="mt-2 flex w-full overflow-hidden rounded-sm border border-black text-[11px] uppercase tracking-[0.18em] font-medium"
+        >
+          <span className="flex-1 bg-black text-white px-3 py-1.5 text-left">Code</span>
+          <span className="flex-1 bg-white text-black px-3 py-1.5 text-right">SMRDLZ20</span>
+        </button>
       </div>
 
     </Link>
