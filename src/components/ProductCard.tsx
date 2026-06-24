@@ -46,6 +46,7 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
       price: selectedVariant.price,
       quantity: 1,
       selectedOptions: selectedVariant.selectedOptions || [],
+      variantImage: selectedVariant.image ?? null,
     });
     toast.success("Added to bag", { description: node.title });
   };

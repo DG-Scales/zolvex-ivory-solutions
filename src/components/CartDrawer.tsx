@@ -84,13 +84,13 @@ export const CartDrawer = () => {
                         onClick={() => setIsOpen(false)}
                         className="w-20 h-20 bg-muted rounded-md overflow-hidden flex-shrink-0 hover:opacity-80 transition-opacity"
                       >
-                        {item.product.node.images?.edges?.[0]?.node && (
-                          <img
-                            src={item.product.node.images.edges[0].node.url}
-                            alt={item.product.node.title}
-                            className="w-full h-full object-cover"
-                          />
-                        )}
+                        {(() => {
+                          const img = item.variantImage?.url ?? item.product.node.images?.edges?.[0]?.node?.url;
+                          const alt = item.variantImage?.altText ?? item.product.node.title;
+                          return img ? (
+                            <img src={img} alt={alt} className="w-full h-full object-cover" />
+                          ) : null;
+                        })()}
                       </Link>
                       <div className="flex-1 min-w-0">
                         <Link
