@@ -112,14 +112,13 @@ function CartPage() {
                           params={{ handle: item.product.node.handle }}
                           className="aspect-square bg-muted/40 rounded-md overflow-hidden hover:opacity-90 transition-opacity"
                         >
-                          {item.product.node.images?.edges?.[0]?.node && (
-                            <img
-                              src={item.product.node.images.edges[0].node.url}
-                              alt={item.product.node.title}
-                              className="w-full h-full object-cover"
-                              loading="lazy"
-                            />
-                          )}
+                          {(() => {
+                            const img = item.variantImage?.url ?? item.product.node.images?.edges?.[0]?.node?.url;
+                            const alt = item.variantImage?.altText ?? item.product.node.title;
+                            return img ? (
+                              <img src={img} alt={alt} className="w-full h-full object-cover" loading="lazy" />
+                            ) : null;
+                          })()}
                         </Link>
 
                         <div className="min-w-0 flex flex-col gap-1">

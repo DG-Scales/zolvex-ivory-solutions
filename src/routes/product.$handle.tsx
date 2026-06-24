@@ -513,6 +513,7 @@ function ProductPage() {
                         price: variant.price,
                         quantity: qty,
                         selectedOptions: variant.selectedOptions || [],
+                        variantImage: variant.image ?? null,
                       });
                       toast.success("Added to bag", { description: product.title });
                       setQty(1);
