@@ -330,7 +330,7 @@ function ProductPage() {
                     aria-label="Copy discount code SMRDLZ20"
                     className="mb-4 flex w-full max-w-sm overflow-hidden rounded-sm border border-black text-[11px] uppercase tracking-[0.18em] font-medium max-md:order-4"
                   >
-                    <span className="flex-1 bg-black text-white px-3 py-1.5 text-left">20% Off Code</span>
+                    <span className="flex-1 bg-black text-white px-3 py-1.5 text-left">Save 20%</span>
                     <span className="flex-1 bg-white text-black px-3 py-1.5 text-right">SMRDLZ20</span>
                   </button>
                   <div className="mb-8 w-fit overflow-hidden rounded-sm border border-border max-md:order-5">
