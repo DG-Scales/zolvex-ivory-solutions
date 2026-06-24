@@ -236,10 +236,10 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
             });
           }}
           aria-label="Copy discount code SMRDLZ20"
-          className="mt-2 flex w-full overflow-hidden rounded-sm border border-black text-[11px] uppercase tracking-[0.18em] font-medium"
+          className="mt-2 flex w-full overflow-hidden rounded-sm border border-black text-[9px] uppercase tracking-[0.12em] font-medium whitespace-nowrap"
         >
-          <span className="flex-1 bg-black text-white px-3 py-1.5 text-left">Save 20%</span>
-          <span className="flex-1 bg-white text-black px-3 py-1.5 text-right">SMRDLZ20</span>
+          <span className="flex-1 bg-black text-white px-2 py-2 text-center">Save 20%</span>
+          <span className="flex-1 bg-white text-black px-2 py-2 text-center">SMRDLZ20</span>
         </button>
       </div>
 
