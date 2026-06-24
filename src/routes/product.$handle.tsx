@@ -320,6 +320,19 @@ function ProductPage() {
                   <p className="text-2xl font-display mb-3 flex items-center gap-3 flex-wrap max-md:order-4">
                     <span>{variant?.price.currencyCode} {currentAmt.toFixed(2)}</span>
                   </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText("SMRDLZ20").then(() => {
+                        toast.success("Code copied", { description: "SMRDLZ20" });
+                      });
+                    }}
+                    aria-label="Copy discount code SMRDLZ20"
+                    className="mb-4 flex w-full max-w-sm overflow-hidden rounded-sm border border-black text-[11px] uppercase tracking-[0.18em] font-medium max-md:order-4"
+                  >
+                    <span className="flex-1 bg-black text-white px-3 py-1.5 text-left">20% Off Code</span>
+                    <span className="flex-1 bg-white text-black px-3 py-1.5 text-right">SMRDLZ20</span>
+                  </button>
                   <div className="mb-8 w-fit overflow-hidden rounded-sm border border-border max-md:order-5">
                     <span className="block px-3 py-1.5 bg-foreground text-background uppercase tracking-[0.18em] font-medium text-[11px]">
                       Free US Shipping • Secure Checkout • Easy Returns
