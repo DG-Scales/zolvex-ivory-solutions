@@ -43,7 +43,7 @@ async function addResendContact(email: string) {
   try {
     const alreadyExists = await resendContactExists(email)
     if (alreadyExists) {
-      console.log('Resend contact already exists, skipping:', email)
+      console.log('Resend contact already exists, skipping:', email.replace(/(?<=.{1}).*(?=@)/, '***'))
       return
     }
     const res = await fetch(
