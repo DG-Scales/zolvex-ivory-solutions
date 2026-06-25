@@ -205,6 +205,15 @@ function CartPage() {
                   <span className="font-display text-2xl tabular-nums">{fmt(totalPrice)}</span>
                 </div>
 
+                {/* Shipping notice */}
+                <div className="rounded-lg border border-border/60 bg-muted/30 p-3 flex gap-2.5">
+                  <Truck className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" strokeWidth={1.5} />
+                  <p className="text-xs leading-relaxed text-muted-foreground">
+                    <span className="text-foreground font-medium">Estimated delivery: 7–25 business days.</span>{" "}
+                    Larger or higher demand items may take up to 60 days. You will receive a tracking number once your order ships.
+                  </p>
+                </div>
+
                 <Button
                   onClick={handleCheckout}
                   className="w-full rounded-full h-12 text-sm tracking-wide"
@@ -222,15 +231,6 @@ function CartPage() {
 
                 <p className="text-[11px] text-center text-muted-foreground">
                   You'll be redirected to our secure payment provider.
-                </p>
-              </div>
-
-              {/* Shipping notice */}
-              <div className="mt-4 rounded-xl border border-border/60 bg-muted/30 p-4 flex gap-3">
-                <Truck className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" strokeWidth={1.5} />
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  <span className="text-foreground font-medium">Estimated delivery: 7–25 business days.</span>{" "}
-                  Larger or higher demand items may take up to 60 days. You will receive a tracking number once your order ships.
                 </p>
               </div>
 
