@@ -169,6 +169,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
           </div>
         </div>
       </header>
+      <ShippingBanner />
     </div>
     </>
   );
