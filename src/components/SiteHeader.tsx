@@ -9,6 +9,7 @@ import { categoriesByGroup } from "@/lib/categories";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { ShippingBanner } from "./ShippingBanner";
 
 export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   const collections = categoriesByGroup("Collection");
@@ -168,6 +169,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
           </div>
         </div>
       </header>
+      <ShippingBanner />
     </div>
     </>
   );
