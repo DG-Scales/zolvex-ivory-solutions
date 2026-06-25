@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ShoppingBag, X, Lock, Loader2, ShieldCheck, Truck, PackageCheck, ArrowLeft, Info } from "lucide-react";
+import { ShoppingBag, X, Lock, Loader2, ShieldCheck, Truck, PackageCheck, ArrowLeft } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatVariantTitle } from "@/lib/variantTitle";
 import { getBeforePrice } from "@/lib/utils";
