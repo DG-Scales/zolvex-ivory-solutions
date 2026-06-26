@@ -95,6 +95,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                     <ul className="space-y-3">
                       <li><Link to="/" onClick={close} className="text-base text-foreground">Home</Link></li>
                       <li><Link to="/shop" onClick={close} className="text-base text-foreground">Shop all</Link></li>
+                      <li><Link to="/new-arrivals" onClick={close} className="text-base text-foreground">New arrivals</Link></li>
                       <li><Link to="/categories/$slug" params={{ slug: "trending" }} onClick={close} className="text-base text-foreground">Trending</Link></li>
                       <li><Link to="/socials" onClick={close} className="text-base text-foreground">Socials</Link></li>
                       <li><Link to="/about" onClick={close} className="text-base text-foreground">About</Link></li>
@@ -187,6 +188,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                 </div>
               </div>
             </div>
+            <Link to="/new-arrivals" className={linkBase}>New arrivals</Link>
             <Link to="/socials" className={linkBase}>Socials</Link>
             <Link to="/categories/$slug" params={{ slug: "trending" }} className={linkBase}>Trending</Link>
             <Link to="/about" className={linkBase}>About</Link>
