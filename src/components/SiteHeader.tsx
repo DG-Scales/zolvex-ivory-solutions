@@ -188,6 +188,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                 </div>
               </div>
             </div>
+            <Link to="/new-arrivals" className={linkBase}>New arrivals</Link>
             <Link to="/socials" className={linkBase}>Socials</Link>
             <Link to="/categories/$slug" params={{ slug: "trending" }} className={linkBase}>Trending</Link>
             <Link to="/about" className={linkBase}>About</Link>
