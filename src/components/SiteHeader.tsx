@@ -93,9 +93,12 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                   <div>
                     <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">Browse</p>
                     <ul className="space-y-3">
+                      <li><Link to="/" onClick={close} className="text-base text-foreground">Home</Link></li>
                       <li><Link to="/shop" onClick={close} className="text-base text-foreground">Shop all</Link></li>
                       <li><Link to="/categories/$slug" params={{ slug: "trending" }} onClick={close} className="text-base text-foreground">Trending</Link></li>
                       <li><Link to="/socials" onClick={close} className="text-base text-foreground">Socials</Link></li>
+                      <li><Link to="/about" onClick={close} className="text-base text-foreground">About</Link></li>
+                      <li><Link to="/contact" onClick={close} className="text-base text-foreground">Contact</Link></li>
                     </ul>
                   </div>
                   <div>
@@ -110,11 +113,38 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                       ))}
                     </ul>
                   </div>
-                  <div className="pt-4 border-t space-y-3">
-                    <Link to="/about" onClick={close} className="block text-sm text-foreground/80">About</Link>
-                    <Link to="/contact" onClick={close} className="block text-sm text-foreground/80">Contact</Link>
+                  <div>
+                    <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">Collections</p>
+                    <ul className="space-y-3">
+                      {collections.map((c) => (
+                        <li key={c.slug}>
+                          <Link to="/categories/$slug" params={{ slug: c.slug }} onClick={close} className="text-sm text-foreground/80">
+                            {c.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">Help</p>
+                    <ul className="space-y-3">
+                      <li><Link to="/shipping" onClick={close} className="text-sm text-foreground/80">Shipping</Link></li>
+                      <li><Link to="/returns" onClick={close} className="text-sm text-foreground/80">Returns</Link></li>
+                      <li><Link to="/faq" onClick={close} className="text-sm text-foreground/80">FAQ</Link></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">Company</p>
+                    <ul className="space-y-3">
+                      <li><Link to="/story" onClick={close} className="text-sm text-foreground/80">Our Story</Link></li>
+                      <li><Link to="/sustainability" onClick={close} className="text-sm text-foreground/80">Sustainability</Link></li>
+                      <li><Link to="/wholesale" onClick={close} className="text-sm text-foreground/80">Wholesale</Link></li>
+                      <li><Link to="/privacy" onClick={close} className="text-sm text-foreground/80">Privacy</Link></li>
+                      <li><Link to="/terms" onClick={close} className="text-sm text-foreground/80">Terms</Link></li>
+                    </ul>
                   </div>
                 </nav>
+
               </SheetContent>
             </Sheet>
           </div>
