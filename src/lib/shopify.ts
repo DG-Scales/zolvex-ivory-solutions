@@ -75,6 +75,25 @@ export const PRODUCT_BY_HANDLE_QUERY = `
   }
 `;
 
+export const PRODUCTS_BY_IDS_QUERY = `
+  ${PRODUCT_FRAGMENT}
+  query GetProductsByIds($ids: [ID!]!) {
+    nodes(ids: $ids) {
+      ... on Product { ...ProductFields }
+    }
+  }
+`;
+
+export async function fetchProductsByIds(numericIds: (string | number)[]): Promise<ShopifyProduct[]> {
+  const ids = numericIds.map((n) => `gid://shopify/Product/${n}`);
+  const data = await storefrontApiRequest(PRODUCTS_BY_IDS_QUERY, { ids });
+  const nodes = (data?.data?.nodes ?? []) as Array<ShopifyProduct["node"] | null>;
+  const edges = nodes
+    .filter((n): n is ShopifyProduct["node"] => !!n && !!n.handle)
+    .map((node) => ({ node }));
+  return stripChineseFromEdges(edges);
+}
+
 export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}) {
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
     method: "POST",

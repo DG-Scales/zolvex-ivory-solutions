@@ -1,18 +1,39 @@
+import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
+import { fetchProductsByIds, type ShopifyProduct } from "@/lib/shopify";
 import { useCartSync } from "@/hooks/useCartSync";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+
+const FEATURED_IDS = [
+  15074951627115, 15074951561579, 15074951528811, 15074951430507, 15074951364971,
+  15074951332203, 15074951266667, 15074951233899, 15074951168363, 15074951135595,
+  15074951102827, 15074951070059, 15074951004523, 15074950938987, 15074950906219,
+  15074950840683, 15074950775147, 15074950742379, 15074950644075, 15074950611307,
+  15074950545771, 15074950480235, 15074950447467, 15074950414699, 15074950381931,
+  15074950349163, 15074950316395, 15074950250859, 15074950185323, 15074950119787,
+  15074950054251, 15074950021483, 15074949923179, 15074949824875, 15074949792107,
+  15074949661035, 15074949628267, 15074949562731, 15074949497195,
+];
+
+type FilterKey = "all" | "pendants" | "chandeliers" | "sconces" | "ceiling";
+
+const FILTERS: { key: FilterKey; label: string; match: (t: string) => boolean }[] = [
+  { key: "all", label: "All", match: () => true },
+  { key: "pendants", label: "Pendants", match: (t) => /pendant/i.test(t) },
+  { key: "chandeliers", label: "Chandeliers", match: (t) => /chandelier/i.test(t) },
+  { key: "sconces", label: "Wall Sconces", match: (t) => /sconce|wall\s*lamp|wall\s*light/i.test(t) },
+  { key: "ceiling", label: "Ceiling Lights", match: (t) => /ceiling|flush\s*mount/i.test(t) },
+];
 
 export const Route = createFileRoute("/new-arrivals")({
   head: () => ({
     meta: [
       { title: "New Arrivals — Zolvex" },
-      { name: "description", content: "The latest Zolvex lighting drops — fresh chandeliers, sconces, pendants, and exterior pieces, presented in a wide-format editorial." },
+      { name: "description", content: "Just landed — handpicked statement lighting for every space. Browse the latest Zolvex chandeliers, pendants, sconces, and ceiling lights." },
       { property: "og:title", content: "New Arrivals — Zolvex" },
-      { property: "og:description", content: "Just landed. Browse the newest Zolvex lighting in a wide horizontal showcase." },
+      { property: "og:description", content: "Handpicked statement lighting. Just landed at Zolvex." },
     ],
   }),
   component: NewArrivalsPage,
@@ -20,205 +41,138 @@ export const Route = createFileRoute("/new-arrivals")({
 
 function NewArrivalsPage() {
   useCartSync();
+  const [filter, setFilter] = useState<FilterKey>("all");
+
   const { data, isLoading } = useQuery({
-    queryKey: ["new-arrivals", 30],
-    queryFn: () => fetchProducts(30),
+    queryKey: ["new-arrivals-featured", FEATURED_IDS.join(",")],
+    queryFn: () => fetchProductsByIds(FEATURED_IDS),
     staleTime: 5 * 60 * 1000,
   });
 
-  const products = (data ?? [])
-    .slice()
-    .sort((a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime());
-
-  const hero = products[0];
-  const strip = products.slice(0, 12);
-  const editorial = products.slice(1, 9);
+  const products = data ?? [];
+  const active = FILTERS.find((f) => f.key === filter) ?? FILTERS[0];
+  const visible = useMemo(
+    () => products.filter((p) => active.match(p.node.title)),
+    [products, active],
+  );
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0E0E0C] text-[#F5F1E8]">
+    <div className="min-h-screen flex flex-col">
       <SiteHeader />
 
-      {/* Hero */}
-      <section className="relative border-b border-white/10 overflow-hidden">
-        <div className="mx-auto max-w-[1600px] px-6 md:px-10 pt-16 md:pt-24 pb-12">
-          <div className="flex items-end justify-between gap-6 flex-wrap mb-10">
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.5em] text-[#F5F1E8]/50 mb-4">
-                Just landed · Season 01
-              </p>
-              <h1 className="font-display text-6xl md:text-8xl leading-[0.95]">
-                New <span className="italic font-light">arrivals.</span>
-              </h1>
-              <p className="mt-5 max-w-xl text-sm md:text-base text-[#F5F1E8]/70">
-                Fresh pieces, photographed at scale. Scroll sideways through the latest drops —
-                each fixture in a wide editorial frame.
-              </p>
-            </div>
-            <Link
-              to="/shop"
-              className="inline-flex items-center gap-2 px-5 py-3 border border-white/30 text-[11px] uppercase tracking-[0.3em] hover:bg-[#F5F1E8] hover:text-[#0E0E0C] transition"
-            >
-              Shop all <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+      <main className="bg-[#FAFAFA] text-[#1A1A1A] font-sans">
+        {/* Hero */}
+        <section className="relative overflow-hidden">
+          <div className="mx-auto max-w-[1400px] px-6 md:px-10 pt-20 md:pt-32 pb-14 md:pb-20 text-center">
+            <p className="text-[11px] uppercase tracking-[0.45em] text-[#C9A84C] mb-6">
+              Season 01 · Just Landed
+            </p>
+            <h1 className="font-display text-6xl md:text-8xl lg:text-9xl leading-[0.95] tracking-tight">
+              New <span className="relative inline-block">
+                <span className="italic font-light">Arrivals</span>
+                <span className="pointer-events-none absolute left-0 right-0 -bottom-2 h-[3px] bg-gradient-to-r from-transparent via-[#C9A84C] to-transparent animate-pulse" />
+              </span>
+            </h1>
+            <p className="mt-8 max-w-xl mx-auto text-[15px] md:text-base text-[#1A1A1A]/60 leading-relaxed">
+              Just landed — handpicked statement lighting for every space.
+            </p>
           </div>
+        </section>
 
-          {hero && (
-            <Link
-              to="/product/$handle"
-              params={{ handle: hero.node.handle }}
-              className="group relative block aspect-[21/9] overflow-hidden bg-white/5"
-            >
-              {hero.node.images.edges[0] && (
-                <img
-                  src={hero.node.images.edges[0].node.url}
-                  alt={hero.node.title}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
-                />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6 md:p-12 flex items-end justify-between gap-6">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.4em] text-[#F5F1E8]/70 mb-3">
-                    Featured arrival
-                  </p>
-                  <h2 className="font-display text-3xl md:text-5xl max-w-2xl leading-tight">
-                    {hero.node.title}
-                  </h2>
-                </div>
-                <span className="hidden md:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em]">
-                  View <ArrowUpRight className="w-4 h-4" />
-                </span>
-              </div>
-            </Link>
-          )}
-        </div>
-      </section>
-
-      {/* Horizontal scroll strip */}
-      <section className="border-b border-white/10 py-16 md:py-24">
-        <div className="mx-auto max-w-[1600px] px-6 md:px-10 flex items-end justify-between gap-6 mb-10">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.4em] text-[#F5F1E8]/50 mb-3">Scroll →</p>
-            <h2 className="font-display text-4xl md:text-5xl">The drop, in wide format.</h2>
-          </div>
-          <p className="hidden md:block text-xs uppercase tracking-[0.3em] text-[#F5F1E8]/50">
-            {strip.length.toString().padStart(2, "0")} pieces
-          </p>
-        </div>
-
-        {isLoading ? (
-          <div className="px-6 md:px-10 text-sm text-[#F5F1E8]/50">Loading the latest…</div>
-        ) : (
-          <div className="overflow-x-auto pb-6 [scrollbar-color:rgba(245,241,232,0.3)_transparent]">
-            <div className="flex gap-6 px-6 md:px-10 snap-x snap-mandatory">
-              {strip.map((p, i) => (
-                <Link
-                  key={p.node.id}
-                  to="/product/$handle"
-                  params={{ handle: p.node.handle }}
-                  className="group snap-start shrink-0 w-[78vw] md:w-[620px] lg:w-[720px]"
-                >
-                  <div className="relative aspect-[4/5] overflow-hidden bg-white/5">
-                    {p.node.images.edges[0] && (
-                      <img
-                        src={p.node.images.edges[0].node.url}
-                        alt={p.node.title}
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
-                      />
-                    )}
-                    <span className="absolute top-4 left-4 bg-[#F5F1E8] text-[#0E0E0C] text-[10px] tracking-[0.25em] uppercase px-2.5 py-1">
-                      New · {String(i + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <div className="mt-5 flex items-start justify-between gap-4">
-                    <h3 className="font-display text-xl md:text-2xl leading-snug group-hover:opacity-70 transition">
-                      {p.node.title}
-                    </h3>
-                    <p className="text-sm tracking-wide whitespace-nowrap pt-1">
-                      {p.node.priceRange.minVariantPrice.currencyCode}{" "}
-                      {parseFloat(p.node.priceRange.minVariantPrice.amount).toFixed(2)}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* Editorial zigzag */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-[1600px] px-6 md:px-10">
-          <div className="mb-16">
-            <p className="text-[10px] uppercase tracking-[0.4em] text-[#F5F1E8]/50 mb-3">Editorial</p>
-            <h2 className="font-display text-4xl md:text-5xl max-w-2xl">
-              A closer look at each piece.
-            </h2>
-          </div>
-
-          <div className="space-y-20 md:space-y-32">
-            {editorial.map((p, i) => {
-              const reverse = i % 2 === 1;
+        {/* Filter bar */}
+        <section className="sticky top-[64px] z-20 bg-[#FAFAFA]/85 backdrop-blur border-y border-[#1A1A1A]/8">
+          <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-4 flex items-center justify-center gap-1 md:gap-2 overflow-x-auto">
+            {FILTERS.map((f) => {
+              const isActive = f.key === filter;
               return (
-                <EditorialRow key={p.node.id} product={p} index={i} reverse={reverse} />
+                <button
+                  key={f.key}
+                  onClick={() => setFilter(f.key)}
+                  className={`shrink-0 px-4 md:px-5 py-2 text-[11px] md:text-xs uppercase tracking-[0.25em] rounded-full transition-all ${
+                    isActive
+                      ? "bg-[#1A1A1A] text-[#FAFAFA]"
+                      : "text-[#1A1A1A]/60 hover:text-[#1A1A1A]"
+                  }`}
+                >
+                  {f.label}
+                </button>
               );
             })}
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Grid */}
+        <section className="mx-auto max-w-[1400px] px-4 md:px-8 py-12 md:py-16">
+          {isLoading ? (
+            <div className="text-center py-24 text-sm text-[#1A1A1A]/50">Loading the latest…</div>
+          ) : visible.length === 0 ? (
+            <div className="text-center py-24 text-sm text-[#1A1A1A]/50">No pieces in this category yet.</div>
+          ) : (
+            <div className="columns-1 md:columns-2 lg:columns-3 gap-4 md:gap-6 [column-fill:_balance]">
+              {visible.map((p, i) => (
+                <EditorialCard key={p.node.id} product={p} index={i} />
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* Banner strip */}
+        <section className="border-t border-[#1A1A1A]/10 bg-[#F2EFE8]">
+          <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-6 flex flex-col md:flex-row items-center justify-center gap-3 md:gap-10 text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-[#1A1A1A]/70 text-center">
+            <span>Free shipping on orders over $200</span>
+            <span className="hidden md:inline text-[#C9A84C]">·</span>
+            <span>Easy 30-day returns</span>
+            <span className="hidden md:inline text-[#C9A84C]">·</span>
+            <span>Handpicked for your home</span>
+          </div>
+        </section>
+      </main>
 
       <SiteFooter />
     </div>
   );
 }
 
-function EditorialRow({ product, index, reverse }: { product: ShopifyProduct; index: number; reverse: boolean }) {
+const ASPECTS = ["aspect-[3/4]", "aspect-[4/5]", "aspect-[1/1]", "aspect-[3/4]", "aspect-[4/5]", "aspect-[2/3]"];
+
+function EditorialCard({ product, index }: { product: ShopifyProduct; index: number }) {
   const n = product.node;
   const img = n.images.edges[0]?.node;
+  const aspect = ASPECTS[index % ASPECTS.length];
+  const delay = `${Math.min(index, 18) * 50}ms`;
+
   return (
-    <div className={`grid md:grid-cols-12 gap-8 md:gap-12 items-center ${reverse ? "md:[&>*:first-child]:order-2" : ""}`}>
-      <Link
-        to="/product/$handle"
-        params={{ handle: n.handle }}
-        className="group md:col-span-8 relative block aspect-[16/10] overflow-hidden bg-white/5"
-      >
+    <Link
+      to="/product/$handle"
+      params={{ handle: n.handle }}
+      className="group mb-4 md:mb-6 block break-inside-avoid opacity-0 animate-fade-in"
+      style={{ animationDelay: delay, animationFillMode: "forwards" }}
+    >
+      <div className={`relative ${aspect} overflow-hidden rounded-[10px] bg-[#EFEBE2]`}>
         {img && (
           <img
             src={img.url}
             alt={n.title}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-[1.04]"
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
           />
         )}
-        <span className="absolute top-5 left-5 text-[10px] tracking-[0.3em] uppercase text-[#F5F1E8] bg-black/50 backdrop-blur px-3 py-1.5">
-          № {String(index + 2).padStart(2, "0")}
+        <span className="absolute top-3 left-3 bg-[#C9A84C] text-[#1A1A1A] text-[9px] tracking-[0.3em] uppercase font-semibold px-2.5 py-1 rounded-full">
+          New
         </span>
-      </Link>
-      <div className="md:col-span-4">
-        <p className="text-[10px] uppercase tracking-[0.4em] text-[#F5F1E8]/50 mb-4">
-          Newly arrived
-        </p>
-        <h3 className="font-display text-3xl md:text-4xl leading-tight mb-5">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#FAFAFA] text-[#1A1A1A] text-[10px] uppercase tracking-[0.3em] px-5 py-3 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400">
+          View product
+        </span>
+      </div>
+      <div className="pt-4 px-1 flex items-start justify-between gap-4">
+        <h3 className="text-[13px] md:text-sm font-medium leading-snug line-clamp-2 group-hover:text-[#C9A84C] transition-colors">
           {n.title}
         </h3>
-        {n.description && (
-          <p className="text-sm text-[#F5F1E8]/70 leading-relaxed line-clamp-4 mb-6">
-            {n.description}
-          </p>
-        )}
-        <div className="flex items-center justify-between gap-4 border-t border-white/15 pt-5">
-          <span className="text-sm tracking-wide">
-            {n.priceRange.minVariantPrice.currencyCode}{" "}
-            {parseFloat(n.priceRange.minVariantPrice.amount).toFixed(2)}
-          </span>
-          <Link
-            to="/product/$handle"
-            params={{ handle: n.handle }}
-            className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] hover:opacity-70"
-          >
-            View piece <ArrowUpRight className="w-4 h-4" />
-          </Link>
-        </div>
+        <p className="text-[13px] md:text-sm tracking-wide whitespace-nowrap text-[#1A1A1A]/70 pt-0.5">
+          ${parseFloat(n.priceRange.minVariantPrice.amount).toFixed(2)}
+        </p>
       </div>
-    </div>
+    </Link>
   );
 }
