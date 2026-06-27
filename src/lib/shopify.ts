@@ -182,7 +182,7 @@ export async function fetchProductsByHandles(handles: string[]): Promise<Shopify
 const COLLECTION_PRODUCTS_QUERY = `
   ${PRODUCT_FRAGMENT}
   query GetCollectionProducts($handle: String!, $first: Int!) {
-    collection(handle: $handle) {
+    collectionByHandle(handle: $handle) {
       products(first: $first) {
         edges { node { ...ProductFields } }
       }
@@ -192,5 +192,5 @@ const COLLECTION_PRODUCTS_QUERY = `
 
 export async function fetchCollectionProducts(handle: string, first = 50): Promise<ShopifyProduct[]> {
   const data = await storefrontApiRequest(COLLECTION_PRODUCTS_QUERY, { handle, first });
-  return stripChineseFromEdges(data?.data?.collection?.products?.edges ?? []);
+  return stripChineseFromEdges(data?.data?.collectionByHandle?.products?.edges ?? []);
 }
