@@ -174,6 +174,13 @@ function ProductPage() {
             };
 
             const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+              if (event.touches.length > 1) {
+                touchStartXRef.current = null;
+                touchStartYRef.current = null;
+                setIsDragging(false);
+                setDragOffset(0);
+                return;
+              }
               touchStartXRef.current = event.touches[0].clientX;
               touchStartYRef.current = event.touches[0].clientY;
               trackWidthRef.current = event.currentTarget.clientWidth;
