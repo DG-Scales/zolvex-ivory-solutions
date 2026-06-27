@@ -188,12 +188,20 @@ function ProductPage() {
             };
 
             const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+              if (event.touches.length > 1) return;
               const startX = touchStartXRef.current;
               const startY = touchStartYRef.current;
               if (startX === null || startY === null) return;
               const dx = event.touches[0].clientX - startX;
               const dy = event.touches[0].clientY - startY;
               if (Math.abs(dy) > Math.abs(dx)) return;
+              // Add resistance at the edges
+              let next = dx;
+              if ((imageIndex === 0 && dx > 0) || (imageIndex === images.length - 1 && dx < 0)) {
+                next = dx * 0.35;
+              }
+              setDragOffset(next);
+            };
               // Add resistance at the edges
               let next = dx;
               if ((imageIndex === 0 && dx > 0) || (imageIndex === images.length - 1 && dx < 0)) {
