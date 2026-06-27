@@ -67,12 +67,20 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
   };
 
   const onTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length > 1) {
+      touchStartX.current = null;
+      touchStartY.current = null;
+      setDragging(false);
+      setDrag(0);
+      return;
+    }
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
     trackWidth.current = e.currentTarget.clientWidth;
     setDragging(true);
   };
   const onTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length > 1) return;
     if (touchStartX.current == null || touchStartY.current == null) return;
     const dx = e.touches[0].clientX - touchStartX.current;
     const dy = e.touches[0].clientY - touchStartY.current;
@@ -109,8 +117,8 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
       <div
         className={
           isFeatured
-            ? "aspect-[4/5] overflow-hidden bg-[#F5F1E8] border border-black/80 rounded-none mb-4 relative touch-pan-y select-none"
-            : "aspect-[4/5] overflow-hidden bg-muted rounded-md mb-4 relative touch-pan-y select-none"
+            ? "aspect-[4/5] overflow-hidden bg-[#F5F1E8] border border-black/80 rounded-none mb-4 relative [touch-action:pan-y_pinch-zoom] select-none"
+            : "aspect-[4/5] overflow-hidden bg-muted rounded-md mb-4 relative [touch-action:pan-y_pinch-zoom] select-none"
         }
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}

@@ -174,6 +174,13 @@ function ProductPage() {
             };
 
             const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+              if (event.touches.length > 1) {
+                touchStartXRef.current = null;
+                touchStartYRef.current = null;
+                setIsDragging(false);
+                setDragOffset(0);
+                return;
+              }
               touchStartXRef.current = event.touches[0].clientX;
               touchStartYRef.current = event.touches[0].clientY;
               trackWidthRef.current = event.currentTarget.clientWidth;
@@ -181,6 +188,7 @@ function ProductPage() {
             };
 
             const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+              if (event.touches.length > 1) return;
               const startX = touchStartXRef.current;
               const startY = touchStartYRef.current;
               if (startX === null || startY === null) return;
@@ -213,7 +221,7 @@ function ProductPage() {
                 <div className="max-md:contents">
                   <div className="relative max-md:order-1">
                     <div
-                      className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative touch-pan-y select-none"
+                      className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative [touch-action:pan-y_pinch-zoom] select-none"
                       onTouchStart={handleTouchStart}
                       onTouchMove={handleTouchMove}
                       onTouchEnd={handleTouchEnd}
