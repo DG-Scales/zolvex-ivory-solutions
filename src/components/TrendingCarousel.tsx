@@ -177,7 +177,7 @@ export function TrendingCarousel() {
         <div className="flex items-end justify-between gap-6 flex-wrap mb-10">
           <div>
             <p className="text-[10px] uppercase tracking-[0.5em] text-background/60 mb-4">
-              Editor's edit · Season 01
+              Editor&apos;s edit · Season 04
             </p>
             <h2 className="font-display text-4xl md:text-6xl leading-[1.02]">
               Trending <span className="italic font-light">Right Now.</span>

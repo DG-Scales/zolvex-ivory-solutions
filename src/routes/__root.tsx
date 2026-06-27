@@ -78,7 +78,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" },
       { title: "Zolvex – Where Design Comes to Light" },
       { name: "description", content: "Shop 150+ premium chandeliers, pendant lights, wall sconces & outdoor fixtures. Free shipping on all US orders." },
       { property: "og:title", content: "Zolvex – Where Design Comes to Light" },

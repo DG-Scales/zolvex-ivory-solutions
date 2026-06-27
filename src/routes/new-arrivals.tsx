@@ -3,19 +3,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { fetchProductsByIds, type ShopifyProduct } from "@/lib/shopify";
+import { fetchCollectionProducts, type ShopifyProduct } from "@/lib/shopify";
 import { useCartSync } from "@/hooks/useCartSync";
 
-const FEATURED_IDS = [
-  15074951627115, 15074951561579, 15074951528811, 15074951430507, 15074951364971,
-  15074951332203, 15074951266667, 15074951233899, 15074951168363, 15074951135595,
-  15074951102827, 15074951070059, 15074951004523, 15074950938987, 15074950906219,
-  15074950840683, 15074950775147, 15074950742379, 15074950644075, 15074950611307,
-  15074950545771, 15074950480235, 15074950447467, 15074950414699, 15074950381931,
-  15074950349163, 15074950316395, 15074950250859, 15074950185323, 15074950119787,
-  15074950054251, 15074950021483, 15074949923179, 15074949824875, 15074949792107,
-  15074949661035, 15074949628267, 15074949562731, 15074949497195,
-];
+const NEW_ARRIVALS_HANDLE = "new-arrivals";
+
 
 type FilterKey = "all" | "pendants" | "chandeliers" | "sconces" | "ceiling";
 
@@ -43,9 +35,9 @@ function NewArrivalsPage() {
   useCartSync();
   const [filter, setFilter] = useState<FilterKey>("all");
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["new-arrivals-featured", FEATURED_IDS.join(",")],
-    queryFn: () => fetchProductsByIds(FEATURED_IDS),
+  const { data, isLoading } = useQuery<ShopifyProduct[]>({
+    queryKey: ["new-arrivals-collection", NEW_ARRIVALS_HANDLE],
+    queryFn: () => fetchCollectionProducts(NEW_ARRIVALS_HANDLE, 60),
     staleTime: 5 * 60 * 1000,
   });
 
@@ -65,7 +57,7 @@ function NewArrivalsPage() {
         <section className="relative overflow-hidden">
           <div className="mx-auto max-w-[1400px] px-6 md:px-10 pt-20 md:pt-32 pb-14 md:pb-20 text-center">
             <p className="text-[11px] uppercase tracking-[0.45em] text-[#C9A84C] mb-6">
-              Season 01 · Just Landed
+              Season 04 · Just Landed
             </p>
             <h1 className="font-display text-6xl md:text-8xl lg:text-9xl leading-[0.95] tracking-tight">
               New <span className="relative inline-block">
