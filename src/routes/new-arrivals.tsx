@@ -35,9 +35,9 @@ function NewArrivalsPage() {
   useCartSync();
   const [filter, setFilter] = useState<FilterKey>("all");
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["new-arrivals-featured", FEATURED_IDS.join(",")],
-    queryFn: () => fetchProductsByIds(FEATURED_IDS),
+  const { data, isLoading } = useQuery<ShopifyProduct[]>({
+    queryKey: ["new-arrivals-collection", NEW_ARRIVALS_HANDLE],
+    queryFn: () => fetchCollectionProducts(NEW_ARRIVALS_HANDLE, 60),
     staleTime: 5 * 60 * 1000,
   });
 
