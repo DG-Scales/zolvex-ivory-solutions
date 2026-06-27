@@ -191,7 +191,6 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
             <Link to="/new-arrivals" className={linkBase}>New arrivals</Link>
             <Link to="/socials" className={linkBase}>Socials</Link>
             <Link to="/categories/$slug" params={{ slug: "trending" }} className={linkBase}>Trending</Link>
-            <Link to="/about" className={linkBase}>About</Link>
             <Link to="/contact" className={linkBase}>Contact</Link>
           </nav>
           <div className="flex items-center justify-end gap-0.5 sm:gap-1">
