@@ -202,13 +202,6 @@ function ProductPage() {
               }
               setDragOffset(next);
             };
-              // Add resistance at the edges
-              let next = dx;
-              if ((imageIndex === 0 && dx > 0) || (imageIndex === images.length - 1 && dx < 0)) {
-                next = dx * 0.35;
-              }
-              setDragOffset(next);
-            };
 
             const handleTouchEnd = () => {
               const width = trackWidthRef.current || 1;
