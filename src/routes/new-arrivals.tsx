@@ -65,7 +65,7 @@ function NewArrivalsPage() {
         <section className="relative overflow-hidden">
           <div className="mx-auto max-w-[1400px] px-6 md:px-10 pt-20 md:pt-32 pb-14 md:pb-20 text-center">
             <p className="text-[11px] uppercase tracking-[0.45em] text-[#C9A84C] mb-6">
-              Season 01 · Just Landed
+              Season 04 · Just Landed
             </p>
             <h1 className="font-display text-6xl md:text-8xl lg:text-9xl leading-[0.95] tracking-tight">
               New <span className="relative inline-block">
