@@ -109,8 +109,8 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
       <div
         className={
           isFeatured
-            ? "aspect-[4/5] overflow-hidden bg-[#F5F1E8] border border-black/80 rounded-none mb-4 relative touch-pan-y select-none"
-            : "aspect-[4/5] overflow-hidden bg-muted rounded-md mb-4 relative touch-pan-y select-none"
+            ? "aspect-[4/5] overflow-hidden bg-[#F5F1E8] border border-black/80 rounded-none mb-4 relative [touch-action:pan-y_pinch-zoom] select-none"
+            : "aspect-[4/5] overflow-hidden bg-muted rounded-md mb-4 relative [touch-action:pan-y_pinch-zoom] select-none"
         }
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}

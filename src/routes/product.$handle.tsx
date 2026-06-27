@@ -221,7 +221,7 @@ function ProductPage() {
                 <div className="max-md:contents">
                   <div className="relative max-md:order-1">
                     <div
-                      className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative touch-pan-y select-none"
+                      className="aspect-[4/5] bg-muted rounded-md overflow-hidden mb-4 relative [touch-action:pan-y_pinch-zoom] select-none"
                       onTouchStart={handleTouchStart}
                       onTouchMove={handleTouchMove}
                       onTouchEnd={handleTouchEnd}
