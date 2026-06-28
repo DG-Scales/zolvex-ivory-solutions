@@ -59,12 +59,21 @@ function NewArrivalsPage() {
     staleTime: 5 * 60 * 1000,
   });
 
+  const { data: debugData } = useQuery({
+    queryKey: ["new-arrivals-debug", NEW_ARRIVALS_HANDLE],
+    queryFn: () => storefrontApiRequest(DEBUG_QUERY, { handle: NEW_ARRIVALS_HANDLE, first: 60 }),
+    staleTime: 5 * 60 * 1000,
+  });
+
   const products = data ?? [];
   const active = FILTERS.find((f) => f.key === filter) ?? FILTERS[0];
   const visible = useMemo(
     () => products.filter((p) => active.match(p.node.title)),
     [products, active],
   );
+
+  const rawEdges = debugData?.data?.collectionByHandle?.products?.edges ?? null;
+
 
   return (
     <div className="min-h-screen flex flex-col">
