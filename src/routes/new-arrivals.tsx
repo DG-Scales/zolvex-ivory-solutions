@@ -3,10 +3,28 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { fetchCollectionProducts, type ShopifyProduct } from "@/lib/shopify";
+import {
+  fetchCollectionProducts,
+  storefrontApiRequest,
+  type ShopifyProduct,
+} from "@/lib/shopify";
 import { useCartSync } from "@/hooks/useCartSync";
 
 const NEW_ARRIVALS_HANDLE = "new-arrivals";
+
+const DEBUG_QUERY = `
+  query DebugCollection($handle: String!, $first: Int!) {
+    collectionByHandle(handle: $handle) {
+      id
+      title
+      handle
+      products(first: $first) {
+        edges { node { id title handle } }
+      }
+    }
+  }
+`;
+
 
 
 type FilterKey = "all" | "pendants" | "chandeliers" | "sconces" | "ceiling";
