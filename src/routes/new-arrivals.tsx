@@ -98,6 +98,34 @@ function NewArrivalsPage() {
           </div>
         </section>
 
+        {/* Debug panel */}
+        <section className="mx-auto max-w-[1400px] px-6 md:px-10 pb-6">
+          <details open className="rounded-lg border border-[#1A1A1A]/15 bg-white">
+            <summary className="cursor-pointer px-4 py-3 text-[11px] uppercase tracking-[0.3em] text-[#1A1A1A]/70">
+              Debug · collectionByHandle("{NEW_ARRIVALS_HANDLE}")
+            </summary>
+            <div className="px-4 pb-4 space-y-3 text-xs font-mono">
+              <div>
+                <span className="text-[#1A1A1A]/60">Parsed products (data length): </span>
+                <span className="font-bold">{products.length}</span>
+              </div>
+              <div>
+                <span className="text-[#1A1A1A]/60">Raw products.edges length: </span>
+                <span className="font-bold">
+                  {rawEdges === null ? "(loading)" : rawEdges.length}
+                </span>
+              </div>
+              <div>
+                <span className="text-[#1A1A1A]/60">Raw response:</span>
+                <pre className="mt-2 max-h-[420px] overflow-auto rounded bg-[#0F0F0F] p-3 text-[11px] leading-relaxed text-[#E6E6E6]">
+{JSON.stringify(debugData ?? { status: "loading" }, null, 2)}
+                </pre>
+              </div>
+            </div>
+          </details>
+        </section>
+
+
         {/* Filter bar */}
         <section className="sticky top-[64px] z-20 bg-[#FAFAFA]/85 backdrop-blur border-y border-[#1A1A1A]/8">
           <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-4 flex items-center justify-center gap-1 md:gap-2 overflow-x-auto">
