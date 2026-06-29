@@ -182,7 +182,7 @@ export async function fetchProductsByHandles(handles: string[]): Promise<Shopify
 const COLLECTION_PRODUCTS_QUERY = `
   ${PRODUCT_FRAGMENT}
   query GetCollectionProducts($handle: String!, $first: Int!) {
-    collectionByHandle(handle: $handle) {
+    collection(handle: $handle) {
       id
       title
       handle
@@ -199,13 +199,13 @@ const COLLECTION_PRODUCTS_QUERY = `
 
 export async function fetchCollectionProducts(handle: string, first = 50): Promise<ShopifyProduct[]> {
   const data = await storefrontApiRequest(COLLECTION_PRODUCTS_QUERY, { handle, first });
-  console.log("[Shopify collectionByHandle raw response]", {
+  console.log("[Shopify collection raw response]", {
     handle,
     first,
     response: data,
   });
-  const edges = data?.data?.collectionByHandle?.products?.edges ?? [];
-  console.log("[Shopify collectionByHandle products edges]", {
+  const edges = data?.data?.collection?.products?.edges ?? [];
+  console.log("[Shopify collection products edges]", {
     handle,
     count: edges.length,
     edges,
