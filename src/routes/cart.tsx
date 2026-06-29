@@ -210,7 +210,7 @@ function CartPage() {
                   <Truck className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" strokeWidth={1.5} />
                   <p className="text-xs leading-relaxed text-muted-foreground">
                     <span className="text-foreground font-medium">Estimated delivery: 7–25 business days.</span>{" "}
-                    Larger or higher demand items may take up to 60 days. You will receive a tracking number once your order ships.
+                    Larger or higher demand items may take up to 60 days. You will receive a tracking number once your order ships, if available.
                   </p>
                 </div>
 
