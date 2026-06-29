@@ -9,11 +9,53 @@ export const Route = createFileRoute("/shipping")({
     ],
   }),
   component: () => (
-    <PageShell eyebrow="Support" title="Shipping" lead="We ship lighting worldwide. Orders are processed and dispatched within 1–4 business days; made-to-order pieces follow the lead time on the product page.">
-      <section><h2 className="font-display text-2xl mb-3">United States</h2><p>Standard shipping: 7–25 business days. Free shipping — no minimum required.</p></section>
-      <section><h2 className="font-display text-2xl mb-3">International</h2><p>7–25 business days depending on destination. Fixtures ship with wiring compliant to your destination region.</p></section>
-      <section><h2 className="font-display text-2xl mb-3">Larger fixtures</h2><p>Some larger products — oversized chandeliers, freight-only pieces, and made-to-order fixtures — may take up to 60 days to arrive depending on circumstances such as customs clearance, carrier delays, or production lead times. We'll keep you updated throughout.</p></section>
-      <section><h2 className="font-display text-2xl mb-3">Tracking</h2><p>You'll receive a tracking link by email as soon as your order ships. If you don't see it, check spam or reach out at <a target="_top" href="mailto:zolvex.business@gmail.com" className="underline underline-offset-4">zolvex.business@gmail.com</a>.</p></section>
+    <PageShell eyebrow="Support" title="Shipping Policy" lead="Everything you need to know about how and when your Zolvex order arrives.">
+      <section>
+        <h2 className="font-display text-2xl mb-3">Processing Time</h2>
+        <p>Orders are processed within 1–4 business days after payment confirmation.</p>
+      </section>
+
+      <section>
+        <h2 className="font-display text-2xl mb-3">Shipping Times</h2>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>United States: 7–25 business days — FREE</li>
+          <li>International / Rest of World: 7–25 business days — $29.99</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 className="font-display text-2xl mb-3">Shipping Costs</h2>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>United States: Free shipping on all orders</li>
+          <li>International: Flat rate $29.99 per order</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 className="font-display text-2xl mb-3">Please Note</h2>
+        <p>Due to the nature of our products, certain items such as large chandeliers, custom lighting fixtures, or items with high demand may require additional processing and shipping time. In these cases, delivery may take up to 60 days (approximately 2 months). We appreciate your patience and assure you that every order is handled with care.</p>
+      </section>
+
+      <section>
+        <h2 className="font-display text-2xl mb-3">Order Tracking</h2>
+        <p>Once your order ships you will receive a confirmation email with a tracking number. You can use this to track your package at any time.</p>
+      </section>
+
+      <section>
+        <h2 className="font-display text-2xl mb-3">International Orders</h2>
+        <p>International orders may be subject to customs duties and taxes upon arrival. These charges are the responsibility of the recipient.</p>
+      </section>
+
+      <section>
+        <h2 className="font-display text-2xl mb-3">Lost or Delayed Packages</h2>
+        <p>If your package is lost or significantly delayed please contact us at <a target="_top" href="mailto:zolvex.business@gmail.com" className="underline underline-offset-4">zolvex.business@gmail.com</a> with your order number and we will investigate immediately.</p>
+      </section>
+
+      <section>
+        <h2 className="font-display text-2xl mb-3">Contact Us</h2>
+        <p>Email: <a target="_top" href="mailto:zolvex.business@gmail.com" className="underline underline-offset-4">zolvex.business@gmail.com</a></p>
+        <p>Website: <a target="_top" href="https://zolvex.org" className="underline underline-offset-4">zolvex.org</a></p>
+      </section>
     </PageShell>
   ),
 });
