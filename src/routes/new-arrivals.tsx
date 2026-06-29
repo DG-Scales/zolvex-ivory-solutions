@@ -3,46 +3,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import {
-  fetchCollectionProducts,
-  storefrontApiRequest,
-  type ShopifyProduct,
-} from "@/lib/shopify";
+import { fetchCollectionProducts, type ShopifyProduct } from "@/lib/shopify";
 import { useCartSync } from "@/hooks/useCartSync";
 
 const NEW_ARRIVALS_HANDLE = "new-arrivals";
 
-const DEBUG_QUERY = `
-  query DebugCollection($handle: String!, $first: Int!) {
-    collectionByHandle(handle: $handle) {
-      id
-      title
-      handle
-      products(first: $first) {
-        edges { node { id title handle } }
-      }
-    }
-  }
-`;
-
-
-
 type FilterKey = "all" | "pendants" | "chandeliers" | "sconces" | "ceiling";
-
-type DebugCollectionResponse = {
-  data?: {
-    collectionByHandle?: {
-      products?: {
-        edges?: unknown[];
-      };
-    } | null;
-  };
-  errors?: unknown;
-};
-
-function getErrorMessage(error: unknown) {
-  return error instanceof Error ? error.message : String(error);
-}
 
 const FILTERS: { key: FilterKey; label: string; match: (t: string) => boolean }[] = [
   { key: "all", label: "All", match: () => true },
@@ -67,67 +33,11 @@ export const Route = createFileRoute("/new-arrivals")({
 function NewArrivalsPage() {
   useCartSync();
   const [filter, setFilter] = useState<FilterKey>("all");
-  const [productsFetchError, setProductsFetchError] = useState<string | null>(null);
-  const [debugFetchError, setDebugFetchError] = useState<string | null>(null);
 
-  const {
-    data,
-    isLoading,
-    error: productsQueryError,
-    status: productsStatus,
-    fetchStatus: productsFetchStatus,
-  } = useQuery<ShopifyProduct[], Error>({
+  const { data, isLoading } = useQuery<ShopifyProduct[]>({
     queryKey: ["new-arrivals-collection", NEW_ARRIVALS_HANDLE],
-    queryFn: async () => {
-      console.log("[New Arrivals] about to call fetchCollectionProducts", {
-        handle: NEW_ARRIVALS_HANDLE,
-        first: 60,
-      });
-      setProductsFetchError(null);
-      try {
-        const result = await fetchCollectionProducts(NEW_ARRIVALS_HANDLE, 60);
-        console.log("[New Arrivals] fetchCollectionProducts resolved", {
-          handle: NEW_ARRIVALS_HANDLE,
-          count: result.length,
-        });
-        return result;
-      } catch (error) {
-        const message = getErrorMessage(error);
-        console.error("[New Arrivals] fetchCollectionProducts failed", error);
-        setProductsFetchError(message);
-        throw error;
-      }
-    },
+    queryFn: () => fetchCollectionProducts(NEW_ARRIVALS_HANDLE, 60),
     staleTime: 5 * 60 * 1000,
-    retry: 1,
-  });
-
-  const {
-    data: debugData,
-    error: debugQueryError,
-    status: debugStatus,
-    fetchStatus: debugFetchStatus,
-  } = useQuery<DebugCollectionResponse, Error>({
-    queryKey: ["new-arrivals-debug", NEW_ARRIVALS_HANDLE],
-    queryFn: async () => {
-      console.log("[New Arrivals] about to call raw collectionByHandle debug query", {
-        handle: NEW_ARRIVALS_HANDLE,
-        first: 60,
-      });
-      setDebugFetchError(null);
-      try {
-        const response = await storefrontApiRequest(DEBUG_QUERY, { handle: NEW_ARRIVALS_HANDLE, first: 60 });
-        console.log("[New Arrivals] raw collectionByHandle debug query resolved", response);
-        return response as DebugCollectionResponse;
-      } catch (error) {
-        const message = getErrorMessage(error);
-        console.error("[New Arrivals] raw collectionByHandle debug query failed", error);
-        setDebugFetchError(message);
-        throw error;
-      }
-    },
-    staleTime: 5 * 60 * 1000,
-    retry: 1,
   });
 
   const products = data ?? [];
@@ -136,11 +46,6 @@ function NewArrivalsPage() {
     () => products.filter((p) => active.match(p.node.title)),
     [products, active],
   );
-
-  const rawEdges = debugData?.data?.collectionByHandle?.products?.edges ?? null;
-  const productsErrorMessage = productsFetchError ?? (productsQueryError ? getErrorMessage(productsQueryError) : null);
-  const debugErrorMessage = debugFetchError ?? (debugQueryError ? getErrorMessage(debugQueryError) : null);
-
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -164,56 +69,6 @@ function NewArrivalsPage() {
             </p>
           </div>
         </section>
-
-        {/* Debug panel */}
-        <section className="mx-auto max-w-[1400px] px-6 md:px-10 pb-6">
-          <details open className="rounded-lg border border-[#1A1A1A]/15 bg-white">
-            <summary className="cursor-pointer px-4 py-3 text-[11px] uppercase tracking-[0.3em] text-[#1A1A1A]/70">
-              Debug · collectionByHandle("{NEW_ARRIVALS_HANDLE}")
-            </summary>
-            <div className="px-4 pb-4 space-y-3 text-xs font-mono">
-              <div>
-                <span className="text-[#1A1A1A]/60">Parsed query status: </span>
-                <span className="font-bold">{productsStatus}</span>
-                <span className="text-[#1A1A1A]/60"> · fetchStatus: </span>
-                <span className="font-bold">{productsFetchStatus}</span>
-              </div>
-              <div>
-                <span className="text-[#1A1A1A]/60">Raw debug query status: </span>
-                <span className="font-bold">{debugStatus}</span>
-                <span className="text-[#1A1A1A]/60"> · fetchStatus: </span>
-                <span className="font-bold">{debugFetchStatus}</span>
-              </div>
-              <div>
-                <span className="text-[#1A1A1A]/60">Parsed products (data length): </span>
-                <span className="font-bold">{products.length}</span>
-              </div>
-              {productsErrorMessage && (
-                <div className="rounded bg-red-50 p-3 text-red-700">
-                  Parsed products error: {productsErrorMessage}
-                </div>
-              )}
-              {debugErrorMessage && (
-                <div className="rounded bg-red-50 p-3 text-red-700">
-                  Raw debug query error: {debugErrorMessage}
-                </div>
-              )}
-              <div>
-                <span className="text-[#1A1A1A]/60">Raw products.edges length: </span>
-                <span className="font-bold">
-                  {rawEdges === null ? "(loading)" : rawEdges.length}
-                </span>
-              </div>
-              <div>
-                <span className="text-[#1A1A1A]/60">Raw response:</span>
-                <pre className="mt-2 max-h-[420px] overflow-auto rounded bg-[#0F0F0F] p-3 text-[11px] leading-relaxed text-[#E6E6E6]">
-{JSON.stringify(debugData ?? { status: debugStatus, fetchStatus: debugFetchStatus, error: debugErrorMessage }, null, 2)}
-                </pre>
-              </div>
-            </div>
-          </details>
-        </section>
-
 
         {/* Filter bar */}
         <section className="sticky top-[64px] z-20 bg-[#FAFAFA]/85 backdrop-blur border-y border-[#1A1A1A]/8">
@@ -241,8 +96,6 @@ function NewArrivalsPage() {
         <section className="mx-auto max-w-[1400px] px-4 md:px-8 py-12 md:py-16">
           {isLoading ? (
             <div className="text-center py-24 text-sm text-[#1A1A1A]/50">Loading the latest…</div>
-          ) : productsErrorMessage ? (
-            <div className="text-center py-24 text-sm text-red-700">Unable to load New Arrivals: {productsErrorMessage}</div>
           ) : visible.length === 0 ? (
             <div className="text-center py-24 text-sm text-[#1A1A1A]/50">No pieces in this category yet.</div>
           ) : (
