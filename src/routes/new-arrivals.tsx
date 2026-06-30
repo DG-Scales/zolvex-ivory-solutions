@@ -157,10 +157,10 @@ function EditorialCard({ product, index }: { product: ShopifyProduct; index: num
         </span>
       </div>
       <div className="pt-4 px-1 flex items-start justify-between gap-4">
-        <h3 className="text-[13px] md:text-sm font-medium leading-snug line-clamp-2 group-hover:text-[#C9A84C] transition-colors">
+        <h3 className="text-lg md:text-xl font-medium leading-snug line-clamp-2 group-hover:text-[#C9A84C] transition-colors">
           {n.title}
         </h3>
-        <p className="text-[13px] md:text-sm tracking-wide whitespace-nowrap text-[#1A1A1A]/70 pt-0.5">
+        <p className="text-base md:text-lg tracking-wide whitespace-nowrap text-[#1A1A1A]/70 pt-0.5">
           ${parseFloat(n.priceRange.minVariantPrice.amount).toFixed(2)}
         </p>
       </div>
