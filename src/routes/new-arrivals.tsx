@@ -72,7 +72,7 @@ function NewArrivalsPage() {
 
         {/* Filter bar */}
         <section className="sticky top-[64px] z-20 bg-[#FAFAFA]/85 backdrop-blur border-y border-[#1A1A1A]/8">
-          <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-4 flex items-center justify-center gap-1 md:gap-2 overflow-x-auto">
+          <div className="mx-auto max-w-[1400px] px-4 md:px-10 py-4 flex items-center md:justify-center gap-1 md:gap-2 overflow-x-auto [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {FILTERS.map((f) => {
               const isActive = f.key === filter;
               return (
@@ -91,6 +91,7 @@ function NewArrivalsPage() {
             })}
           </div>
         </section>
+
 
         {/* Grid */}
         <section className="mx-auto max-w-[1400px] px-4 md:px-8 py-12 md:py-16">
