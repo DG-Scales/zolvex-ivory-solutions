@@ -136,8 +136,7 @@ function EditorialCard({ product, index }: { product: ShopifyProduct; index: num
     <Link
       to="/product/$handle"
       params={{ handle: n.handle }}
-      className="group mb-4 md:mb-6 block break-inside-avoid opacity-0 animate-fade-in"
-      style={{ animationDelay: delay, animationFillMode: "forwards" }}
+      className="group mb-4 md:mb-6 block break-inside-avoid"
     >
       <div className={`relative ${aspect} overflow-hidden rounded-[10px] bg-[#EFEBE2]`}>
         {img && (
