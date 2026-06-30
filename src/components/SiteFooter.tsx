@@ -57,6 +57,11 @@ export function SiteFooter() {
                 <span>Easy returns</span>
               </div>
             </div>
+            <address className="mt-4 text-[11px] not-italic text-muted-foreground leading-relaxed">
+              437 Lafayette St<br />
+              Salem, Massachusetts 01970<br />
+              United States
+            </address>
           </div>
         </div>
 
@@ -117,10 +122,7 @@ export function SiteFooter() {
 
       <div className="border-t border-border/60">
         <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col md:flex-row md:items-center justify-between text-xs text-muted-foreground gap-2">
-          <div className="flex flex-col gap-1">
-            <p>© 2026 Zolvex. All rights reserved.</p>
-            <p>437 Lafayette St, Salem, Massachusetts</p>
-          </div>
+          <p>© 2026 Zolvex. All rights reserved.</p>
           <p>Crafted with intention.</p>
         </div>
       </div>
