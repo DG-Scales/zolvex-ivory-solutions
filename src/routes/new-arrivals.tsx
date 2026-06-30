@@ -72,7 +72,7 @@ function NewArrivalsPage() {
 
         {/* Filter bar */}
         <section className="sticky top-[64px] z-20 bg-[#FAFAFA]/85 backdrop-blur border-y border-[#1A1A1A]/8">
-          <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-4 flex items-center justify-center gap-1 md:gap-2 overflow-x-auto">
+          <div className="mx-auto max-w-[1400px] px-4 md:px-10 py-4 flex items-center md:justify-center gap-1 md:gap-2 overflow-x-auto [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {FILTERS.map((f) => {
               const isActive = f.key === filter;
               return (
@@ -92,6 +92,7 @@ function NewArrivalsPage() {
           </div>
         </section>
 
+
         {/* Grid */}
         <section className="mx-auto max-w-[1400px] px-4 md:px-8 py-12 md:py-16">
           {isLoading ? (
@@ -110,7 +111,7 @@ function NewArrivalsPage() {
         {/* Banner strip */}
         <section className="border-t border-[#1A1A1A]/10 bg-[#F2EFE8]">
           <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-6 flex flex-col md:flex-row items-center justify-center gap-3 md:gap-10 text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-[#1A1A1A]/70 text-center">
-            <span>Free shipping on orders over $200</span>
+            <span>Free shipping on all U.S. orders</span>
             <span className="hidden md:inline text-[#C9A84C]">·</span>
             <span>Easy 30-day returns</span>
             <span className="hidden md:inline text-[#C9A84C]">·</span>
@@ -156,10 +157,10 @@ function EditorialCard({ product, index }: { product: ShopifyProduct; index: num
         </span>
       </div>
       <div className="pt-4 px-1 flex items-start justify-between gap-4">
-        <h3 className="text-[13px] md:text-sm font-medium leading-snug line-clamp-2 group-hover:text-[#C9A84C] transition-colors">
+        <h3 className="text-lg md:text-xl font-medium leading-snug line-clamp-2 group-hover:text-[#C9A84C] transition-colors">
           {n.title}
         </h3>
-        <p className="text-[13px] md:text-sm tracking-wide whitespace-nowrap text-[#1A1A1A]/70 pt-0.5">
+        <p className="text-base md:text-lg tracking-wide whitespace-nowrap text-[#1A1A1A]/70 pt-0.5">
           ${parseFloat(n.priceRange.minVariantPrice.amount).toFixed(2)}
         </p>
       </div>
