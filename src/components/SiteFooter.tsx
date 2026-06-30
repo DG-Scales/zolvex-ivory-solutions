@@ -116,8 +116,11 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-border/60">
-        <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col md:flex-row justify-between text-xs text-muted-foreground gap-2">
-          <p>© 2026 Zolvex. All rights reserved.</p>
+        <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col md:flex-row md:items-center justify-between text-xs text-muted-foreground gap-2">
+          <div className="flex flex-col gap-1">
+            <p>© 2026 Zolvex. All rights reserved.</p>
+            <p>437 Lafayette St, Salem, Massachusetts</p>
+          </div>
           <p>Crafted with intention.</p>
         </div>
       </div>
