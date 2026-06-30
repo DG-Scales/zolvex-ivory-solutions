@@ -57,6 +57,11 @@ export function SiteFooter() {
                 <span>Easy returns</span>
               </div>
             </div>
+            <address className="mt-4 text-[11px] not-italic text-muted-foreground leading-relaxed">
+              437 Lafayette St<br />
+              Salem, Massachusetts 01970<br />
+              United States
+            </address>
           </div>
         </div>
 
