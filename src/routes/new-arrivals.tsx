@@ -111,7 +111,7 @@ function NewArrivalsPage() {
         {/* Banner strip */}
         <section className="border-t border-[#1A1A1A]/10 bg-[#F2EFE8]">
           <div className="mx-auto max-w-[1400px] px-6 md:px-10 py-6 flex flex-col md:flex-row items-center justify-center gap-3 md:gap-10 text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-[#1A1A1A]/70 text-center">
-            <span>Free shipping on orders over $200</span>
+            <span>Free shipping on all U.S. orders</span>
             <span className="hidden md:inline text-[#C9A84C]">·</span>
             <span>Easy 30-day returns</span>
             <span className="hidden md:inline text-[#C9A84C]">·</span>
