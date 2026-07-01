@@ -34,7 +34,7 @@ function ReturnsPage() {
           To start a return, you can contact us at {email}. Please note that returns will need to be sent to the following address: Please do not ship items back without contacting us first. Email us at {email}, and we will provide you with the correct return instructions and address based on your order.
         </p>
         <p>
-          If your return is accepted, we'll send you a return shipping label, as well as instructions on how and where to send your package. Items sent back to us without first requesting a return will not be accepted.
+          If your return is accepted, we'll send you a return shipping label, as well as instructions on how and where to send your package. Return shipping costs are covered by Zolvex for all eligible returns — you will not be charged for the return label. Items sent back to us without first requesting a return will not be accepted.
         </p>
         <p>You can always contact us for any return questions at {email}.</p>
       </section>
@@ -42,9 +42,10 @@ function ReturnsPage() {
       <section>
         <h2 className="font-display text-2xl mb-3">Damages and issues</h2>
         <p>
-          Please inspect your order upon reception and contact us immediately if the item is defective, damaged, or if you receive the wrong item, so that we can evaluate the issue and make it right.
+          Please inspect your order upon receiving and contact us immediately if the item is defective, damaged, or if you receive the wrong item, so that we can evaluate the issue and make it right. For items confirmed damaged in transit, we will arrange a replacement or issue a full refund at no cost to you — no return shipment is required.
         </p>
       </section>
+
 
       <section>
         <h2 className="font-display text-2xl mb-3">Exceptions / non-returnable items</h2>
