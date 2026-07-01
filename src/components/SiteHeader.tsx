@@ -153,7 +153,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
           </div>
 
           <Link to="/" className="flex items-center">
-            <Logo size="md" tone={overlay ? "light" : "dark"} />
+            <Logo size="md" tone={useLightLook ? "light" : "dark"} />
           </Link>
           <nav className={`hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.2em]`}>
             <div className="group relative">
