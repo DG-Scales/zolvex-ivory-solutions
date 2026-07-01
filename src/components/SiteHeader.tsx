@@ -80,7 +80,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={overlay ? "text-background hover:bg-background/10 hover:text-background" : ""}
+                  className={useLightLook ? "text-background hover:bg-background/10 hover:text-background" : ""}
                   aria-label="Open menu"
                 >
                   <Menu className="h-5 w-5" />
