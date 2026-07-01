@@ -16,10 +16,10 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   const featured = categoriesByGroup("Featured");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [visible, setVisible] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
   const lastYRef = useRef(0);
 
   useEffect(() => {
-    if (overlay) return;
     lastYRef.current = window.scrollY;
     let ticking = false;
     const onScroll = () => {
@@ -28,32 +28,37 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
       window.requestAnimationFrame(() => {
         const y = Math.max(0, window.scrollY);
         const delta = y - lastYRef.current;
+        setScrolled(y > 40);
         if (Math.abs(delta) < 8) {
           ticking = false;
           return;
         }
-        if (y < 24) {
+        if (overlay) {
+          setVisible(true);
+        } else if (y < 24) {
           setVisible(true);
         } else if (delta > 0) {
-          // scrolling down -> hide
           setVisible(false);
         } else {
-          // scrolling up -> show
           setVisible(true);
         }
         lastYRef.current = y;
         ticking = false;
       });
     };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [overlay]);
 
-  const headerClass = overlay
+  // When overlay + at top: transparent light look. When overlay + scrolled: switch to solid white look.
+  const useLightLook = overlay && !scrolled;
+
+  const headerClass = useLightLook
     ? "bg-transparent text-background"
     : "border-b border-border/40 bg-background/85 backdrop-blur-md text-foreground";
 
-  const linkBase = overlay
+  const linkBase = useLightLook
     ? "text-background/90 hover:text-background transition-colors"
     : "text-muted-foreground hover:text-foreground transition-colors";
 
@@ -63,12 +68,9 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
     <>
     {!overlay && <div aria-hidden className="h-[100px] md:h-[120px]" />}
     <div
-      className={
-        overlay
-          ? "absolute inset-x-0 top-0 z-40"
-          : `fixed inset-x-0 top-0 z-40 transition-transform duration-300 ease-out will-change-transform ${visible ? "translate-y-0" : "-translate-y-full"}`
-      }
+      className={`fixed inset-x-0 top-0 z-40 transition-transform duration-300 ease-out will-change-transform ${visible ? "translate-y-0" : "-translate-y-full"}`}
     >
+
       <PromoBar />
       <header className={headerClass}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between gap-3 md:gap-8">
