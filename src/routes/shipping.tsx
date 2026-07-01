@@ -21,6 +21,7 @@ export const Route = createFileRoute("/shipping")({
           <li>United States: 7–25 business days — FREE</li>
           <li>International / Rest of World: 7–25 business days — $29.99</li>
         </ul>
+        <p className="mt-3">All delivery times are estimates only and are not guaranteed. Actual delivery may vary due to carrier delays, customs clearance, or other circumstances outside our control.</p>
       </section>
 
       <section>
@@ -38,7 +39,7 @@ export const Route = createFileRoute("/shipping")({
 
       <section>
         <h2 className="font-display text-2xl mb-3">Order Tracking</h2>
-        <p>Once your order ships you will receive a confirmation email with a tracking number. You can use this to track your package at any time.</p>
+        <p>Once your order ships, you will receive a confirmation email with a tracking number. You can use this to track your package at any time if available.</p>
       </section>
 
       <section>
@@ -48,7 +49,7 @@ export const Route = createFileRoute("/shipping")({
 
       <section>
         <h2 className="font-display text-2xl mb-3">Lost or Delayed Packages</h2>
-        <p>If your package is lost or significantly delayed please contact us at <a target="_top" href="mailto:zolvex.business@gmail.com" className="underline underline-offset-4">zolvex.business@gmail.com</a> with your order number and we will investigate immediately.</p>
+        <p>If your package is lost or significantly delayed, please contact us at <a target="_top" href="mailto:zolvex.business@gmail.com" className="underline underline-offset-4">zolvex.business@gmail.com</a> with your order number, and we will investigate immediately. If the carrier confirms a package is lost, we will arrange a replacement or issue a full refund at no additional cost to you.</p>
       </section>
 
       <section>
@@ -59,3 +60,4 @@ export const Route = createFileRoute("/shipping")({
     </PageShell>
   ),
 });
+
