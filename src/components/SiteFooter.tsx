@@ -86,6 +86,7 @@ export function SiteFooter() {
             <li><Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link></li>
             <li><Link to="/privacy" className="hover:text-foreground transition-colors">Privacy</Link></li>
             <li><Link to="/terms" className="hover:text-foreground transition-colors">Terms</Link></li>
+            <li><Link to="/cookies" className="hover:text-foreground transition-colors">Cookies</Link></li>
           </ul>
         </div>
 
