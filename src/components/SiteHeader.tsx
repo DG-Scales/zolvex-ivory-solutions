@@ -144,6 +144,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                       <li><Link to="/wholesale" onClick={close} className="text-sm text-foreground/80">Wholesale</Link></li>
                       <li><Link to="/privacy" onClick={close} className="text-sm text-foreground/80">Privacy</Link></li>
                       <li><Link to="/terms" onClick={close} className="text-sm text-foreground/80">Terms</Link></li>
+                      <li><Link to="/cookies" onClick={close} className="text-sm text-foreground/80">Cookies</Link></li>
                     </ul>
                   </div>
                 </nav>
