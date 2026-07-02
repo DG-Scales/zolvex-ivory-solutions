@@ -22,6 +22,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NewArrivalsRouteImport } from './routes/new-arrivals'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -100,6 +101,11 @@ const NewArrivalsRoute = NewArrivalsRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -182,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/privacy': typeof PrivacyRoute
@@ -211,6 +218,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/privacy': typeof PrivacyRoute
@@ -241,6 +249,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/privacy': typeof PrivacyRoute
@@ -272,6 +281,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/cart'
     | '/contact'
+    | '/cookies'
     | '/faq'
     | '/new-arrivals'
     | '/privacy'
@@ -301,6 +311,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/cart'
     | '/contact'
+    | '/cookies'
     | '/faq'
     | '/new-arrivals'
     | '/privacy'
@@ -330,6 +341,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/cart'
     | '/contact'
+    | '/cookies'
     | '/faq'
     | '/new-arrivals'
     | '/privacy'
@@ -360,6 +372,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CartRoute: typeof CartRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   FaqRoute: typeof FaqRoute
   NewArrivalsRoute: typeof NewArrivalsRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -477,6 +490,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -584,6 +604,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CartRoute: CartRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   FaqRoute: FaqRoute,
   NewArrivalsRoute: NewArrivalsRoute,
   PrivacyRoute: PrivacyRoute,
