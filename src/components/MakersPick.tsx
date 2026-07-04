@@ -6,7 +6,7 @@ import { Loader2 } from "lucide-react";
 
 const PICK_HANDLES = [
   "villa-light-luxury-living-room-floor-lamp",
-  "light-luxury-crystal-living-room-chandelier-postmodern-round-stainless-steel",
+  "modern-led-pendant-light-24-inch-round-hanging-chandelier-with-adjustable-height-marble-finish-resin-ring-ceiling-light-for-dining-room-kitchen-island-living-room",
   "led-strip-simple-office-long-line-pendant-light",
 ];
 
