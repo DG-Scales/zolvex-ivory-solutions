@@ -136,15 +136,11 @@ function ProductPage() {
     <div className="min-h-screen flex flex-col bg-background">
       <SiteHeader />
       <main className="flex-1 mx-auto max-w-7xl px-6 py-10 w-full">
-        {fromCategory ? (
-          <Link to="/categories/$slug" params={{ slug: fromCategory }} className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8">
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back
-          </Link>
-        ) : (
-          <Link to="/categories" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8">
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back
-          </Link>
-        )}
+        <SmartBack
+          fallbackTo={fromCategory ? "/categories/$slug" : "/categories"}
+          fallbackParams={fromCategory ? { slug: fromCategory } : undefined}
+          className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8"
+        />
 
         {isLoading ? (
           <div className="flex justify-center py-32"><Loader2 className="w-6 h-6 animate-spin" /></div>
