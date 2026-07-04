@@ -5,6 +5,7 @@ import { ProductGrid } from "@/components/ProductGrid";
 import { useCartSync } from "@/hooks/useCartSync";
 import { getCategory, categories } from "@/lib/categories";
 import { ArrowLeft } from "lucide-react";
+import { SmartBack } from "@/components/SmartBack";
 
 export const Route = createFileRoute("/categories/$slug")({
   loader: ({ params }) => {
