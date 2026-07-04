@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { PromoBox } from "@/components/PromoBox";
 import { ProductCard } from "@/components/ProductCard";
 import { getBeforePrice } from "@/lib/utils";
+import { SmartBack } from "@/components/SmartBack";
 
 function getSocialPreviewImageUrl(url: string) {
   const imageUrl = new URL(url);
