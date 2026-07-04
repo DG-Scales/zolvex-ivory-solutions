@@ -5,6 +5,7 @@ import { ProductGrid } from "@/components/ProductGrid";
 import { useCartSync } from "@/hooks/useCartSync";
 import { getCategory, categories } from "@/lib/categories";
 import { ArrowLeft } from "lucide-react";
+import { SmartBack } from "@/components/SmartBack";
 
 export const Route = createFileRoute("/categories/$slug")({
   loader: ({ params }) => {
@@ -62,9 +63,11 @@ function CategoryPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/30" />
         <div className="relative mx-auto max-w-7xl px-6 py-24 md:py-32 grid md:grid-cols-12 gap-8 items-end">
           <div className="md:col-span-8">
-            <Link to="/categories" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.35em] text-background/70 hover:text-background mb-6">
-              <ArrowLeft className="h-3 w-3" /> All collections
-            </Link>
+            <SmartBack
+              fallbackTo="/categories"
+              label="All collections"
+              className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.35em] text-background/70 hover:text-background mb-6"
+            />
             {isTrending ? (
               <>
                 <p className="text-[10px] uppercase tracking-[0.5em] text-background/60 mb-5">Editor's edit · Season 01</p>
