@@ -101,6 +101,14 @@ function gtag(): GtagFn | null {
   return typeof w.gtag === "function" ? w.gtag : null;
 }
 
+type FbqFn = (...args: unknown[]) => void;
+function fbq(): FbqFn | null {
+  if (!isBrowser()) return null;
+  const w = window as unknown as { fbq?: FbqFn };
+  return typeof w.fbq === "function" ? w.fbq : null;
+}
+
+
 const GA4_ID = "G-NJD4V4K981";
 
 export function trackPageView(path: string, title?: string) {
