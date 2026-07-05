@@ -117,13 +117,16 @@ export function trackPageView(path: string, title?: string) {
   ensureShopifyVisitor();
   ensureShopifySession();
   const g = gtag();
-  if (!g) return;
-  g("event", "page_view", {
-    page_path: path,
-    page_location: window.location.origin + path,
-    page_title: title ?? document.title,
-    send_to: GA4_ID,
-  });
+  if (g) {
+    g("event", "page_view", {
+      page_path: path,
+      page_location: window.location.origin + path,
+      page_title: title ?? document.title,
+      send_to: GA4_ID,
+    });
+  }
+  const f = fbq();
+  if (f) f("track", "PageView");
 }
 
 export function trackProductView(args: {
@@ -133,12 +136,23 @@ export function trackProductView(args: {
   currency: string;
 }) {
   const g = gtag();
-  if (!g) return;
-  g("event", "view_item", {
-    currency: args.currency,
-    value: args.price,
-    items: [{ item_id: args.id, item_name: args.title, price: args.price, quantity: 1 }],
-  });
+  if (g) {
+    g("event", "view_item", {
+      currency: args.currency,
+      value: args.price,
+      items: [{ item_id: args.id, item_name: args.title, price: args.price, quantity: 1 }],
+    });
+  }
+  const f = fbq();
+  if (f) {
+    f("track", "ViewContent", {
+      content_ids: [args.id],
+      content_name: args.title,
+      content_type: "product",
+      value: args.price,
+      currency: args.currency,
+    });
+  }
 }
 
 export function trackAddToCart(args: {
@@ -149,15 +163,27 @@ export function trackAddToCart(args: {
   quantity: number;
 }) {
   const g = gtag();
-  if (!g) return;
-  g("event", "add_to_cart", {
-    currency: args.currency,
-    value: args.price * args.quantity,
-    items: [
-      { item_id: args.id, item_name: args.title, price: args.price, quantity: args.quantity },
-    ],
-  });
+  if (g) {
+    g("event", "add_to_cart", {
+      currency: args.currency,
+      value: args.price * args.quantity,
+      items: [
+        { item_id: args.id, item_name: args.title, price: args.price, quantity: args.quantity },
+      ],
+    });
+  }
+  const f = fbq();
+  if (f) {
+    f("track", "AddToCart", {
+      content_ids: [args.id],
+      content_name: args.title,
+      content_type: "product",
+      value: args.price * args.quantity,
+      currency: args.currency,
+    });
+  }
 }
+
 
 export function trackBeginCheckout(args: { value: number; currency: string; itemCount: number }) {
   const g = gtag();
