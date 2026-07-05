@@ -520,6 +520,15 @@ function ProductPage() {
                         selectedOptions: variant.selectedOptions || [],
                         variantImage: variant.image ?? null,
                       });
+                      void import("@/lib/analytics").then(({ trackAddToCart }) => {
+                        trackAddToCart({
+                          id: product.id,
+                          title: product.title,
+                          price: parseFloat(variant.price.amount),
+                          currency: variant.price.currencyCode,
+                          quantity: qty,
+                        });
+                      });
                       toast.success("Added to bag", { description: product.title });
                       setQty(1);
                     }}
