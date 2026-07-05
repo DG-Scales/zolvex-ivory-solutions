@@ -114,6 +114,19 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
      <head>
   <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="86bb7c1d-aa41-44c5-b57e-a4321316675c" data-blockingmode="auto" type="text/javascript"></script>
+  <script dangerouslySetInnerHTML={{__html: `
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '223180557412153');
+fbq('track', 'PageView');
+  `}} />
+  <noscript dangerouslySetInnerHTML={{__html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=223180557412153&ev=PageView&noscript=1" />`}} />
   <HeadContent />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NJD4V4K981"></script>
   <script dangerouslySetInnerHTML={{__html: `
@@ -126,6 +139,7 @@ function RootShell({ children }: { children: ReactNode }) {
   `}} />
   <script type="text/javascript" src="https://onsite.optimonk.com/script.js?account=271410" async />
 </head>
+
       <body>
         {children}
         <Scripts />
