@@ -25,7 +25,7 @@ function ContactPage() {
         <h1 className="font-display text-5xl md:text-6xl mb-6">Get in touch.</h1>
         <p className="text-lg text-muted-foreground mb-12">
           Specification questions, custom finishes, bespoke chandeliers, or a fixture you wish existed — we read every message.
-          Email us directly at <a href="mailto:zolvex.business@gmail.com" target="_top" className="text-foreground underline underline-offset-4">zolvex.business@gmail.com</a> or use the form below.
+          Email us directly at <a href="mailto:notify@zolvex.org" target="_top" className="text-foreground underline underline-offset-4">notify@zolvex.org</a> or use the form below.
         </p>
 
         <form
@@ -51,7 +51,7 @@ function ContactPage() {
               toast.success("Message sent. We'll get back to you shortly.", { id: t });
               form.reset();
             } catch {
-              toast.error("Something went wrong. Please email us directly at zolvex.business@gmail.com.", { id: t });
+              toast.error("Something went wrong. Please email us directly at notify@zolvex.org.", { id: t });
             }
           }}
           className="space-y-5"

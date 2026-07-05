@@ -17,8 +17,8 @@ export const Route = createFileRoute("/privacy")({
 
 function PrivacyPage() {
   const email = (
-    <a className="underline underline-offset-4" target="_top" href="mailto:zolvex.business@gmail.com">
-      zolvex.business@gmail.com
+    <a className="underline underline-offset-4" target="_top" href="mailto:notify@zolvex.org">
+      notify@zolvex.org
     </a>
   );
 
