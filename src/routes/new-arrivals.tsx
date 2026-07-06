@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -129,9 +130,72 @@ const ASPECTS = ["aspect-[3/4]", "aspect-[4/5]", "aspect-[1/1]", "aspect-[3/4]",
 
 function EditorialCard({ product, index }: { product: ShopifyProduct; index: number }) {
   const n = product.node;
-  const img = n.images.edges[0]?.node;
+  const images = n.images.edges;
   const aspect = ASPECTS[index % ASPECTS.length];
-  const delay = `${Math.min(index, 18) * 50}ms`;
+
+  const [imgIndex, setImgIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const trackWidth = useRef<number>(0);
+  const [drag, setDrag] = useState(0);
+  const [dragging, setDragging] = useState(false);
+
+  const stop = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const next = (e: React.MouseEvent) => {
+    stop(e);
+    setImgIndex((i) => (i + 1) % images.length);
+  };
+
+  const prev = (e: React.MouseEvent) => {
+    stop(e);
+    setImgIndex((i) => (i - 1 + images.length) % images.length);
+  };
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length > 1) {
+      touchStartX.current = null;
+      touchStartY.current = null;
+      setDragging(false);
+      setDrag(0);
+      return;
+    }
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    trackWidth.current = e.currentTarget.clientWidth;
+    setDragging(true);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length > 1) return;
+    if (touchStartX.current == null || touchStartY.current == null) return;
+    const dx = e.touches[0].clientX - touchStartX.current;
+    const dy = e.touches[0].clientY - touchStartY.current;
+    if (Math.abs(dy) > Math.abs(dx)) return;
+    let nextDx = dx;
+    if ((imgIndex === 0 && dx > 0) || (imgIndex === images.length - 1 && dx < 0)) {
+      nextDx = dx * 0.35;
+    }
+    setDrag(nextDx);
+  };
+
+  const onTouchEnd = () => {
+    const width = trackWidth.current || 1;
+    const offset = drag;
+    touchStartX.current = null;
+    touchStartY.current = null;
+    setDragging(false);
+    setDrag(0);
+    const threshold = Math.min(70, width * 0.18);
+    if (Math.abs(offset) > threshold && images.length > 1) {
+      setImgIndex((i) =>
+        offset < 0 ? (i + 1) % images.length : (i - 1 + images.length) % images.length,
+      );
+    }
+  };
 
   return (
     <Link
@@ -139,20 +203,84 @@ function EditorialCard({ product, index }: { product: ShopifyProduct; index: num
       params={{ handle: n.handle }}
       className="group mb-4 md:mb-6 block break-inside-avoid"
     >
-      <div className={`relative ${aspect} overflow-hidden rounded-[10px] bg-[#EFEBE2]`}>
-        {img && (
-          <img
-            src={img.url}
-            alt={n.title}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
-          />
+      <div
+        className={`relative ${aspect} overflow-hidden rounded-[10px] bg-[#EFEBE2] [touch-action:pan-y_pinch-zoom] select-none`}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        onTouchCancel={onTouchEnd}
+      >
+        {images.length > 0 ? (
+          <div
+            className="flex h-full will-change-transform"
+            style={{
+              width: `${images.length * 100}%`,
+              transform: `translate3d(calc(${-imgIndex * (100 / images.length)}% + ${drag}px), 0, 0)`,
+              transition: dragging ? "none" : "transform 500ms cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
+          >
+            {images.map(({ node: img }, i) => (
+              <div
+  key={img.url + i}
+  className="h-full shrink-0 overflow-hidden"
+  style={{ width: `${100 / images.length}%` }}
+>
+  <img
+    src={img.url}
+    alt={img.altText || n.title}
+    loading="lazy"
+    className="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
+  />
+</div>
+            ))}
+          </div>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-sm text-[#1A1A1A]/40">No image</div>
         )}
-        <span className="absolute top-3 left-3 bg-[#C9A84C] text-[#1A1A1A] text-[9px] tracking-[0.3em] uppercase font-semibold px-2.5 py-1 rounded-full">
+
+        <span className="absolute top-3 left-3 bg-[#C9A84C] text-[#1A1A1A] text-[9px] tracking-[0.3em] uppercase font-semibold px-2.5 py-1 rounded-full z-20">
           New
         </span>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#FAFAFA] text-[#1A1A1A] text-[10px] uppercase tracking-[0.3em] px-5 py-3 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400">
+
+        {images.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="Previous image"
+              className="absolute left-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-[#FAFAFA]/85 text-[#1A1A1A] flex items-center justify-center transition-opacity hover:bg-[#FAFAFA] z-10 opacity-0 group-hover:opacity-100"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Next image"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-[#FAFAFA]/85 text-[#1A1A1A] flex items-center justify-center transition-opacity hover:bg-[#FAFAFA] z-10 opacity-0 group-hover:opacity-100"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={(e) => {
+                    stop(e);
+                    setImgIndex(i);
+                  }}
+                  aria-label={`Show image ${i + 1}`}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === imgIndex ? "w-4 bg-[#FAFAFA]" : "w-1.5 bg-[#FAFAFA]/60"
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#FAFAFA] text-[#1A1A1A] text-[10px] uppercase tracking-[0.3em] px-5 py-3 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400 pointer-events-none">
           View product
         </span>
       </div>
