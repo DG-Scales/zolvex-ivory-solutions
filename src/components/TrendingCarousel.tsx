@@ -259,7 +259,7 @@ export function TrendingCarousel() {
                     </span>
                   </div>
                   <span className="bg-black text-white text-[11px] font-bold tracking-wider px-2.5 py-1 rounded-sm uppercase leading-none">
-                    20% Off
+                    20% OFF W/ CODE
                   </span>
                 </div>
 
