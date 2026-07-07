@@ -225,7 +225,7 @@ function ProductPage() {
                       onTouchCancel={handleTouchEnd}
                     >
                       <span className="absolute top-3 left-3 z-20 bg-black text-white text-xs font-bold tracking-wider px-3 py-1.5 rounded-sm uppercase leading-none">
-                        20% Off
+                        20% OFF W/ CODE
                       </span>
                       <div
                         className="flex h-full will-change-transform"

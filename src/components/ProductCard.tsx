@@ -136,7 +136,7 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
       >
         <div className="absolute top-3 left-3 z-20 flex flex-col gap-1.5 items-start">
           <span className={`bg-black text-white font-bold tracking-wider rounded-sm uppercase leading-none ${smallBadge ? "text-[10px] px-2 py-1" : "text-[11px] px-2.5 py-1"}`}>
-            20% Off
+            20% OFF W/ CODE
           </span>
           {isSoldOut && (
             <Badge variant="destructive" className="uppercase tracking-wider text-[10px]">
