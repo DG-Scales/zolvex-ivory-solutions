@@ -185,12 +185,57 @@ export function trackAddToCart(args: {
 }
 
 
-export function trackBeginCheckout(args: { value: number; currency: string; itemCount: number }) {
+export function trackBeginCheckout(args: {
+  value: number;
+  currency: string;
+  itemCount: number;
+  contentIds?: string[];
+}) {
   const g = gtag();
-  if (!g) return;
-  g("event", "begin_checkout", {
-    currency: args.currency,
-    value: args.value,
-    num_items: args.itemCount,
-  });
+  if (g) {
+    g("event", "begin_checkout", {
+      currency: args.currency,
+      value: args.value,
+      num_items: args.itemCount,
+    });
+  }
+  const f = fbq();
+  if (f) {
+    f("track", "InitiateCheckout", {
+      value: args.value,
+      currency: args.currency,
+      num_items: args.itemCount,
+      content_ids: args.contentIds ?? [],
+      content_type: "product",
+    });
+  }
 }
+
+export function trackPurchase(args: {
+  value: number;
+  currency: string;
+  contentIds: string[];
+  numItems?: number;
+  orderId?: string;
+}) {
+  const g = gtag();
+  if (g) {
+    g("event", "purchase", {
+      transaction_id: args.orderId,
+      currency: args.currency,
+      value: args.value,
+      items: args.contentIds.map((id) => ({ item_id: id })),
+    });
+  }
+  const f = fbq();
+  if (f) {
+    f("track", "Purchase", {
+      value: args.value,
+      currency: args.currency,
+      content_ids: args.contentIds,
+      content_type: "product",
+      num_items: args.numItems ?? args.contentIds.length,
+    });
+  }
+}
+
