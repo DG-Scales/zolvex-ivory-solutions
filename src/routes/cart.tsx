@@ -50,8 +50,17 @@ function CartPage() {
   const handleCheckout = async () => {
     const url = await getCheckoutUrl();
     if (!url) return;
+    void import("@/lib/analytics").then(({ trackBeginCheckout }) => {
+      trackBeginCheckout({
+        value: totalPrice,
+        currency,
+        itemCount: totalItems,
+        contentIds: items.map((i) => i.product.node.id),
+      });
+    });
     window.location.href = url;
   };
+
 
   const fmt = (n: number) =>
     new Intl.NumberFormat("en-US", { style: "currency", currency }).format(n);

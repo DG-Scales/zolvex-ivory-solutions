@@ -38,9 +38,18 @@ export const CartDrawer = () => {
   const handleCheckout = async () => {
     const url = await getCheckoutUrl();
     if (!url) return;
+    void import("@/lib/analytics").then(({ trackBeginCheckout }) => {
+      trackBeginCheckout({
+        value: totalPrice,
+        currency: items[0]?.price.currencyCode || "USD",
+        itemCount: totalItems,
+        contentIds: items.map((i) => i.product.node.id),
+      });
+    });
     setIsOpen(false);
     window.location.href = url;
   };
+
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
