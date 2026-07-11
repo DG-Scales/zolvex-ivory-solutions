@@ -10,6 +10,7 @@ import { TrendingCarousel } from "@/components/TrendingCarousel";
 import { MakersPick } from "@/components/MakersPick";
 import { toast } from "sonner";
 import { LiveVideos } from "@/components/LiveVideos";
+import { JudgeMeAllReviewsSection } from "@/components/JudgeMe";
 import heroImage from "@/assets/hero-room.jpg";
 
 export const Route = createFileRoute("/")({
@@ -81,6 +82,9 @@ function Index() {
 
       {/* Trending highlight */}
       <TrendingCarousel />
+
+      {/* Customer reviews (auto-hides if store has no reviews yet) */}
+      <JudgeMeAllReviewsSection />
 
       {/* Collections */}
       <section id="categories" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">

@@ -138,6 +138,15 @@ fbq('track', 'PageView');
     gtag('config', 'G-NJD4V4K981', { send_page_view: false });
   `}} />
   <script type="text/javascript" src="https://onsite.optimonk.com/script.js?account=271410" async />
+  <style dangerouslySetInnerHTML={{__html: `
+    /* Hide Judge.me preview badges on product cards when a product has zero reviews */
+    .jdgm-prev-badge[data-number-of-reviews="0"] { display: none !important; }
+    /* Tone Judge.me stars to match ivory/black aesthetic */
+    .jdgm-prev-badge__stars { color: #111 !important; }
+    .jdgm-prev-badge__text { color: rgba(0,0,0,0.55) !important; font-size: 12px !important; }
+    .jdgm-all-reviews-widget .jdgm-rev__title,
+    .jdgm-all-reviews-widget .jdgm-rev__author { font-family: inherit !important; }
+  `}} />
 </head>
 
       <body>
