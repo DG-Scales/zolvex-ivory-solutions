@@ -10,6 +10,7 @@ import { TrendingCarousel } from "@/components/TrendingCarousel";
 import { MakersPick } from "@/components/MakersPick";
 import { toast } from "sonner";
 import { LiveVideos } from "@/components/LiveVideos";
+import { JudgeMeAllReviewsSection } from "@/components/JudgeMe";
 import heroImage from "@/assets/hero-room.jpg";
 
 export const Route = createFileRoute("/")({

@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import type { ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { getBeforePrice } from "@/lib/utils";
+import { JudgeMePreviewBadge } from "@/components/JudgeMe";
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -244,6 +245,7 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
         >
           <span>{price.currencyCode} {parseFloat(price.amount).toFixed(2)}</span>
         </p>
+        <JudgeMePreviewBadge productGid={node.id} className="mt-0.5" />
         <button
           type="button"
           onClick={(e) => {
