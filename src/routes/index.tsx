@@ -83,6 +83,9 @@ function Index() {
       {/* Trending highlight */}
       <TrendingCarousel />
 
+      {/* Customer reviews (auto-hides if store has no reviews yet) */}
+      <JudgeMeAllReviewsSection />
+
       {/* Collections */}
       <section id="categories" className="mx-auto max-w-7xl px-6 py-24 md:py-32 w-full">
         <div className="mb-10">
