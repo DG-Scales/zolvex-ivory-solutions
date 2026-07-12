@@ -89,6 +89,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Zolvex – Where Design Comes to Light" },
       { name: "twitter:description", content: "Shop 150+ premium chandeliers, pendant lights, wall sconces & outdoor fixtures. Free shipping on all US orders." },
+      { name: "facebook-domain-verification", content: "8sqdh2oppfxg77w7d9weha05f7lre4" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
