@@ -4,8 +4,8 @@ import { createClient } from '@supabase/supabase-js'
 import { TEMPLATES, type TemplateEntry } from '@/lib/email-templates/registry'
 
 const SITE_NAME = 'Zolvex'
-const SENDER_DOMAIN = 'notify.zolvex.org'
-const FROM_DOMAIN = 'zolvex.org'
+const SENDER_DOMAIN = 'notify.zolvexlighting.com'
+const FROM_DOMAIN = 'zolvexlighting.com'
 
 function redactEmail(email: string | null | undefined): string {
   if (!email) return '***'

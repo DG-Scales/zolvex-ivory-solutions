@@ -12,7 +12,7 @@ const subscribeSchema = z.object({
   email: z.string().trim().email().max(320),
 })
 
-const FROM = 'Zolvex <notify@zolvex.org>'
+const FROM = 'Zolvex <notify@zolvexlighting.com>'
 const TO = 'notify@zolvex.org'
 const RESEND_AUDIENCE_ID = '3a752339-55ff-4d8d-b810-ce1e9a5692f3'
 
