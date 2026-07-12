@@ -17,8 +17,8 @@ export const Route = createFileRoute("/cookies")({
 
 function CookiesPage() {
   const email = (
-    <a className="underline underline-offset-4" target="_top" href="mailto:notify@zolvex.org">
-      notify@zolvex.org
+    <a className="underline underline-offset-4" target="_top" href="mailto:notify@zolvexlighting.com">
+      notify@zolvexlighting.com
     </a>
   );
 

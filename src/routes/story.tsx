@@ -37,7 +37,7 @@ export const Route = createFileRoute("/story")({
             "@type": "Organization",
             name: "Zolvex",
             url: "https://zolvexlighting.com",
-            email: "notify@zolvex.org",
+            email: "notify@zolvexlighting.com",
           },
         }),
       },
@@ -186,8 +186,8 @@ function StoryPage() {
             <h2 className="font-display text-4xl md:text-5xl mb-5">Find a piece that fits the room.</h2>
             <p className="text-muted-foreground mb-8 max-w-xl mx-auto leading-relaxed">
               Browse the collection, or write to us about a space you're designing. We answer every message personally at{" "}
-              <a target="_top" href="mailto:notify@zolvex.org" className="text-foreground underline underline-offset-4">
-                notify@zolvex.org
+              <a target="_top" href="mailto:notify@zolvexlighting.com" className="text-foreground underline underline-offset-4">
+                notify@zolvexlighting.com
               </a>
               .
             </p>

@@ -5,9 +5,9 @@ export const Route = createFileRoute("/returns")({
   head: () => ({
     meta: [
       { title: "Return Policy — Zolvex" },
-      { name: "description", content: "30-day return policy. Contact notify@zolvex.org to start a return." },
+      { name: "description", content: "30-day return policy. Contact notify@zolvexlighting.com to start a return." },
       { property: "og:title", content: "Return Policy — Zolvex" },
-      { property: "og:description", content: "30-day return policy. Contact notify@zolvex.org to start a return." },
+      { property: "og:description", content: "30-day return policy. Contact notify@zolvexlighting.com to start a return." },
     ],
   }),
   component: ReturnsPage,
@@ -15,8 +15,8 @@ export const Route = createFileRoute("/returns")({
 
 function ReturnsPage() {
   const email = (
-    <a target="_top" href="mailto:notify@zolvex.org" className="underline underline-offset-4 hover:opacity-80">
-      notify@zolvex.org
+    <a target="_top" href="mailto:notify@zolvexlighting.com" className="underline underline-offset-4 hover:opacity-80">
+      notify@zolvexlighting.com
     </a>
   );
 
