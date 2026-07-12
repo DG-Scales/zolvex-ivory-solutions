@@ -111,6 +111,39 @@ function fbq(): FbqFn | null {
 
 const GA4_ID = "G-NJD4V4K981";
 
+// Read Meta Pixel first-party cookies so CAPI can attribute the event
+// to the same browser session for higher event match quality.
+function getFbCookies(): { fbp?: string; fbc?: string } {
+  return { fbp: readCookie("_fbp") ?? undefined, fbc: readCookie("_fbc") ?? undefined };
+}
+
+function sendCapiEvent(
+  eventName: "PageView" | "ViewContent" | "AddToCart" | "InitiateCheckout" | "Purchase",
+  eventId: string,
+  customData: Record<string, unknown> = {},
+) {
+  if (!isBrowser()) return;
+  const body = JSON.stringify({
+    event_name: eventName,
+    event_id: eventId,
+    event_source_url: window.location.href,
+    action_source: "website",
+    custom_data: customData,
+    user_data: getFbCookies(),
+  });
+  try {
+    // keepalive lets the request survive page navigation (esp. checkout redirects).
+    void fetch("/api/public/meta-capi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // never let analytics throw
+  }
+}
+
 export function trackPageView(path: string, title?: string) {
   if (!isBrowser()) return;
   // Refresh the Shopify session window on every navigation.
@@ -125,8 +158,10 @@ export function trackPageView(path: string, title?: string) {
       send_to: GA4_ID,
     });
   }
+  const eventId = uuid();
   const f = fbq();
-  if (f) f("track", "PageView");
+  if (f) f("track", "PageView", {}, { eventID: eventId });
+  sendCapiEvent("PageView", eventId);
 }
 
 export function trackProductView(args: {
@@ -143,16 +178,17 @@ export function trackProductView(args: {
       items: [{ item_id: args.id, item_name: args.title, price: args.price, quantity: 1 }],
     });
   }
+  const eventId = uuid();
+  const pixelData = {
+    content_ids: [args.id],
+    content_name: args.title,
+    content_type: "product",
+    value: args.price,
+    currency: args.currency,
+  };
   const f = fbq();
-  if (f) {
-    f("track", "ViewContent", {
-      content_ids: [args.id],
-      content_name: args.title,
-      content_type: "product",
-      value: args.price,
-      currency: args.currency,
-    });
-  }
+  if (f) f("track", "ViewContent", pixelData, { eventID: eventId });
+  sendCapiEvent("ViewContent", eventId, pixelData);
 }
 
 export function trackAddToCart(args: {
@@ -172,16 +208,17 @@ export function trackAddToCart(args: {
       ],
     });
   }
+  const eventId = uuid();
+  const pixelData = {
+    content_ids: [args.id],
+    content_name: args.title,
+    content_type: "product",
+    value: args.price * args.quantity,
+    currency: args.currency,
+  };
   const f = fbq();
-  if (f) {
-    f("track", "AddToCart", {
-      content_ids: [args.id],
-      content_name: args.title,
-      content_type: "product",
-      value: args.price * args.quantity,
-      currency: args.currency,
-    });
-  }
+  if (f) f("track", "AddToCart", pixelData, { eventID: eventId });
+  sendCapiEvent("AddToCart", eventId, pixelData);
 }
 
 
@@ -199,17 +236,19 @@ export function trackBeginCheckout(args: {
       num_items: args.itemCount,
     });
   }
+  const eventId = uuid();
+  const pixelData = {
+    value: args.value,
+    currency: args.currency,
+    num_items: args.itemCount,
+    content_ids: args.contentIds ?? [],
+    content_type: "product",
+  };
   const f = fbq();
-  if (f) {
-    f("track", "InitiateCheckout", {
-      value: args.value,
-      currency: args.currency,
-      num_items: args.itemCount,
-      content_ids: args.contentIds ?? [],
-      content_type: "product",
-    });
-  }
+  if (f) f("track", "InitiateCheckout", pixelData, { eventID: eventId });
+  sendCapiEvent("InitiateCheckout", eventId, pixelData);
 }
+
 
 export function trackPurchase(args: {
   value: number;
