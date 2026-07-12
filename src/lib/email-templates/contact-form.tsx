@@ -31,7 +31,7 @@ const ContactFormEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Heading style={h1}>New Contact Form Message</Heading>
-        <Text style={muted}>Someone reached out through zolvex.org.</Text>
+        <Text style={muted}>Someone reached out through zolvexlighting.com.</Text>
 
         <Section style={card}>
           <Text style={label}>From</Text>
