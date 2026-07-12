@@ -183,6 +183,7 @@ export function trackProductView(args: {
     content_ids: [args.id],
     content_name: args.title,
     content_type: "product",
+    contents: [{ id: args.id, quantity: 1, item_price: args.price }],
     value: args.price,
     currency: args.currency,
   };
@@ -213,6 +214,7 @@ export function trackAddToCart(args: {
     content_ids: [args.id],
     content_name: args.title,
     content_type: "product",
+    contents: [{ id: args.id, quantity: args.quantity, item_price: args.price }],
     value: args.price * args.quantity,
     currency: args.currency,
   };
@@ -227,6 +229,7 @@ export function trackBeginCheckout(args: {
   currency: string;
   itemCount: number;
   contentIds?: string[];
+  contents?: Array<{ id: string; quantity: number; item_price: number }>;
 }) {
   const g = gtag();
   if (g) {
@@ -237,17 +240,22 @@ export function trackBeginCheckout(args: {
     });
   }
   const eventId = uuid();
+  const contents =
+    args.contents ??
+    (args.contentIds ?? []).map((id) => ({ id, quantity: 1, item_price: 0 }));
   const pixelData = {
     value: args.value,
     currency: args.currency,
     num_items: args.itemCount,
-    content_ids: args.contentIds ?? [],
+    content_ids: args.contentIds ?? contents.map((c) => c.id),
     content_type: "product",
+    contents,
   };
   const f = fbq();
   if (f) f("track", "InitiateCheckout", pixelData, { eventID: eventId });
   sendCapiEvent("InitiateCheckout", eventId, pixelData);
 }
+
 
 
 export function trackPurchase(args: {

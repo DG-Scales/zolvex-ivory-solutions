@@ -56,6 +56,11 @@ function CartPage() {
         currency,
         itemCount: totalItems,
         contentIds: items.map((i) => i.product.node.id),
+        contents: items.map((i) => ({
+          id: i.product.node.id,
+          quantity: i.quantity,
+          item_price: parseFloat(i.price.amount),
+        })),
       });
     });
     window.location.href = url;
