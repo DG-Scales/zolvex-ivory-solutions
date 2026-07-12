@@ -20,9 +20,9 @@ export const Route = createFileRoute("/story")({
           "How Zolvex began, what we believe, and the standards behind every chandelier, pendant, and sconce we carry.",
       },
       { property: "og:type", content: "article" },
-      { property: "og:url", content: "https://zolvex.org/story" },
+      { property: "og:url", content: "https://zolvexlighting.com/story" },
     ],
-    links: [{ rel: "canonical", href: "https://zolvex.org/story" }],
+    links: [{ rel: "canonical", href: "https://zolvexlighting.com/story" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -30,13 +30,13 @@ export const Route = createFileRoute("/story")({
           "@context": "https://schema.org",
           "@type": "AboutPage",
           name: "Our Story — Zolvex",
-          url: "https://zolvex.org/story",
+          url: "https://zolvexlighting.com/story",
           description:
             "The story behind Zolvex — a curated designer lighting house built on material honesty and considered design.",
           publisher: {
             "@type": "Organization",
             name: "Zolvex",
-            url: "https://zolvex.org",
+            url: "https://zolvexlighting.com",
             email: "notify@zolvex.org",
           },
         }),

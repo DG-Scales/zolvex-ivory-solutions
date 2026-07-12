@@ -84,7 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Zolvex – Where Design Comes to Light" },
       { property: "og:description", content: "Shop 150+ premium chandeliers, pendant lights, wall sconces & outdoor fixtures. Free shipping on all US orders." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://zolvex.org" },
+      { property: "og:url", content: "https://zolvexlighting.com" },
       { property: "og:site_name", content: "Zolvex" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Zolvex – Where Design Comes to Light" },
