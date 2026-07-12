@@ -34,7 +34,7 @@ function CookiesPage() {
           <section className="space-y-4">
             <p>
               This Cookies Policy explains how Zolvex ("we", "us", or "our") uses cookies and similar
-              tracking technologies when you visit zolvex.org (the "Site"). It should be read together
+              tracking technologies when you visit zolvexlighting.com (the "Site"). It should be read together
               with our Privacy Policy, which describes how we handle your personal information more
               broadly.
             </p>

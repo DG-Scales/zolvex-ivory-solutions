@@ -1,6 +1,6 @@
 // Lightweight analytics for the Lovable storefront.
 // - GA4 page_view on every SPA route change
-// - Persistent Shopify visitor/session cookies on zolvex.org, forwarded to
+// - Persistent Shopify visitor/session cookies on zolvexlighting.com, forwarded to
 //   Shopify checkout via query params so checkout sessions are attributed
 //   to the same visitor that browsed the storefront.
 

@@ -55,7 +55,7 @@ export const Route = createFileRoute("/shipping")({
       <section>
         <h2 className="font-display text-2xl mb-3">Contact Us</h2>
         <p>Email: <a target="_top" href="mailto:notify@zolvexlighting.com" className="underline underline-offset-4">notify@zolvexlighting.com</a></p>
-        <p>Website: <a target="_top" href="https://zolvex.org" className="underline underline-offset-4">zolvex.org</a></p>
+        <p>Website: <a target="_top" href="https://zolvexlighting.com" className="underline underline-offset-4">zolvexlighting.com</a></p>
       </section>
     </PageShell>
   ),
