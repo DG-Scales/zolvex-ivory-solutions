@@ -34,6 +34,7 @@ import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe
 import { Route as CategoriesSlugRouteImport } from './routes/categories.$slug'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as ApiPublicNotifyRouteImport } from './routes/api/public/notify'
+import { Route as ApiPublicMetaCapiRouteImport } from './routes/api/public/meta-capi'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
@@ -163,6 +164,11 @@ const ApiPublicNotifyRoute = ApiPublicNotifyRouteImport.update({
   path: '/api/public/notify',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicMetaCapiRoute = ApiPublicMetaCapiRouteImport.update({
+  id: '/api/public/meta-capi',
+  path: '/api/public/meta-capi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LovableEmailTransactionalSendRoute =
   LovableEmailTransactionalSendRouteImport.update({
     id: '/lovable/email/transactional/send',
@@ -206,6 +212,7 @@ export interface FileRoutesByFullPath {
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/product/$handle': typeof ProductHandleRoute
   '/categories/': typeof CategoriesIndexRoute
+  '/api/public/meta-capi': typeof ApiPublicMetaCapiRoute
   '/api/public/notify': typeof ApiPublicNotifyRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -236,6 +243,7 @@ export interface FileRoutesByTo {
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/product/$handle': typeof ProductHandleRoute
   '/categories': typeof CategoriesIndexRoute
+  '/api/public/meta-capi': typeof ApiPublicMetaCapiRoute
   '/api/public/notify': typeof ApiPublicNotifyRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -267,6 +275,7 @@ export interface FileRoutesById {
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/product/$handle': typeof ProductHandleRoute
   '/categories/': typeof CategoriesIndexRoute
+  '/api/public/meta-capi': typeof ApiPublicMetaCapiRoute
   '/api/public/notify': typeof ApiPublicNotifyRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -299,6 +308,7 @@ export interface FileRouteTypes {
     | '/email/unsubscribe'
     | '/product/$handle'
     | '/categories/'
+    | '/api/public/meta-capi'
     | '/api/public/notify'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
@@ -329,6 +339,7 @@ export interface FileRouteTypes {
     | '/email/unsubscribe'
     | '/product/$handle'
     | '/categories'
+    | '/api/public/meta-capi'
     | '/api/public/notify'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
@@ -359,6 +370,7 @@ export interface FileRouteTypes {
     | '/email/unsubscribe'
     | '/product/$handle'
     | '/categories/'
+    | '/api/public/meta-capi'
     | '/api/public/notify'
     | '/lovable/email/suppression'
     | '/lovable/email/queue/process'
@@ -390,6 +402,7 @@ export interface RootRouteChildren {
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   ProductHandleRoute: typeof ProductHandleRoute
   CategoriesIndexRoute: typeof CategoriesIndexRoute
+  ApiPublicMetaCapiRoute: typeof ApiPublicMetaCapiRoute
   ApiPublicNotifyRoute: typeof ApiPublicNotifyRoute
   LovableEmailSuppressionRoute: typeof LovableEmailSuppressionRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
@@ -574,6 +587,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicNotifyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/meta-capi': {
+      id: '/api/public/meta-capi'
+      path: '/api/public/meta-capi'
+      fullPath: '/api/public/meta-capi'
+      preLoaderRoute: typeof ApiPublicMetaCapiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/transactional/send': {
       id: '/lovable/email/transactional/send'
       path: '/lovable/email/transactional/send'
@@ -622,6 +642,7 @@ const rootRouteChildren: RootRouteChildren = {
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   ProductHandleRoute: ProductHandleRoute,
   CategoriesIndexRoute: CategoriesIndexRoute,
+  ApiPublicMetaCapiRoute: ApiPublicMetaCapiRoute,
   ApiPublicNotifyRoute: ApiPublicNotifyRoute,
   LovableEmailSuppressionRoute: LovableEmailSuppressionRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
@@ -631,13 +652,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
