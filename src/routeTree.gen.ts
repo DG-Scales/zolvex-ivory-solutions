@@ -15,6 +15,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SustainabilityRouteImport } from './routes/sustainability'
 import { Route as StoryRouteImport } from './routes/story'
 import { Route as SocialsRouteImport } from './routes/socials'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ShippingRouteImport } from './routes/shipping'
 import { Route as ReturnsRouteImport } from './routes/returns'
@@ -67,6 +68,11 @@ const StoryRoute = StoryRouteImport.update({
 const SocialsRoute = SocialsRouteImport.update({
   id: '/socials',
   path: '/socials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShopRoute = ShopRouteImport.update({
@@ -202,6 +208,7 @@ export interface FileRoutesByFullPath {
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/socials': typeof SocialsRoute
   '/story': typeof StoryRoute
   '/sustainability': typeof SustainabilityRoute
@@ -233,6 +240,7 @@ export interface FileRoutesByTo {
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/socials': typeof SocialsRoute
   '/story': typeof StoryRoute
   '/sustainability': typeof SustainabilityRoute
@@ -265,6 +273,7 @@ export interface FileRoutesById {
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/socials': typeof SocialsRoute
   '/story': typeof StoryRoute
   '/sustainability': typeof SustainabilityRoute
@@ -298,6 +307,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/sitemap.xml'
     | '/socials'
     | '/story'
     | '/sustainability'
@@ -329,6 +339,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/sitemap.xml'
     | '/socials'
     | '/story'
     | '/sustainability'
@@ -360,6 +371,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/sitemap.xml'
     | '/socials'
     | '/story'
     | '/sustainability'
@@ -392,6 +404,7 @@ export interface RootRouteChildren {
   ReturnsRoute: typeof ReturnsRoute
   ShippingRoute: typeof ShippingRoute
   ShopRoute: typeof ShopRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SocialsRoute: typeof SocialsRoute
   StoryRoute: typeof StoryRoute
   SustainabilityRoute: typeof SustainabilityRoute
@@ -452,6 +465,13 @@ declare module '@tanstack/react-router' {
       path: '/socials'
       fullPath: '/socials'
       preLoaderRoute: typeof SocialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shop': {
@@ -632,6 +652,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReturnsRoute: ReturnsRoute,
   ShippingRoute: ShippingRoute,
   ShopRoute: ShopRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SocialsRoute: SocialsRoute,
   StoryRoute: StoryRoute,
   SustainabilityRoute: SustainabilityRoute,
@@ -652,13 +673,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
