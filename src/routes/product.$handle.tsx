@@ -31,7 +31,7 @@ export const Route = createFileRoute("/product/$handle")({
   },
   head: ({ params, loaderData }) => {
     const product = loaderData?.product;
-    const url = `https://zolvex.org/product/${params.handle}`;
+    const url = `https://zolvexlighting.com/product/${params.handle}`;
     if (!product) {
       return {
         meta: [
