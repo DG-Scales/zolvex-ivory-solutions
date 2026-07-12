@@ -57,7 +57,7 @@ function SocialsPage() {
               </a>
 
               <a
-                href="https://www.tiktok.com/@zolvex.org"
+                href="https://www.tiktok.com/@zolvexlighting"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group block border border-border rounded-2xl p-8 md:p-10 hover:border-foreground/30 transition-colors"
@@ -72,7 +72,7 @@ function SocialsPage() {
                   Catch new releases, flash sales, and behind-the-scenes updates. Follow and like to see the journey as it happens.
                 </p>
                 <span className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-foreground group-hover:opacity-60 transition-opacity">
-                  @zolvex.org <span aria-hidden="true">→</span>
+                  @zolvexlighting <span aria-hidden="true">→</span>
                 </span>
               </a>
             </div>
