@@ -125,7 +125,9 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2231805574125153');
-fbq('track', 'PageView');
+// PageView is fired from RootComponent via trackPageView() with an eventID
+// so it dedupes against the server-side CAPI event. Do NOT fire an untracked
+// PageView here — it would be un-deduped and tank CAPI coverage.
   `}} />
   <noscript dangerouslySetInnerHTML={{__html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2231805574125153&ev=PageView&noscript=1" />`}} />
   <HeadContent />
