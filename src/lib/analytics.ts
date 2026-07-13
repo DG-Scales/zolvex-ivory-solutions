@@ -123,25 +123,36 @@ function sendCapiEvent(
   customData: Record<string, unknown> = {},
 ) {
   if (!isBrowser()) return;
-  const body = JSON.stringify({
-    event_name: eventName,
-    event_id: eventId,
-    event_source_url: window.location.href,
-    action_source: "website",
-    custom_data: customData,
-    user_data: getFbCookies(),
-  });
-  try {
-    // keepalive lets the request survive page navigation (esp. checkout redirects).
-    void fetch("/api/public/meta-capi", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body,
-      keepalive: true,
-    }).catch(() => {});
-  } catch {
-    // never let analytics throw
-  }
+  const eventSourceUrl = window.location.href;
+  // Wait briefly for _fbp/_fbc cookies to be set by fbevents.js so CAPI carries
+  // the same browser identifiers as the Pixel event (raises match quality).
+  const start = Date.now();
+  const attempt = () => {
+    const cookies = getFbCookies();
+    if (!cookies.fbp && Date.now() - start < 1500) {
+      setTimeout(attempt, 150);
+      return;
+    }
+    const body = JSON.stringify({
+      event_name: eventName,
+      event_id: eventId,
+      event_source_url: eventSourceUrl,
+      action_source: "website",
+      custom_data: customData,
+      user_data: cookies,
+    });
+    try {
+      void fetch("/api/public/meta-capi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body,
+        keepalive: true,
+      }).catch(() => {});
+    } catch {
+      // never let analytics throw
+    }
+  };
+  attempt();
 }
 
 export function trackPageView(path: string, title?: string) {
