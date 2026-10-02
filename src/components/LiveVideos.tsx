@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
-import liveVideo1 from "@/assets/live-video-1.mp4.asset.json";
-import liveVideo2 from "@/assets/live-video-2.mp4.asset.json";
-import liveVideo3 from "@/assets/live-video-3.mp4.asset.json";
+import liveVideo1 from "@/assets/hosted/live-video-1.mp4";
+import liveVideo2 from "@/assets/hosted/live-video-2.mp4";
+import liveVideo3 from "@/assets/hosted/live-video-3.mp4";
 import {
   Dialog,
   DialogContent,
@@ -12,17 +12,17 @@ import { X } from "lucide-react";
 
 const videos = [
   {
-    url: liveVideo1.url,
+    url: liveVideo1,
     productTitle: "Villa Luxury Floor Lamp – Multi-Head Living Room Standing Light",
     productHandle: "villa-light-luxury-living-room-floor-lamp",
   },
   {
-    url: liveVideo2.url,
+    url: liveVideo2,
     productTitle: "Modern Light Luxury Natural Marble Chandelier for Villas",
     productHandle: "modern-light-luxury-natural-marble-chandelier-for-villas",
   },
   {
-    url: liveVideo3.url,
+    url: liveVideo3,
     productTitle: "Spanish Marble Restaurant Round Light",
     productHandle:
       "spanish-marble-restaurant-round-light-luxury-bar-aisle-light-designer-model-coffee-dining-table-chandelier",

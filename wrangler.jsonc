@@ -1,0 +1,12 @@
+// Cloudflare Workers config (staging). Nitro's `cloudflare-module` preset reads this file,
+// merges in `main`, the `ASSETS` binding and the build output paths, and writes the final
+// config to .output/server/wrangler.json. It deliberately has no `pages_build_output_dir`
+// (a Pages-only key) and no routes/custom domains, so deploying only creates a *.workers.dev URL.
+// wrangler.toml is the older Pages-style config; Nitro ignores it while this file exists.
+{
+  "name": "zolvex-staging",
+  "compatibility_date": "2026-06-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "observability": { "enabled": true }
+}

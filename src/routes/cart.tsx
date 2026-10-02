@@ -10,20 +10,20 @@ import { QuantityControl } from "@/components/QuantityControl";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 
-import visaLogo from "@/assets/visa.svg.asset.json";
-import mastercardLogo from "@/assets/mastercard.svg.asset.json";
-import amexLogo from "@/assets/amex.svg.asset.json";
-import applePayLogo from "@/assets/applepay.svg.asset.json";
-import googlePayLogo from "@/assets/googlepay.svg.asset.json";
-import shopPayLogo from "@/assets/shoppay.svg.asset.json";
+import visaLogo from "@/assets/hosted/visa.svg";
+import mastercardLogo from "@/assets/hosted/mastercard.svg";
+import amexLogo from "@/assets/hosted/amex.svg";
+import applePayLogo from "@/assets/hosted/applepay.svg";
+import googlePayLogo from "@/assets/hosted/googlepay.svg";
+import shopPayLogo from "@/assets/hosted/shoppay.svg";
 
 const paymentLogos = [
-  { src: visaLogo.url, alt: "Visa" },
-  { src: mastercardLogo.url, alt: "Mastercard" },
-  { src: amexLogo.url, alt: "American Express" },
-  { src: applePayLogo.url, alt: "Apple Pay" },
-  { src: googlePayLogo.url, alt: "Google Pay" },
-  { src: shopPayLogo.url, alt: "Shop Pay" },
+  { src: visaLogo, alt: "Visa" },
+  { src: mastercardLogo, alt: "Mastercard" },
+  { src: amexLogo, alt: "American Express" },
+  { src: applePayLogo, alt: "Apple Pay" },
+  { src: googlePayLogo, alt: "Google Pay" },
+  { src: shopPayLogo, alt: "Shop Pay" },
 ];
 
 export const Route = createFileRoute("/cart")({
