@@ -22,8 +22,13 @@ const paymentLogos = [
 export function PaymentMethods() {
   return (
     <div className="mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 max-md:order-[13]">
-      <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">We accept</span>
-      <ul aria-label="Accepted payment methods" className="flex flex-wrap items-center justify-center gap-1.5">
+      <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+        We accept
+      </span>
+      <ul
+        aria-label="Accepted payment methods"
+        className="flex flex-wrap items-center justify-center gap-1.5"
+      >
         {paymentLogos.map((logo) => (
           <li
             key={logo.alt}
