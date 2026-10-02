@@ -12,6 +12,7 @@ import { formatVariantTitle, formatOptionValue } from "@/lib/variantTitle";
 import { parseDescription } from "@/lib/parseSpecs";
 import { toast } from "sonner";
 import { PromoBox } from "@/components/PromoBox";
+import { PaymentMethods } from "@/components/PaymentMethods";
 import { ProductCard } from "@/components/ProductCard";
 import { getBeforePrice } from "@/lib/utils";
 import { SmartBack } from "@/components/SmartBack";
@@ -543,6 +544,7 @@ function ProductPage() {
                     <span className="flex items-center gap-1.5"><Truck className="w-3.5 h-3.5" /> Free Shipping</span>
                     <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> Secure Payment</span>
                   </div>
+                  <PaymentMethods />
                 </div>
               </div>
             );
