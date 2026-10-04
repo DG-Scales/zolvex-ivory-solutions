@@ -13,6 +13,7 @@ import { parseDescription } from "@/lib/parseSpecs";
 import { toast } from "sonner";
 import { PromoBox } from "@/components/PromoBox";
 import { PaymentMethods } from "@/components/PaymentMethods";
+import { JudgeMeRating, JudgeMeReviewsSection } from "@/components/JudgeMeReviews";
 import { ProductCard } from "@/components/ProductCard";
 import { getBeforePrice } from "@/lib/utils";
 import { SmartBack } from "@/components/SmartBack";
@@ -77,28 +78,6 @@ function ProductPage() {
   useCartSync();
   const { handle } = useParams({ from: "/product/$handle" });
   const location = useLocation();
-
-  useEffect(() => {
-    const existing = document.getElementById("jm") as HTMLScriptElement | null;
-    if (existing) {
-      existing.remove();
-    }
-    const script = document.createElement("script");
-    script.id = "jm";
-    script.src = "https://cdn.judge.me/assets/widget.js";
-    script.async = true;
-    script.onload = () => {
-      const w = window as unknown as Record<string, unknown>;
-      const jm = w.jm as ((cmd: string, opts: { shop: string }) => void) | undefined;
-      if (jm) {
-        jm("init", { shop: "zolvex-solutions-hub-pnf34.myshopify.com" });
-      }
-    };
-    document.body.appendChild(script);
-    return () => {
-      script.remove();
-    };
-  }, [handle]);
 
   const fromCategory = new URLSearchParams(location.search).get("from");
   const { data: product, isLoading } = useQuery({
@@ -349,15 +328,6 @@ function ProductPage() {
                     {prose || "A considered solution. More details coming soon."}
                   </div>
 
-                  <div
-                    key={`jdgm-${handle}`}
-                    id="judgeme_product_reviews"
-                    className="jdgm-widget jdgm-review-widget jdgm-outside-widget mb-10 max-md:order-8"
-                    data-id={product.id.split("/").pop()}
-                    data-handle={handle}
-                    data-product-title={product.title}
-                  />
-
                   {(() => {
                     const allVariants = product.variants.edges.map((e) => e.node);
                     const rawOptions = (product.options || []).filter(
@@ -545,11 +515,16 @@ function ProductPage() {
                     <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> Secure Payment</span>
                   </div>
                   <PaymentMethods />
+                  {/* Compact Judge.me rating — renders only when Judge.me reports real reviews. */}
+                  <JudgeMeRating productGid={product.id} className="mt-3 justify-center max-md:order-[14]" />
                 </div>
               </div>
             );
           })()
         )}
+
+        {/* Full Judge.me reviews. Real reviews only; renders nothing when the count is 0. */}
+        {product && <JudgeMeReviewsSection productGid={product.id} />}
 
         {product && allProducts && allProducts.length > 1 && (
           <section className="mt-20 border-t border-border pt-10">
