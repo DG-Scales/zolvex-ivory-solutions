@@ -142,19 +142,18 @@ fbq('init', '2231805574125153');
   `}} />
   <script type="text/javascript" src="https://onsite.optimonk.com/script.js?account=271410" async />
   <style dangerouslySetInnerHTML={{__html: `
-    /* Judge.me reviews on product pages (rendered only when real reviews exist). Scoped to .zx-reviews. */
-    .zx-reviews { --zx-gold: #b08d57; }
-    .zx-reviews .jdgm-rev-widg { font-family: var(--font-sans); color: var(--foreground); background: transparent; border: 0; padding: 0; margin: 0; }
-    .zx-reviews .jdgm-rev-widg__title { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.5rem, 2.4vw, 1.875rem); letter-spacing: -0.01em; color: var(--foreground); }
-    .zx-reviews .jdgm-rev-widg__summary-text, .zx-reviews .jdgm-rev__timestamp, .zx-reviews .jdgm-histogram__frequency, .zx-reviews .jdgm-histogram__percentage { color: var(--muted-foreground); }
-    .zx-reviews .jdgm-star.jdgm--on, .zx-reviews .jdgm-star.jdgm--half { color: var(--zx-gold) !important; }
+    /* Judge.me review items on product pages (rendered only when real reviews exist). Scoped to .zx-reviews. */
+    .zx-reviews .jdgm-rev-widg__reviews { font-family: var(--font-sans); color: var(--foreground); }
+    .zx-reviews .jdgm-rev { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px; }
+    .zx-reviews .jdgm-rev:first-child { border-top: 0; padding-top: 0; margin-top: 0; }
+    .zx-reviews .jdgm-star.jdgm--on, .zx-reviews .jdgm-star.jdgm--half { color: #b08d57 !important; }
     .zx-reviews .jdgm-star.jdgm--off { color: var(--border) !important; }
-    .zx-reviews .jdgm-histogram__bar-content { background: var(--zx-gold); box-shadow: none; }
-    .zx-reviews .jdgm-histogram__bar { background: var(--muted); box-shadow: none; }
-    .zx-reviews .jdgm-histogram__row { pointer-events: none; cursor: default; }
-    .zx-reviews .jdgm-rev, .zx-reviews .jdgm-histogram { border-color: var(--border); }
+    .zx-reviews .jdgm-rev__icon { background-color: var(--muted); color: var(--foreground); }
     .zx-reviews .jdgm-rev__author, .zx-reviews .jdgm-rev__title { color: var(--foreground); font-family: var(--font-sans); }
-    .zx-reviews .jdgm-write-rev-link, .zx-reviews .jdgm-rev-widg__sort-wrapper, .zx-reviews .jdgm-paginate { display: none !important; }
+    .zx-reviews .jdgm-rev__title { font-weight: 600; }
+    .zx-reviews .jdgm-rev__body { color: var(--foreground); line-height: 1.7; height: auto; }
+    .zx-reviews .jdgm-rev__timestamp, .zx-reviews .jdgm-rev__location, .zx-reviews .jdgm-rev__buyer-badge { color: var(--muted-foreground); }
+    .zx-reviews .jdgm-rev__social, .zx-reviews .jdgm-rev__votes, .zx-reviews .jdgm-rev__actions { display: none !important; }
   `}} />
 </head>
 
