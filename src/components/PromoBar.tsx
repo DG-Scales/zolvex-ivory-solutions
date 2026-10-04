@@ -3,7 +3,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const MESSAGES = [
   "Free shipping on all U.S. orders · Worldwide delivery",
-  "GET 20% OFF WITH CODE SMRDLZ20 STOREWIDE",
 ];
 
 export function PromoBar() {
@@ -38,13 +37,15 @@ export function PromoBar() {
 
   return (
     <div className="relative bg-foreground text-background text-[11px] uppercase tracking-[0.25em] px-4">
-      <button
-        onClick={goPrev}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1 rounded-full hover:bg-background/10 transition-colors cursor-pointer"
-        aria-label="Previous promotion"
-      >
-        <ChevronLeft size={14} />
-      </button>
+      {MESSAGES.length > 1 && (
+        <button
+          onClick={goPrev}
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1 rounded-full hover:bg-background/10 transition-colors cursor-pointer"
+          aria-label="Previous promotion"
+        >
+          <ChevronLeft size={14} />
+        </button>
+      )}
 
       <div className="overflow-hidden mx-6">
         <div
@@ -59,13 +60,15 @@ export function PromoBar() {
         </div>
       </div>
 
-      <button
-        onClick={goNext}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1 rounded-full hover:bg-background/10 transition-colors cursor-pointer"
-        aria-label="Next promotion"
-      >
-        <ChevronRight size={14} />
-      </button>
+      {MESSAGES.length > 1 && (
+        <button
+          onClick={goNext}
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1 rounded-full hover:bg-background/10 transition-colors cursor-pointer"
+          aria-label="Next promotion"
+        >
+          <ChevronRight size={14} />
+        </button>
+      )}
     </div>
   );
 }
