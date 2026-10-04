@@ -142,13 +142,19 @@ fbq('init', '2231805574125153');
   `}} />
   <script type="text/javascript" src="https://onsite.optimonk.com/script.js?account=271410" async />
   <style dangerouslySetInnerHTML={{__html: `
-    /* Hide Judge.me preview badges on product cards when a product has zero reviews */
-    .jdgm-prev-badge[data-number-of-reviews="0"] { display: none !important; }
-    /* Tone Judge.me stars to match ivory/black aesthetic */
-    .jdgm-prev-badge__stars { color: #111 !important; }
-    .jdgm-prev-badge__text { color: rgba(0,0,0,0.55) !important; font-size: 12px !important; }
-    .jdgm-all-reviews-widget .jdgm-rev__title,
-    .jdgm-all-reviews-widget .jdgm-rev__author { font-family: inherit !important; }
+    /* Judge.me reviews on product pages (rendered only when real reviews exist). Scoped to .zx-reviews. */
+    .zx-reviews { --zx-gold: #b08d57; }
+    .zx-reviews .jdgm-rev-widg { font-family: var(--font-sans); color: var(--foreground); background: transparent; border: 0; padding: 0; margin: 0; }
+    .zx-reviews .jdgm-rev-widg__title { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.5rem, 2.4vw, 1.875rem); letter-spacing: -0.01em; color: var(--foreground); }
+    .zx-reviews .jdgm-rev-widg__summary-text, .zx-reviews .jdgm-rev__timestamp, .zx-reviews .jdgm-histogram__frequency, .zx-reviews .jdgm-histogram__percentage { color: var(--muted-foreground); }
+    .zx-reviews .jdgm-star.jdgm--on, .zx-reviews .jdgm-star.jdgm--half { color: var(--zx-gold) !important; }
+    .zx-reviews .jdgm-star.jdgm--off { color: var(--border) !important; }
+    .zx-reviews .jdgm-histogram__bar-content { background: var(--zx-gold); box-shadow: none; }
+    .zx-reviews .jdgm-histogram__bar { background: var(--muted); box-shadow: none; }
+    .zx-reviews .jdgm-histogram__row { pointer-events: none; cursor: default; }
+    .zx-reviews .jdgm-rev, .zx-reviews .jdgm-histogram { border-color: var(--border); }
+    .zx-reviews .jdgm-rev__author, .zx-reviews .jdgm-rev__title { color: var(--foreground); font-family: var(--font-sans); }
+    .zx-reviews .jdgm-write-rev-link, .zx-reviews .jdgm-rev-widg__sort-wrapper, .zx-reviews .jdgm-paginate { display: none !important; }
   `}} />
 </head>
 
