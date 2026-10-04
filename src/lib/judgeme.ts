@@ -4,6 +4,12 @@
  * Reads come from Judge.me's public `reviews_for_widget` endpoint, the same one Judge.me's own widget
  * pages through. It needs no token and is CORS-open. No private token is ever used here, and nothing is
  * stored, seeded or invented locally: Judge.me is the single source of truth.
+ *
+ * DEPENDENCY NOTE: `reviews_for_widget` is not in Judge.me's published API docs. It is the backend Judge.me's own
+ * storefront widget uses, and the documented Widgets API cannot be used publicly (it needs Judge.me's internal
+ * product id, which only the private token can look up). Every call here therefore fails QUIETLY: on a network
+ * error, a non-200 response or an unexpected payload the rating and the Customer Reviews section simply stay
+ * hidden. The product page never depends on this data, and nothing is shown unless Judge.me returns real reviews.
  */
 export const JUDGEME_SHOP_DOMAIN = "zolvex-solutions-hub-pnf34.myshopify.com";
 
@@ -42,24 +48,29 @@ function buildUrl(externalId: string, page: number, perPage: number, legacy: boo
 
 /** Real average rating, review count and rating histogram from Judge.me, or null if unavailable. */
 export async function fetchJudgeMeSummary(externalId: string): Promise<JudgeMeSummary | null> {
-  const res = await fetch(buildUrl(externalId, 1, 1, false));
-  if (!res.ok) return null;
-  const json = (await res.json()) as {
-    number_of_reviews?: unknown;
-    average_rating?: unknown;
-    histogram?: Array<{ rating?: unknown; frequency?: unknown; percentage?: unknown }>;
-  };
-  const count = Number(json.number_of_reviews);
-  const average = Number(json.average_rating);
-  if (!Number.isFinite(count) || !Number.isFinite(average)) return null;
-  const histogram = Array.isArray(json.histogram)
-    ? json.histogram.map((h) => ({
-        rating: Number(h.rating),
-        frequency: Number(h.frequency) || 0,
-        percentage: Number(h.percentage) || 0,
-      }))
-    : [];
-  return { average, count, histogram };
+  try {
+    const res = await fetch(buildUrl(externalId, 1, 1, false));
+    if (!res.ok) return null;
+    const json = (await res.json()) as {
+      number_of_reviews?: unknown;
+      average_rating?: unknown;
+      histogram?: Array<{ rating?: unknown; frequency?: unknown; percentage?: unknown }>;
+    };
+    const count = Number(json.number_of_reviews);
+    const average = Number(json.average_rating);
+    if (!Number.isFinite(count) || !Number.isFinite(average)) return null;
+    const histogram = Array.isArray(json.histogram)
+      ? json.histogram.map((h) => ({
+          rating: Number(h.rating),
+          frequency: Number(h.frequency) || 0,
+          percentage: Number(h.percentage) || 0,
+        }))
+      : [];
+    return { average, count, histogram };
+  } catch {
+    // Endpoint changed or unreachable: stay hidden.
+    return null;
+  }
 }
 
 /**
