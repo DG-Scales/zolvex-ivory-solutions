@@ -48,15 +48,6 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
       selectedOptions: selectedVariant.selectedOptions || [],
       variantImage: selectedVariant.image ?? null,
     });
-    void import("@/lib/analytics").then(({ trackAddToCart }) => {
-      trackAddToCart({
-        id: node.id,
-        title: node.title,
-        price: parseFloat(selectedVariant.price.amount),
-        currency: selectedVariant.price.currencyCode,
-        quantity: 1,
-      });
-    });
     toast.success("Added to bag", { description: node.title });
   };
 
