@@ -6,9 +6,6 @@ import { useRef, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { getBeforePrice } from "@/lib/utils";
 
-const TRENDING_DISCOUNT_CODE = "SMRDLZ20";
-const TRENDING_DISCOUNT_PCT = 20;
-
 const TRENDING_HANDLES = [
   "modern-minimalist-outdoor-waterproof-crystal-wall-light",
   "light-luxury-elegant-crystal-dining-table-chandelier",
@@ -228,7 +225,6 @@ export function TrendingCarousel() {
             const img = p.node.images.edges[0]?.node.url;
             const price = p.node.priceRange.minVariantPrice.amount;
             const priceNum = parseFloat(price);
-            const discounted = priceNum * (1 - TRENDING_DISCOUNT_PCT / 100);
             return (
               <Link
                 key={`${p.node.id}-${idx}`}
@@ -258,8 +254,8 @@ export function TrendingCarousel() {
                       ${priceNum.toFixed(0)}
                     </span>
                   </div>
-                  <span className="bg-black text-white text-[11px] font-bold tracking-wider px-2.5 py-1 rounded-sm uppercase leading-none">
-                    20% OFF W/ CODE
+                  <span className="whitespace-nowrap bg-black text-white text-[11px] max-sm:text-[9px] font-bold tracking-wider px-2.5 max-sm:px-2 py-1 rounded-sm uppercase leading-none">
+                    FREE U.S. SHIPPING
                   </span>
                 </div>
 

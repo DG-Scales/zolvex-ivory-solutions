@@ -73,22 +73,10 @@ const CART_LINES_REMOVE_MUTATION = `
   }
 `;
 
-const AUTO_DISCOUNT_CODE = "SMRDLZ20";
-
 function formatCheckoutUrl(checkoutUrl: string): string {
-  // Keep Shopify's host intact; add visitor/session tracking params and
-  // auto-apply the storewide discount code so customers don't have to
-  // re-enter it at checkout.
-  const tracked = appendShopifyTrackingToCheckoutUrl(checkoutUrl);
-  try {
-    const u = new URL(tracked);
-    if (!u.searchParams.has("discount")) {
-      u.searchParams.set("discount", AUTO_DISCOUNT_CODE);
-    }
-    return u.toString();
-  } catch {
-    return tracked;
-  }
+  // Keep Shopify's host intact and add visitor/session tracking params.
+  // No discount code is auto-applied; customers enter their code at checkout.
+  return appendShopifyTrackingToCheckoutUrl(checkoutUrl);
 }
 
 function isCartNotFoundError(userErrors: Array<{ field: string[] | null; message: string }>): boolean {
