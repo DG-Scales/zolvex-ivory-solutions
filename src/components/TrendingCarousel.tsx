@@ -254,7 +254,7 @@ export function TrendingCarousel() {
                       ${priceNum.toFixed(0)}
                     </span>
                   </div>
-                  <span className="bg-black text-white text-[11px] max-sm:text-[9px] font-bold tracking-wider px-2.5 max-sm:px-2 py-1 rounded-sm uppercase leading-none">
+                  <span className="whitespace-nowrap bg-black text-white text-[11px] max-sm:text-[9px] font-bold tracking-wider px-2.5 max-sm:px-2 py-1 rounded-sm uppercase leading-none">
                     FREE U.S. SHIPPING
                   </span>
                 </div>

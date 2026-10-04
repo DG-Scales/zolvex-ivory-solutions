@@ -124,8 +124,8 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
         onTouchEnd={onTouchEnd}
         onTouchCancel={onTouchEnd}
       >
-        <div className="absolute top-3 left-3 right-3 z-20 pointer-events-none flex flex-col gap-1.5 items-start">
-          <span className={`bg-black text-white font-bold tracking-wider rounded-sm uppercase leading-none max-sm:text-[9px] max-sm:px-2 max-sm:leading-tight ${smallBadge ? "text-[10px] px-2 py-1" : "text-[11px] px-2.5 py-1"}`}>
+        <div className="absolute top-3 left-3 right-3 max-sm:left-2 max-sm:right-2 z-20 pointer-events-none flex flex-col gap-1.5 items-start">
+          <span className={`bg-black text-white font-bold tracking-wider rounded-sm uppercase leading-none whitespace-nowrap max-sm:text-[9px] max-sm:tracking-normal max-sm:px-1.5 ${smallBadge ? "text-[10px] px-2 py-1" : "text-[11px] px-2.5 py-1"}`}>
             FREE U.S. SHIPPING
           </span>
           {isSoldOut && (
