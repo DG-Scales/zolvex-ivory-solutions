@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import {
-  JUDGEME_PAGE_SIZE,
-  fetchJudgeMeReviewsHtml,
+  fetchJudgeMeReviewsPage,
   fetchJudgeMeSummary,
   shopifyNumericId,
 } from "@/lib/judgeme";
@@ -44,6 +45,8 @@ function Stars({ value, className }: { value: number; className?: string }) {
   );
 }
 
+const reviewsLabel = (n: number) => `${n} review${n === 1 ? "" : "s"}`;
+
 /** Compact rating. Renders nothing unless Judge.me reports at least one real review. */
 export function JudgeMeRating({ productGid, className }: { productGid: string; className?: string }) {
   const { data } = useJudgeMeSummary(productGid);
@@ -55,9 +58,7 @@ export function JudgeMeRating({ productGid, className }: { productGid: string; c
     >
       <Stars value={data.average} />
       <span className="text-foreground font-medium">{data.average.toFixed(1)}</span>
-      <span>
-        {data.count} review{data.count === 1 ? "" : "s"}
-      </span>
+      <span>{reviewsLabel(data.count)}</span>
     </a>
   );
 }
@@ -70,17 +71,24 @@ export function JudgeMeReviewsSection({ productGid }: { productGid: string }) {
   const { data: summary } = useJudgeMeSummary(productGid);
   const hasReviews = !!summary && summary.count > 0;
 
-  const { data: html } = useQuery({
+  const reviews = useInfiniteQuery({
     queryKey: ["judgeme", "reviews", externalId],
-    queryFn: () => fetchJudgeMeReviewsHtml(externalId),
+    queryFn: ({ pageParam }) => fetchJudgeMeReviewsPage(externalId, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (last, pages) => {
+      if (!last.split || last.reviews.length === 0) return undefined;
+      const loaded = pages.reduce((n, p) => n + p.reviews.length, 0);
+      return loaded < last.total ? pages.length + 1 : undefined;
+    },
     enabled: hasReviews,
     staleTime: STALE_MS,
     retry: false,
   });
 
-  const show = hasReviews && !!html;
+  const items = reviews.data?.pages.flatMap((p) => p.reviews) ?? [];
+  const show = hasReviews && items.length > 0;
 
-  // Judge.me's static stylesheet supplies the star glyph font and base layout for its markup.
+  // Judge.me's static stylesheet supplies the star glyph font and base layout for its review markup.
   useEffect(() => {
     if (!show || document.querySelector("link[data-jdgm-css]")) return;
     const link = document.createElement("link");
@@ -92,14 +100,60 @@ export function JudgeMeReviewsSection({ productGid }: { productGid: string }) {
 
   if (!show || !summary) return null;
 
+  const rows = [...summary.histogram].sort((a, b) => b.rating - a.rating);
+
   return (
     <section id="reviews" className="zx-reviews mt-16 scroll-mt-24 border-t border-border pt-10">
-      <div className="jdgm-widget jdgm-review-widget" dangerouslySetInnerHTML={{ __html: html }} />
-      {summary.count > JUDGEME_PAGE_SIZE && (
-        <p className="mt-6 text-xs text-muted-foreground">
-          Showing {JUDGEME_PAGE_SIZE} of {summary.count} reviews.
-        </p>
-      )}
+      <h2 className="font-display text-2xl md:text-3xl tracking-tight">Customer Reviews</h2>
+      <div className="mt-8 grid gap-10 md:grid-cols-[240px_1fr]">
+        <div>
+          <div className="flex items-end gap-3">
+            <span className="font-display text-5xl leading-none">{summary.average.toFixed(1)}</span>
+            <span className="pb-1 text-xs uppercase tracking-[0.18em] text-muted-foreground">out of 5</span>
+          </div>
+          <div className="mt-3">
+            <Stars value={summary.average} className="h-5 w-5" />
+          </div>
+          <p className="mt-2 text-sm text-muted-foreground">Based on {reviewsLabel(summary.count)}</p>
+          {rows.length > 0 && (
+            <ul className="mt-6 space-y-2" aria-label="Rating breakdown">
+              {rows.map((r) => (
+                <li key={r.rating} className="flex items-center gap-3 text-xs text-muted-foreground">
+                  <span className="w-3 text-foreground">{r.rating}</span>
+                  <span className="h-1.5 flex-1 overflow-hidden bg-muted">
+                    <span
+                      className="block h-full bg-[#b08d57]"
+                      style={{ width: `${Math.max(0, Math.min(100, r.percentage))}%` }}
+                    />
+                  </span>
+                  <span className="w-6 text-right">{r.frequency}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div>
+          <div className="jdgm-widget jdgm-review-widget">
+            <div className="jdgm-rev-widg__reviews" dangerouslySetInnerHTML={{ __html: items.join("") }} />
+          </div>
+          {reviews.hasNextPage && (
+            <div className="mt-8">
+              <Button
+                type="button"
+                variant="outline"
+                className="rounded-none border-black/80 uppercase tracking-[0.18em] text-[11px] hover:bg-black hover:text-background"
+                onClick={() => void reviews.fetchNextPage()}
+                disabled={reviews.isFetchingNextPage}
+              >
+                {reviews.isFetchingNextPage ? <Loader2 className="h-4 w-4 animate-spin" /> : "Load more reviews"}
+              </Button>
+            </div>
+          )}
+          {reviews.isError && !reviews.isFetchingNextPage && (
+            <p className="mt-4 text-xs text-muted-foreground">Couldn&apos;t load more reviews. Please try again.</p>
+          )}
+        </div>
+      </div>
     </section>
   );
 }
