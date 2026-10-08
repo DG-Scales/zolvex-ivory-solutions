@@ -26,7 +26,7 @@ export const Route = createFileRoute("/wholesale")({
       </section>
       <section>
         <h2 className="font-display text-3xl mb-3">How to apply</h2>
-        <p>Send a short note with the products you are interested in, quantities, and your delivery location (United States only) to <a target="_top" href="mailto:notify@zolvexlighting.com" className="underline underline-offset-4">notify@zolvexlighting.com</a>. We'll reply as soon as we can.</p>
+        <p>Send a short note with the products you are interested in, quantities, and your delivery location (United States only) to <a target="_top" href="mailto:zolvex.business@gmail.com" className="underline underline-offset-4">zolvex.business@gmail.com</a>. We'll reply as soon as we can.</p>
       </section>
     </PageShell>
   ),

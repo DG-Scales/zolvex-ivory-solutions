@@ -34,7 +34,7 @@ export const template = {
   component: NewsletterSubscribeEmail,
   subject: () => `New Newsletter Subscriber – Zolvex`,
   displayName: 'Newsletter subscriber',
-  to: 'notify@zolvexlighting.com',
+  to: 'zolvex.business@gmail.com',
   previewData: { email: 'reader@example.com' },
 } satisfies TemplateEntry
 

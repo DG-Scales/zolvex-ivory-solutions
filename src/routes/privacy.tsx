@@ -17,8 +17,8 @@ export const Route = createFileRoute("/privacy")({
 
 function PrivacyPage() {
   const email = (
-    <a className="underline underline-offset-4" target="_top" href="mailto:notify@zolvexlighting.com">
-      notify@zolvexlighting.com
+    <a className="underline underline-offset-4" target="_top" href="mailto:zolvex.business@gmail.com">
+      zolvex.business@gmail.com
     </a>
   );
 
@@ -175,14 +175,8 @@ function PrivacyPage() {
           <section className="space-y-3">
             <h2 className="font-display text-2xl mb-3">Contact</h2>
             <p>
-              Should you have any questions about our privacy practices or this Privacy Policy, or if you would like to exercise any of the rights available to you, please email us at {email} or contact us at:
+              Should you have any questions about our privacy practices or this Privacy Policy, or if you would like to exercise any of the rights available to you, please email us at {email}.
             </p>
-            <address className="not-italic text-muted-foreground">
-              Zolvex<br />
-              437 Lafayette St<br />
-              Salem, MA 01970<br />
-              United States
-            </address>
             <p>For the purpose of applicable data protection laws, we are the data controller of your personal information.</p>
           </section>
         </div>

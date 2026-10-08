@@ -308,7 +308,7 @@ function ProductPage() {
                   </p>
                   <div className="mb-8 w-fit overflow-hidden rounded-sm border border-border max-md:order-5">
                     <span className="block px-3 py-1.5 bg-foreground text-background uppercase tracking-[0.18em] font-medium text-[11px]">
-                      Free US Shipping • Secure Checkout • 30-Day Returns
+                      Free US Shipping • Secure Checkout • Free 30-Day Returns
                     </span>
                   </div>
 

@@ -96,7 +96,7 @@ function AboutPage() {
               { k: "Free", v: "U.S. shipping, no minimum" },
               { k: "U.S.", v: "Delivery within the United States" },
               { k: "Clear", v: "Specifications on every product page" },
-              { k: "Support", v: "Email notify@zolvexlighting.com" },
+              { k: "Support", v: "Email zolvex.business@gmail.com" },
             ].map((item) => (
               <div key={item.k}>
                 <p className="font-display text-3xl md:text-4xl mb-2">{item.k}</p>

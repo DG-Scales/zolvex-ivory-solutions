@@ -54,14 +54,9 @@ export function SiteFooter() {
               </div>
               <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                 <RefreshCw className="w-3.5 h-3.5" />
-                <span>30-day returns</span>
+                <span>Free 30-day returns</span>
               </div>
             </div>
-            <address className="mt-4 text-[11px] not-italic text-muted-foreground leading-relaxed">
-              437 Lafayette St<br />
-              Salem, Massachusetts 01970<br />
-              United States
-            </address>
           </div>
         </div>
 
@@ -95,8 +90,8 @@ export function SiteFooter() {
           <h4 className="font-display text-lg mb-5 text-foreground">Contact</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
             <li>
-              <a target="_top" href="mailto:notify@zolvexlighting.com" className="hover:text-foreground transition-colors break-all">
-                notify@zolvexlighting.com
+              <a target="_top" href="mailto:zolvex.business@gmail.com" className="hover:text-foreground transition-colors break-all">
+                zolvex.business@gmail.com
               </a>
             </li>
             <li>

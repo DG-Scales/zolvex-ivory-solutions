@@ -26,7 +26,7 @@ export const Route = createFileRoute("/shipping")({
       <section>
         <h2 className="font-display text-2xl mb-3">Shipping Costs</h2>
         <ul className="list-disc pl-5 space-y-1">
-          <li>United States: Free shipping on all orders</li>
+          <li>United States: Free shipping on all orders, with no minimum purchase</li>
         </ul>
       </section>
 
@@ -47,12 +47,12 @@ export const Route = createFileRoute("/shipping")({
 
       <section>
         <h2 className="font-display text-2xl mb-3">Lost or Delayed Packages</h2>
-        <p>If your package is lost or significantly delayed, please contact us at <a target="_top" href="mailto:notify@zolvexlighting.com" className="underline underline-offset-4">notify@zolvexlighting.com</a> with your order number, and we will investigate immediately. If the carrier confirms a package is lost, we will arrange a replacement or issue a full refund at no additional cost to you.</p>
+        <p>If your package is lost or significantly delayed, please contact us at <a target="_top" href="mailto:zolvex.business@gmail.com" className="underline underline-offset-4">zolvex.business@gmail.com</a> with your order number, and we will investigate immediately. If the carrier confirms a package is lost, we will arrange a replacement or issue a full refund at no additional cost to you.</p>
       </section>
 
       <section>
         <h2 className="font-display text-2xl mb-3">Contact Us</h2>
-        <p>Email: <a target="_top" href="mailto:notify@zolvexlighting.com" className="underline underline-offset-4">notify@zolvexlighting.com</a></p>
+        <p>Email: <a target="_top" href="mailto:zolvex.business@gmail.com" className="underline underline-offset-4">zolvex.business@gmail.com</a></p>
         <p>Website: <a target="_top" href="https://www.zolvexlighting.com" className="underline underline-offset-4">www.zolvexlighting.com</a></p>
       </section>
     </PageShell>
