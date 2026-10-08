@@ -17,6 +17,7 @@ import { JudgeMeRating, JudgeMeReviewsSection } from "@/components/JudgeMeReview
 import { ProductCard } from "@/components/ProductCard";
 import { getBeforePrice } from "@/lib/utils";
 import { SmartBack } from "@/components/SmartBack";
+import { buildProductJsonLd, SITE_URL } from "@/lib/productJsonLd";
 
 function getSocialPreviewImageUrl(url: string) {
   const imageUrl = new URL(url);
@@ -33,7 +34,7 @@ export const Route = createFileRoute("/product/$handle")({
   },
   head: ({ params, loaderData }) => {
     const product = loaderData?.product;
-    const url = `https://zolvexlighting.com/product/${params.handle}`;
+    const url = `${SITE_URL}/product/${params.handle}`;
     if (!product) {
       return {
         meta: [
@@ -70,6 +71,7 @@ export const Route = createFileRoute("/product/$handle")({
     return {
       meta,
       links: [{ rel: "canonical", href: url }],
+      scripts: [{ type: "application/ld+json", children: JSON.stringify(buildProductJsonLd(product, url)) }],
     };
   },
 });
@@ -306,7 +308,7 @@ function ProductPage() {
                   </p>
                   <div className="mb-8 w-fit overflow-hidden rounded-sm border border-border max-md:order-5">
                     <span className="block px-3 py-1.5 bg-foreground text-background uppercase tracking-[0.18em] font-medium text-[11px]">
-                      Free US Shipping • Secure Checkout • Easy Returns
+                      Free US Shipping • Secure Checkout • 30-Day Returns
                     </span>
                   </div>
 

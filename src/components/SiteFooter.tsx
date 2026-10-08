@@ -50,11 +50,11 @@ export function SiteFooter() {
               </div>
               <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                 <Truck className="w-3.5 h-3.5" />
-                <span>Fast shipping</span>
+                <span>Free U.S. shipping</span>
               </div>
               <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                 <RefreshCw className="w-3.5 h-3.5" />
-                <span>Easy returns</span>
+                <span>30-day returns</span>
               </div>
             </div>
             <address className="mt-4 text-[11px] not-italic text-muted-foreground leading-relaxed">

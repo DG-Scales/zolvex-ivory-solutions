@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const MESSAGES = [
-  "Free shipping on all U.S. orders · Worldwide delivery",
+  "Free shipping on all U.S. orders",
 ];
 
 export function PromoBar() {

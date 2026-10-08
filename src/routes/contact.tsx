@@ -8,9 +8,9 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — Zolvex" },
-      { name: "description", content: "Get in touch with the Zolvex lighting team. We answer every message personally." },
+      { name: "description", content: "Get in touch with the Zolvex lighting team by email or through our contact form." },
       { property: "og:title", content: "Contact — Zolvex" },
-      { property: "og:description", content: "Specification help, custom finishes, or trade enquiries." },
+      { property: "og:description", content: "Product questions, order help, or project enquiries." },
     ],
   }),
   component: ContactPage,
@@ -24,7 +24,7 @@ function ContactPage() {
         <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">Contact</p>
         <h1 className="font-display text-5xl md:text-6xl mb-6">Get in touch.</h1>
         <p className="text-lg text-muted-foreground mb-12">
-          Specification questions, custom finishes, bespoke chandeliers, or a fixture you wish existed — we read every message.
+          Product and specification questions, order help, or questions about a project — we read every message and reply as soon as we can.
           Email us directly at <a href="mailto:notify@zolvexlighting.com" target="_top" className="text-foreground underline underline-offset-4">notify@zolvexlighting.com</a> or use the form below.
         </p>
 

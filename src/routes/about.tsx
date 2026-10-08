@@ -6,9 +6,9 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "Our Story — Zolvex" },
-      { name: "description", content: "How Zolvex began, what we believe about light, and the standards behind every fixture we carry." },
+      { name: "description", content: "About Zolvex, an online retailer of modern residential lighting: how we choose products and how orders are fulfilled." },
       { property: "og:title", content: "Our Story — Zolvex" },
-      { property: "og:description", content: "A curated lighting house for considered spaces." },
+      { property: "og:description", content: "An online retailer of modern residential lighting." },
     ],
   }),
   component: AboutPage,
@@ -27,7 +27,7 @@ function AboutPage() {
               Light, treated with the seriousness it deserves.
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed">
-              Zolvex is a curated lighting house for interiors and exteriors — built around a single conviction: the right fixture quietly changes the way a room is lived in.
+              Zolvex is an online lighting retailer offering a curated selection of modern residential lighting — built around a single conviction: the right fixture quietly changes the way a room is lived in.
             </p>
           </div>
         </section>
@@ -38,10 +38,10 @@ function AboutPage() {
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Origin</p>
             <div className="space-y-6 text-foreground/90 leading-relaxed text-lg max-w-2xl">
               <p>
-                Zolvex was started by people who kept running into the same problem — beautiful rooms let down by ordinary light. Catalogs full of fixtures that looked the part online and felt thin in person. Long lead times, vague specs, and finishes that aged poorly within a season.
+                Zolvex is an online retailer of modern residential lighting. We started with a simple observation: beautiful rooms are often let down by ordinary light, and finding the right fixture shouldn't mean wading through endless catalogs with vague specifications.
               </p>
               <p>
-                We set out to build the opposite. A small, deliberate catalog. Pieces we would specify in our own homes. Sources we could vouch for. A short conversation away from a real person who knows the product.
+                We curate chandeliers, pendants, wall sconces, ceiling lights and outdoor fixtures, and we describe each product's materials, dimensions and options as clearly as we can, so you know what you are buying. If something isn't clear, email us before you order.
               </p>
             </div>
           </div>
@@ -53,21 +53,21 @@ function AboutPage() {
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-12">What we believe</p>
             <div className="grid md:grid-cols-3 gap-10 md:gap-16">
               <div>
-                <h3 className="font-display text-2xl mb-4">Built to last</h3>
+                <h3 className="font-display text-2xl mb-4">Clear information</h3>
                 <p className="text-foreground/80 leading-relaxed">
-                  Solid brass, hand-blown glass, machined steel, finishes that age with grace. Nothing disposable, nothing hollow.
+                  Each product page lists the materials, dimensions and options provided for that fixture, so you can compare before you buy.
                 </p>
               </div>
               <div>
-                <h3 className="font-display text-2xl mb-4">Designed with intent</h3>
+                <h3 className="font-display text-2xl mb-4">A curated selection</h3>
                 <p className="text-foreground/80 leading-relaxed">
-                  Every piece earns its place. Proportion, restraint, a point of view — work from designers who treat lighting as architecture.
+                  We choose modern styles for living rooms, bedrooms, dining spaces, hallways and outdoor areas, with an emphasis on clean lines and considered proportions.
                 </p>
               </div>
               <div>
                 <h3 className="font-display text-2xl mb-4">Light that feels right</h3>
                 <p className="text-foreground/80 leading-relaxed">
-                  Color temperature, throw, glare, dimming behavior. Specs matter, but the way light lands on a wall or a face is the whole point.
+                  Color temperature, size and mounting details are shown where available. Specs matter, but the way light lands on a wall or a face is the whole point.
                 </p>
               </div>
             </div>
@@ -80,10 +80,10 @@ function AboutPage() {
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">How we work</p>
             <div className="space-y-6 text-foreground/90 leading-relaxed text-lg max-w-2xl">
               <p>
-                We partner directly with trusted studios and workshops around the world. That keeps the catalog tight, the quality consistent, and the story behind each piece honest.
+                Zolvex is an online retailer. Orders are fulfilled through our supplier and fulfillment partners and shipped directly to you, so delivery estimates are listed on our Shipping page and tracking is provided when your order ships.
               </p>
               <p>
-                We ship globally — free across the United States, with no minimum. We stand behind every order, and we answer every email personally. Whether you're finishing a single room or specifying an entire home, we're here to help you choose light that belongs.
+                We currently ship to addresses in the United States only — free, with no minimum. If you have a question about a product or an order, email us and we'll reply as soon as we can.
               </p>
             </div>
           </div>
@@ -94,9 +94,9 @@ function AboutPage() {
           <div className="mx-auto max-w-5xl px-6 py-20 md:py-24 grid grid-cols-2 md:grid-cols-4 gap-10">
             {[
               { k: "Free", v: "U.S. shipping, no minimum" },
-              { k: "Global", v: "Delivery to your door" },
-              { k: "Direct", v: "Sourced from the studio" },
-              { k: "Personal", v: "Every email answered" },
+              { k: "U.S.", v: "Delivery within the United States" },
+              { k: "Clear", v: "Specifications on every product page" },
+              { k: "Support", v: "Email notify@zolvexlighting.com" },
             ].map((item) => (
               <div key={item.k}>
                 <p className="font-display text-3xl md:text-4xl mb-2">{item.k}</p>
@@ -111,7 +111,7 @@ function AboutPage() {
           <div className="mx-auto max-w-5xl px-6 py-24 md:py-32 text-center">
             <h2 className="font-display text-4xl md:text-5xl mb-6">Explore the collection</h2>
             <p className="text-muted-foreground text-lg mb-10 max-w-xl mx-auto">
-              Chandeliers, pendants, sconces, floor lamps, and exterior fixtures — chosen one piece at a time.
+              Chandeliers, pendants, sconces, floor lamps, and exterior fixtures for the rooms and spaces you live in.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Link

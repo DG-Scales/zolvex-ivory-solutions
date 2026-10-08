@@ -175,7 +175,7 @@ function PrivacyPage() {
           <section className="space-y-3">
             <h2 className="font-display text-2xl mb-3">Contact</h2>
             <p>
-              Should you have any questions about our privacy practices or this Privacy Policy, or if you would like to exercise any of the rights available to you, please call <a target="_top" href="tel:+16174802895" className="underline underline-offset-4">617-480-2895</a> or email us at {email} or contact us at:
+              Should you have any questions about our privacy practices or this Privacy Policy, or if you would like to exercise any of the rights available to you, please email us at {email} or contact us at:
             </p>
             <address className="not-italic text-muted-foreground">
               Zolvex<br />

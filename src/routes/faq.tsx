@@ -2,12 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 
 const faqs = [
-  { q: "When will my order ship?", a: "In-stock fixtures leave within 1–4 business days. Made-to-order and custom-finish pieces ship within the lead time noted on each product page." },
-  { q: "Do you ship internationally?", a: "Yes — worldwide. International orders take 7–25 business days depending on destination and fixture size." },
-  { q: "Do bulbs come included?", a: "Most fixtures ship with high-CRI LED bulbs included. Where they don't, recommended bulb specs are listed on the product page." },
-  { q: "What's your return policy?", a: "30 days from delivery on any uninstalled fixture in original packaging. Custom and made-to-order pieces are final sale." },
+  { q: "When will my order ship?", a: "Orders are processed within 1–4 business days after payment confirmation. See our Shipping page for delivery estimates." },
+  { q: "Do you ship internationally?", a: "Not at this time. We currently ship to addresses in the United States only." },
+  { q: "Do bulbs come included?", a: "It depends on the fixture. Each product page lists the specifications and options for that item (for example \"Bulb Not Included\" where applicable). If it isn't clear, email us before ordering." },
+  { q: "What's your return policy?", a: "You can request a return within 30 days of delivery. See our Returns page for the full terms." },
   { q: "Can I change or cancel my order?", a: "Email notify@zolvexlighting.com within 24 hours of placing your order and we'll do our best." },
-  { q: "Do you offer trade pricing?", a: "Yes — we work with designers, architects, and hospitality. See our Wholesale page or email notify@zolvexlighting.com." },
+  { q: "Do you take project or bulk enquiries?", a: "Yes. Email notify@zolvexlighting.com with the products you are interested in and the quantities, and we'll let you know what is possible." },
 ];
 
 export const Route = createFileRoute("/faq")({
