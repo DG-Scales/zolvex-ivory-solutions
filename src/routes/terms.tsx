@@ -223,8 +223,8 @@ function TermsPage() {
         <h2 className="font-display text-2xl mb-3">Section 25 — Contact Information</h2>
         <p>
           Questions about the Terms of Service should be sent to us at{" "}
-          <a className="underline" target="_top" href="mailto:zolvex.business@gmail.com">
-            zolvex.business@gmail.com
+          <a className="underline" target="_top" href="mailto:info@zolvexlighting.com">
+            info@zolvexlighting.com
           </a>
           .
         </p>
@@ -233,7 +233,7 @@ function TermsPage() {
           <br />
           Zolvex Lighting
           <br />
-          zolvex.business@gmail.com
+          info@zolvexlighting.com
         </p>
       </section>
     </PageShell>

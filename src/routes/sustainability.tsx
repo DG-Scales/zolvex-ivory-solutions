@@ -26,7 +26,7 @@ export const Route = createFileRoute("/sustainability")({
       </section>
       <section>
         <h2 className="font-display text-3xl mb-3">Questions about a product</h2>
-        <p>If you want to know more about a fixture's materials or light source before ordering, email zolvex.business@gmail.com and we'll help.</p>
+        <p>If you want to know more about a fixture's materials or light source before ordering, email info@zolvexlighting.com and we'll help.</p>
       </section>
     </PageShell>
   ),

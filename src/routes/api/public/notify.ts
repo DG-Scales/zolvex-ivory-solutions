@@ -13,7 +13,7 @@ const subscribeSchema = z.object({
 })
 
 const FROM = 'Zolvex <notify@zolvexlighting.com>'
-const TO = 'zolvex.business@gmail.com'
+const TO = ['info@zolvexlighting.com', 'zolvex.business@gmail.com']
 const RESEND_AUDIENCE_ID = '3a752339-55ff-4d8d-b810-ce1e9a5692f3'
 
 async function resendContactExists(email: string): Promise<boolean> {
@@ -93,7 +93,7 @@ async function sendResend(args: {
     },
     body: JSON.stringify({
       from: FROM,
-      to: [TO],
+      to: TO,
       subject: args.subject,
       html: args.html,
       text: args.text,

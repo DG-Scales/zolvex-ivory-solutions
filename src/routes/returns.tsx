@@ -5,7 +5,7 @@ export const Route = createFileRoute("/returns")({
   head: () => ({
     meta: [
       { title: "Return Policy — Zolvex" },
-      { name: "description", content: "30-day returns on regular-priced and discounted items. Zolvex pays return shipping. Contact zolvex.business@gmail.com to start a return." },
+      { name: "description", content: "30-day returns on regular-priced and discounted items. Zolvex pays return shipping. Contact info@zolvexlighting.com to start a return." },
       { property: "og:title", content: "Return Policy — Zolvex" },
       { property: "og:description", content: "30-day returns on regular-priced and discounted items. Zolvex pays return shipping." },
     ],
@@ -15,8 +15,8 @@ export const Route = createFileRoute("/returns")({
 
 function ReturnsPage() {
   const email = (
-    <a target="_top" href="mailto:zolvex.business@gmail.com" className="underline underline-offset-4 hover:opacity-80">
-      zolvex.business@gmail.com
+    <a target="_top" href="mailto:info@zolvexlighting.com" className="underline underline-offset-4 hover:opacity-80">
+      info@zolvexlighting.com
     </a>
   );
 
@@ -54,6 +54,13 @@ function ReturnsPage() {
         <h2 className="font-display text-2xl mb-3">Refunds</h2>
         <p>
           Approved refunds are processed within 10 business days to your original payment method. Your bank or card issuer may need additional time to post the refund to your account.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="font-display text-2xl mb-3">Exchanges</h2>
+        <p>
+          We do not offer direct exchanges. To get a different item, return the eligible item as described above and place a separate order for the new item.
         </p>
       </section>
 
