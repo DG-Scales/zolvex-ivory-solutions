@@ -10,7 +10,7 @@ export const Route = createFileRoute("/privacy")({
       { property: "og:title", content: "Privacy Policy — Zolvex" },
       { property: "og:description", content: "How Zolvex collects, uses, and protects your personal information." },
     ],
-    links: [{ rel: "canonical", href: "/privacy" }],
+    links: [{ rel: "canonical", href: "https://www.zolvexlighting.com/privacy" }],
   }),
   component: PrivacyPage,
 });
