@@ -42,7 +42,7 @@ function ShopPage() {
               Shop the <span className="italic font-light">lighting.</span>
             </h1>
             <p className="mt-6 max-w-xl text-background/75 text-sm md:text-base">
-              150+ sculpted pieces — marble, crystal, brushed brass and architectural exterior fixtures.
+              Sculpted pieces — marble, crystal, brushed brass and architectural exterior fixtures.
               Filter by collection or scroll the full edit below.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -63,8 +63,7 @@ function ShopPage() {
           </div>
           <div className="md:col-span-4 hidden md:block">
             <div className="flex flex-col gap-3 text-[10px] uppercase tracking-[0.3em] text-background/60">
-              <div className="flex justify-between border-b border-background/15 pb-3"><span>Pieces</span><span className="text-background">150+</span></div>
-              <div className="flex justify-between border-b border-background/15 pb-3"><span>Collections</span><span className="text-background">07</span></div>
+              <div className="flex justify-between border-b border-background/15 pb-3"><span>Returns</span><span className="text-background">30 days</span></div>
               <div className="flex justify-between"><span>Shipping</span><span className="text-background">Free · US</span></div>
             </div>
           </div>

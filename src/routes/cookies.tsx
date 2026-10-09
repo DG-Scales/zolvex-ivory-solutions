@@ -10,7 +10,7 @@ export const Route = createFileRoute("/cookies")({
       { property: "og:title", content: "Cookies Policy — Zolvex" },
       { property: "og:description", content: "How Zolvex uses cookies and similar tracking technologies on our website." },
     ],
-    links: [{ rel: "canonical", href: "/cookies" }],
+    links: [{ rel: "canonical", href: "https://www.zolvexlighting.com/cookies" }],
   }),
   component: CookiesPage,
 });
