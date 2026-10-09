@@ -5,7 +5,7 @@ import { PROCESSING_DAYS, transitDaysFor } from "@/lib/shipping";
 
 // Dedicated Google Merchant Center product feed (RSS 2.0 / g: namespace).
 // - Every link is a www.zolvexlighting.com product URL (the Shopify channel feed links to myshopify.com).
-// - Item ids follow Shopify's own scheme (shopify_US_<productId>_<variantId>) so product identity is preserved
+// - Item ids follow Shopify's own scheme (shopify_ZZ_<productId>_<variantId>, the id Shopify's Google channel uses today) so product identity is preserved
 //   when this feed replaces the Shopify channel feed. Use a DIFFERENT feed label on the new data source while testing.
 // - Prices, availability and titles come live from the Shopify Storefront API on each fetch.
 // - Shipping is free for the US; processing/transit windows come from lib/shipping.ts (per-product via tag).
@@ -39,16 +39,26 @@ interface FeedProduct { id: string; handle: string; title: string; description: 
 export const Route = createFileRoute("/feeds/google.xml")({
   server: {
     handlers: {
-      GET: async () => {
+      GET: async ({ request }) => {
+        // ?idprefix=test_ lets the feed be fetched into a separate MC test source without clashing with live ids.
+        const idPrefix = new URL(request.url).searchParams.get("idprefix") ?? "shopify_ZZ_";
+        // Fail safely: a partial or empty feed must never reach Merchant Center (it would delist products),
+        // so any Storefront error or empty result returns 503 and Google keeps its last good copy.
         const products: FeedProduct[] = [];
-        let after: string | null = null;
-        for (let page = 0; page < 10; page++) {
-          const data = await storefrontApiRequest(FEED_QUERY, { first: 100, after });
-          const conn = data?.data?.products;
-          if (!conn) break;
-          for (const e of conn.edges) products.push(e.node as FeedProduct);
-          if (!conn.pageInfo.hasNextPage) break;
-          after = conn.pageInfo.endCursor;
+        try {
+          let after: string | null = null;
+          let complete = false;
+          for (let page = 0; page < 20; page++) {
+            const data = await storefrontApiRequest(FEED_QUERY, { first: 100, after });
+            const conn = data?.data?.products;
+            if (!conn) throw new Error("storefront returned no products connection");
+            for (const e of conn.edges) products.push(e.node as FeedProduct);
+            if (!conn.pageInfo.hasNextPage) { complete = true; break; }
+            after = conn.pageInfo.endCursor;
+          }
+          if (!complete || products.length === 0) throw new Error("incomplete product list");
+        } catch {
+          return new Response("Feed temporarily unavailable", { status: 503, headers: { "Retry-After": "900", "Cache-Control": "no-store" } });
         }
 
         const items: string[] = [];
@@ -65,7 +75,7 @@ export const Route = createFileRoute("/feeds/google.xml")({
             items.push(
               [
                 "<item>",
-                `<g:id>shopify_US_${productId}_${num(v.id)}</g:id>`,
+                `<g:id>${esc(idPrefix)}${productId}_${num(v.id)}</g:id>`,
                 `<g:item_group_id>${productId}</g:item_group_id>`,
                 `<title>${esc(title)}</title>`,
                 `<description>${esc(plain(p.description || p.title).slice(0, 4900))}</description>`,
