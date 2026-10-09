@@ -25,6 +25,7 @@ export interface ShopifyProduct {
           title: string;
           price: { amount: string; currencyCode: string };
           availableForSale: boolean;
+          sku?: string | null;
           selectedOptions: Array<{ name: string; value: string }>;
           image?: { url: string; altText: string | null } | null;
         };
@@ -50,6 +51,7 @@ export const PRODUCT_FRAGMENT = `
           title
           price { amount currencyCode }
           availableForSale
+          sku
           selectedOptions { name value }
           image { url altText }
         }

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { PRODUCTS_QUERY, storefrontApiRequest, type ShopifyProduct } from "@/lib/shopify";
 
-const BASE_URL = "https://zolvexlighting.com";
+const BASE_URL = "https://www.zolvexlighting.com";
 
 interface SitemapEntry {
   path: string;

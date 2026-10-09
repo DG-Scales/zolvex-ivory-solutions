@@ -74,7 +74,7 @@ const sections: { title: string; paragraphs: string[] }[] = [
   {
     title: "Section 10 — Privacy Policy",
     paragraphs: [
-      "All personal information we collect through the Services is subject to our Privacy Policy, which can be viewed at https://zolvexlighting.com/privacy, and certain personal information may be subject to Shopify's Privacy Policy. By using the Services, you acknowledge that you have read these privacy policies.",
+      "All personal information we collect through the Services is subject to our Privacy Policy, which can be viewed at https://www.zolvexlighting.com/privacy, and certain personal information may be subject to Shopify's Privacy Policy. By using the Services, you acknowledge that you have read these privacy policies.",
       "Because the Services are hosted by Shopify, Shopify collects and processes personal information about your access to and use of the Services in order to provide and improve the Services for you. Information you submit to the Services will be transmitted to and shared with Shopify as well as third parties that may be located in other countries than where you reside, in order to provide services to you. Review our privacy policy for more details on how we, Shopify, and our partners use your personal information.",
     ],
   },
@@ -223,8 +223,8 @@ function TermsPage() {
         <h2 className="font-display text-2xl mb-3">Section 25 — Contact Information</h2>
         <p>
           Questions about the Terms of Service should be sent to us at{" "}
-          <a className="underline" target="_top" href="mailto:notify@zolvexlighting.com">
-            notify@zolvexlighting.com
+          <a className="underline" target="_top" href="mailto:info@zolvexlighting.com">
+            info@zolvexlighting.com
           </a>
           .
         </p>
@@ -233,7 +233,7 @@ function TermsPage() {
           <br />
           Zolvex Lighting
           <br />
-          notify@zolvexlighting.com
+          info@zolvexlighting.com
         </p>
       </section>
     </PageShell>

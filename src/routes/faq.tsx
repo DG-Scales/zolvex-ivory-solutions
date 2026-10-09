@@ -2,12 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 
 const faqs = [
-  { q: "When will my order ship?", a: "In-stock fixtures leave within 1–4 business days. Made-to-order and custom-finish pieces ship within the lead time noted on each product page." },
-  { q: "Do you ship internationally?", a: "Yes — worldwide. International orders take 7–25 business days depending on destination and fixture size." },
-  { q: "Do bulbs come included?", a: "Most fixtures ship with high-CRI LED bulbs included. Where they don't, recommended bulb specs are listed on the product page." },
-  { q: "What's your return policy?", a: "30 days from delivery on any uninstalled fixture in original packaging. Custom and made-to-order pieces are final sale." },
-  { q: "Can I change or cancel my order?", a: "Email notify@zolvexlighting.com within 24 hours of placing your order and we'll do our best." },
-  { q: "Do you offer trade pricing?", a: "Yes — we work with designers, architects, and hospitality. See our Wholesale page or email notify@zolvexlighting.com." },
+  { q: "When will my order ship?", a: "Orders are processed within 1–4 business days after payment confirmation. See our Shipping page for delivery estimates." },
+  { q: "Do you ship internationally?", a: "Not at this time. We currently ship to addresses in the United States only." },
+  { q: "Do bulbs come included?", a: "It depends on the fixture. Each product page lists the specifications and options for that item (for example \"Bulb Not Included\" where applicable). If it isn't clear, email us before ordering." },
+  { q: "What's your return policy?", a: "You can return eligible items within 30 days of delivery, including discounted items, and Zolvex covers return shipping. Email info@zolvexlighting.com first; once your return is approved we send return instructions and a return label. See our Returns page for details." },
+  { q: "Can I exchange an item?", a: "We do not offer direct exchanges. Return the eligible item (see our Returns page) and place a separate order for the new item." },
+  { q: "Can I change or cancel my order?", a: "Email info@zolvexlighting.com within 24 hours of placing your order and we'll do our best." },
+  { q: "Do you take project or bulk enquiries?", a: "Yes. Email info@zolvexlighting.com with the products you are interested in and the quantities, and we'll let you know what is possible." },
 ];
 
 export const Route = createFileRoute("/faq")({
@@ -18,7 +19,7 @@ export const Route = createFileRoute("/faq")({
     ],
   }),
   component: () => (
-    <PageShell eyebrow="Support" title="Frequently asked" lead="Quick answers. If yours isn't here, email notify@zolvexlighting.com.">
+    <PageShell eyebrow="Support" title="Frequently asked" lead="Quick answers. If yours isn't here, email info@zolvexlighting.com.">
       {faqs.map((f) => (
         <section key={f.q} className="border-b border-border pb-6">
           <h2 className="font-display text-2xl mb-2">{f.q}</h2>

@@ -7,22 +7,22 @@ import { Compass, Gem, Hand, Sparkles } from "lucide-react";
 export const Route = createFileRoute("/story")({
   head: () => ({
     meta: [
-      { title: "Our Story — Zolvex | Premium Designer Lighting House" },
+      { title: "Our Story — Zolvex | Modern Residential Lighting" },
       {
         name: "description",
         content:
-          "The story of Zolvex — a curated designer lighting house built on material honesty, considered design, and the quality of light. Discover our mission, values, and journey.",
+          "About Zolvex, an online retailer of modern residential lighting: what we sell, how we choose products, and how orders are fulfilled.",
       },
       { property: "og:title", content: "Our Story — Zolvex" },
       {
         property: "og:description",
         content:
-          "How Zolvex began, what we believe, and the standards behind every chandelier, pendant, and sconce we carry.",
+          "About Zolvex, an online retailer of modern residential lighting.",
       },
       { property: "og:type", content: "article" },
-      { property: "og:url", content: "https://zolvexlighting.com/story" },
+      { property: "og:url", content: "https://www.zolvexlighting.com/story" },
     ],
-    links: [{ rel: "canonical", href: "https://zolvexlighting.com/story" }],
+    links: [{ rel: "canonical", href: "https://www.zolvexlighting.com/story" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -30,14 +30,14 @@ export const Route = createFileRoute("/story")({
           "@context": "https://schema.org",
           "@type": "AboutPage",
           name: "Our Story — Zolvex",
-          url: "https://zolvexlighting.com/story",
+          url: "https://www.zolvexlighting.com/story",
           description:
-            "The story behind Zolvex — a curated designer lighting house built on material honesty and considered design.",
+            "About Zolvex, an online retailer of modern residential lighting.",
           publisher: {
             "@type": "Organization",
             name: "Zolvex",
-            url: "https://zolvexlighting.com",
-            email: "notify@zolvexlighting.com",
+            url: "https://www.zolvexlighting.com",
+            email: "info@zolvexlighting.com",
           },
         }),
       },
@@ -49,18 +49,18 @@ export const Route = createFileRoute("/story")({
 const values = [
   {
     icon: Hand,
-    title: "Made well",
-    body: "Honest materials, careful finishing, and fixtures vetted before they ever reach a customer.",
+    title: "Clear information",
+    body: "Each product page lists the materials, dimensions and options supplied for that fixture.",
   },
   {
     icon: Gem,
-    title: "Material honesty",
-    body: "Brass, steel, glass, marble, stone. Real things, aged with grace — never imitations.",
+    title: "Honest descriptions",
+    body: "We describe products as they are listed, including finish, size and what is or isn't included.",
   },
   {
     icon: Compass,
     title: "Considered design",
-    body: "A curated catalog built to last. Every piece earns its place. No filler, no trend chasing.",
+    body: "A curated catalog of modern styles for living rooms, bedrooms, dining spaces, hallways and outdoor areas.",
   },
   {
     icon: Sparkles,
@@ -72,13 +72,13 @@ const values = [
 const timeline = [
   {
     year: "Beginning",
-    title: "A frustration with modern lighting",
-    body: "Zolvex began with a simple observation — most lighting today looks the part but feels hollow. We wanted a house where every piece had a reason to be there.",
+    title: "A simple idea",
+    body: "Zolvex began with a simple observation: the right fixture changes how a room feels, and finding it should be easier than it is.",
   },
   {
-    year: "Year One",
-    title: "Building the catalog, slowly",
-    body: "We spent the first year meeting studios and workshops, vetting samples, and rejecting far more than we accepted. What remained became the foundation of the collection.",
+    year: "How it works",
+    title: "An online retailer",
+    body: "Zolvex is an online retailer. Orders are fulfilled through our supplier and fulfillment partners and shipped directly to you; delivery estimates are on our Shipping page.",
   },
   {
     year: "Today",
@@ -87,8 +87,8 @@ const timeline = [
   },
   {
     year: "Ahead",
-    title: "Small, intentional, and built to last",
-    body: "Built to last in every sense. A handful of new pieces each year, retired ones that no longer fit, and a relationship with every customer we ship to.",
+    title: "A growing, carefully chosen catalog",
+    body: "We add new pieces over time and retire ones that no longer fit, and we are here to help with questions about any order.",
   },
 ];
 
@@ -101,10 +101,10 @@ function StoryPage() {
         <section className="mx-auto max-w-4xl px-6 pt-20 md:pt-28 pb-16 text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-5">Our Story</p>
           <h1 className="font-display text-5xl md:text-7xl leading-[1.05] mb-8">
-            Crafted with care,<br />built to endure.
+            Modern lighting,<br />clearly described.
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            Zolvex is a curated designer lighting house. We exist because light is the first thing you feel when you walk into a room — and the last thing you remember when you leave.
+            Zolvex is an online lighting retailer. We exist because light is the first thing you feel when you walk into a room — and the last thing you remember when you leave.
           </p>
         </section>
 
@@ -117,7 +117,7 @@ function StoryPage() {
                 To bring quiet, considered lighting into the rooms, façades, and gardens of people who care how a space feels.
               </p>
               <p className="text-muted-foreground leading-relaxed text-lg">
-                We curate premium designer lighting from trusted studios and workshops — chandeliers, pendants, wall sconces, table and floor lamps, and exterior fixtures. Every piece is selected for the quality of its materials, the integrity of its design, and the light it gives.
+                We curate modern residential lighting — chandeliers, pendants, wall sconces, ceiling lights, floor lamps, and exterior fixtures — from our supplier network. Each piece is selected for its design and the light it gives, and described as accurately as we can.
               </p>
             </div>
           </div>
@@ -172,10 +172,10 @@ function StoryPage() {
           <h2 className="font-display text-4xl md:text-5xl mb-6">The standards behind the catalog.</h2>
           <div className="space-y-5 text-foreground/90 leading-relaxed text-lg">
             <p>
-              Every piece is judged against the same quiet standards. It has to be made well. It has to earn its place — no filler, no novelty, nothing chasing a trend. And the light it gives has to feel right. Warm, considered, true to the room.
+              We look for fixtures with clear specifications, a coherent design, and the kind of light that suits the room it is meant for. If we can't describe a product accurately, we don't list it.
             </p>
             <p>
-              If a fixture fails any one of these, it doesn't belong here. The catalog is small by design — each piece chosen with patience, held to a standard we would apply to our own homes.
+              Product details come from our suppliers; if you see something that doesn't look right, email us and we will look into it.
             </p>
           </div>
         </section>
@@ -185,9 +185,9 @@ function StoryPage() {
           <div className="mx-auto max-w-3xl px-6 py-20 md:py-24 text-center">
             <h2 className="font-display text-4xl md:text-5xl mb-5">Find a piece that fits the room.</h2>
             <p className="text-muted-foreground mb-8 max-w-xl mx-auto leading-relaxed">
-              Browse the collection, or write to us about a space you're designing. We answer every message personally at{" "}
-              <a target="_top" href="mailto:notify@zolvexlighting.com" className="text-foreground underline underline-offset-4">
-                notify@zolvexlighting.com
+              Browse the collection, or write to us about a space you're designing. Write to us about a product or an order at{" "}
+              <a target="_top" href="mailto:info@zolvexlighting.com" className="text-foreground underline underline-offset-4">
+                info@zolvexlighting.com
               </a>
               .
             </p>
