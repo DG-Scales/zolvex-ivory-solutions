@@ -1,4 +1,5 @@
 import type { ShopifyProduct } from "@/lib/shopify";
+import { PROCESSING_DAYS, transitDaysFor } from "@/lib/shipping";
 
 export const SITE_URL = "https://www.zolvexlighting.com";
 
@@ -9,6 +10,7 @@ type ProductNode = ShopifyProduct["node"];
 export function buildProductJsonLd(product: ProductNode, url: string) {
   const images = (product.images?.edges ?? []).map((e) => e.node.url).filter(Boolean);
   const variants = (product.variants?.edges ?? []).map((e) => e.node);
+  const transit = transitDaysFor(product.tags);
   const offers = variants.map((v) => ({
     "@type": "Offer",
     url,
@@ -33,8 +35,8 @@ export function buildProductJsonLd(product: ProductNode, url: string) {
       shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
       deliveryTime: {
         "@type": "ShippingDeliveryTime",
-        handlingTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 4, unitCode: "DAY" },
-        transitTime: { "@type": "QuantitativeValue", minValue: 7, maxValue: 25, unitCode: "DAY" },
+        handlingTime: { "@type": "QuantitativeValue", minValue: PROCESSING_DAYS.min, maxValue: PROCESSING_DAYS.max, unitCode: "DAY" },
+        transitTime: { "@type": "QuantitativeValue", minValue: transit.min, maxValue: transit.max, unitCode: "DAY" },
       },
     },
   }));

@@ -11,6 +11,7 @@ export interface ShopifyProduct {
     title: string;
     description: string;
     handle: string;
+    tags?: string[];
     createdAt: string;
     priceRange: {
       minVariantPrice: { amount: string; currencyCode: string };
@@ -42,6 +43,7 @@ export const PRODUCT_FRAGMENT = `
     createdAt
     description
     handle
+    tags
     priceRange { minVariantPrice { amount currencyCode } }
     images(first: 20) { edges { node { url altText } } }
     variants(first: 100) {
