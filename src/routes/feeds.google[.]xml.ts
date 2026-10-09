@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { storefrontApiRequest } from "@/lib/shopify";
 import { PROCESSING_DAYS, transitDaysFor } from "@/lib/shipping";
+import { GOOGLE_FEED_SELECTION } from "@/lib/googleFeedSelection";
 
 // Dedicated Google Merchant Center product feed (RSS 2.0 / g: namespace).
 // - Every link is a www.zolvexlighting.com product URL (the Shopify channel feed links to myshopify.com).
@@ -41,7 +42,10 @@ export const Route = createFileRoute("/feeds/google.xml")({
     handlers: {
       GET: async ({ request }) => {
         // ?idprefix=test_ lets the feed be fetched into a separate MC test source without clashing with live ids.
-        const idPrefix = new URL(request.url).searchParams.get("idprefix") ?? "shopify_ZZ_";
+        const params = new URL(request.url).searchParams;
+        const idPrefix = params.get("idprefix") ?? "shopify_ZZ_";
+        // Default: the capacity-limited selection (one variant per selected product). ?scope=all sends every variant.
+        const allScope = params.get("scope") === "all";
         // Fail safely: a partial or empty feed must never reach Merchant Center (it would delist products),
         // so any Storefront error or empty result returns 503 and Google keeps its last good copy.
         const products: FeedProduct[] = [];
@@ -62,12 +66,17 @@ export const Route = createFileRoute("/feeds/google.xml")({
         }
 
         const items: string[] = [];
+        let selectedFound = 0;
         for (const p of products) {
           const productId = num(p.id);
+          const pickedVariant = GOOGLE_FEED_SELECTION[productId];
+          if (!allScope && !pickedVariant) continue;
+          if (!allScope) selectedFound++;
           const transit = transitDaysFor(p.tags);
           const gallery = p.images.edges.map((e) => e.node.url);
           const single = p.variants.edges.length === 1;
           for (const { node: v } of p.variants.edges) {
+            if (!allScope && num(v.id) !== pickedVariant) continue;
             const image = v.image?.url ?? gallery[0];
             if (!image) continue; // Google requires an image
             const title = plain(single || /^default title$/i.test(v.title) ? p.title : `${p.title} - ${v.title}`).slice(0, 150);
@@ -104,6 +113,11 @@ export const Route = createFileRoute("/feeds/google.xml")({
                 .join("\n"),
             );
           }
+        }
+
+        // A selection that has mostly disappeared from Shopify must not publish a nearly empty feed.
+        if (!allScope && selectedFound < Object.keys(GOOGLE_FEED_SELECTION).length * 0.8) {
+          return new Response("Feed temporarily unavailable", { status: 503, headers: { "Retry-After": "900", "Cache-Control": "no-store" } });
         }
 
         const xml = [
