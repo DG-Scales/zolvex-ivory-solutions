@@ -69,7 +69,7 @@ export const Route = createFileRoute("/feeds/google.xml")({
                 `<g:item_group_id>${productId}</g:item_group_id>`,
                 `<title>${esc(title)}</title>`,
                 `<description>${esc(plain(p.description || p.title).slice(0, 4900))}</description>`,
-                `<link>${BASE_URL}/product/${esc(p.handle)}</link>`,
+                `<link>${BASE_URL}/product/${esc(p.handle)}?variant=${num(v.id)}</link>`,
                 `<g:image_link>${esc(image)}</g:image_link>`,
                 ...extra.map((u) => `<g:additional_image_link>${esc(u)}</g:additional_image_link>`),
                 `<g:availability>${v.availableForSale ? "in_stock" : "out_of_stock"}</g:availability>`,

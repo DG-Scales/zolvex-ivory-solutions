@@ -106,6 +106,13 @@ function ProductPage() {
   }, [product]);
 
   const [variantIndex, setVariantIndex] = useState(0);
+  // Deep link from the product feed / ads: ?variant=<numeric id> preselects that variant so the page shows the same price and image.
+  const variantParam = new URLSearchParams(location.search).get("variant");
+  useEffect(() => {
+    if (!product || !variantParam) return;
+    const idx = product.variants.edges.findIndex((e) => e.node.id.split("/").pop() === variantParam);
+    if (idx >= 0) setVariantIndex(idx);
+  }, [product, variantParam]);
   const addItem = useCartStore((s) => s.addItem);
   const isAdding = useCartStore((s) => s.isLoading);
   const touchStartXRef = useRef<number | null>(null);
