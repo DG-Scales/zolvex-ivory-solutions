@@ -31,6 +31,11 @@ export const Route = createFileRoute("/shipping")({
       </section>
 
       <section>
+        <h2 className="font-display text-2xl mb-3">Larger and slower-shipping items</h2>
+        <p>Most products arrive within 7–25 business days after they ship. Some larger or slower-shipping products can take 30–60 business days. Every product page shows its own estimated delivery time before you buy. Shipping is free either way, and delivery times are estimates, not guarantees.</p>
+      </section>
+
+      <section>
         <h2 className="font-display text-2xl mb-3">Please Note</h2>
         <p>Due to the nature of our products, certain items such as large chandeliers or items with high demand may require additional processing and shipping time. In these cases, delivery may take up to 60 days (approximately 2 months). We appreciate your patience.</p>
       </section>

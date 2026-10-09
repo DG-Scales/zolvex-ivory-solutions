@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 
 const faqs = [
-  { q: "When will my order ship?", a: "Orders are processed within 1–4 business days after payment confirmation. See our Shipping page for delivery estimates." },
+  { q: "When will my order ship?", a: "Orders are processed within 1–4 business days after payment confirmation. Most items then arrive in 7–25 business days; some larger or slower-shipping items can take 30–60 business days. Each product page shows its own estimate." },
   { q: "Do you ship internationally?", a: "Not at this time. We currently ship to addresses in the United States only." },
   { q: "Do bulbs come included?", a: "It depends on the fixture. Each product page lists the specifications and options for that item (for example \"Bulb Not Included\" where applicable). If it isn't clear, email us before ordering." },
   { q: "What's your return policy?", a: "You can return eligible items within 30 days of delivery, including discounted items, and Zolvex covers return shipping. Standard returns must be unused and in original condition and packaging; damaged, defective or incorrect items are resolved at no cost to you. Email info@zolvexlighting.com first; once your return is approved we send return instructions and a return label. See our Returns page for details." },

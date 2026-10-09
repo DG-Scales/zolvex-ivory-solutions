@@ -18,6 +18,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { getBeforePrice } from "@/lib/utils";
 import { SmartBack } from "@/components/SmartBack";
 import { buildProductJsonLd, SITE_URL } from "@/lib/productJsonLd";
+import { deliveryEstimateText, hasExtendedShipping } from "@/lib/shipping";
 
 function getSocialPreviewImageUrl(url: string) {
   const imageUrl = new URL(url);
@@ -105,6 +106,13 @@ function ProductPage() {
   }, [product]);
 
   const [variantIndex, setVariantIndex] = useState(0);
+  // Deep link from the product feed / ads: ?variant=<numeric id> preselects that variant so the page shows the same price and image.
+  const variantParam = new URLSearchParams(location.search).get("variant");
+  useEffect(() => {
+    if (!product || !variantParam) return;
+    const idx = product.variants.edges.findIndex((e) => e.node.id.split("/").pop() === variantParam);
+    if (idx >= 0) setVariantIndex(idx);
+  }, [product, variantParam]);
   const addItem = useCartStore((s) => s.addItem);
   const isAdding = useCartStore((s) => s.isLoading);
   const touchStartXRef = useRef<number | null>(null);
@@ -311,6 +319,9 @@ function ProductPage() {
                       Free US Shipping • Secure Checkout • Free 30-Day Returns
                     </span>
                   </div>
+                  <p className={`mb-8 text-sm max-md:order-5 ${hasExtendedShipping(product?.tags) ? "text-foreground font-medium" : "text-muted-foreground"}`} data-testid="delivery-estimate">
+                    {deliveryEstimateText(product?.tags)}
+                  </p>
 
                   <div className="prose prose-sm text-muted-foreground mb-10 whitespace-pre-line leading-relaxed max-md:order-6">
                     {prose || "A considered solution. More details coming soon."}
