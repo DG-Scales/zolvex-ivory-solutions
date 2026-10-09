@@ -16,9 +16,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Zolvex – Where Design Comes to Light" },
-      { name: "description", content: "Shop 150+ premium chandeliers, pendant lights, wall sconces & outdoor fixtures. Free shipping on all US orders." },
+      { name: "description", content: "Shop premium chandeliers, pendant lights, wall sconces & outdoor fixtures. Free shipping on all US orders." },
       { property: "og:title", content: "Zolvex – Where Design Comes to Light" },
-      { property: "og:description", content: "Shop 150+ premium chandeliers, pendant lights, wall sconces & outdoor fixtures. Free shipping on all US orders." },
+      { property: "og:description", content: "Shop premium chandeliers, pendant lights, wall sconces & outdoor fixtures. Free shipping on all US orders." },
       { property: "og:url", content: "https://www.zolvexlighting.com" },
       { property: "og:image", content: "https://www.zolvexlighting.com/zolvex-og.png" },
       { property: "og:image:width", content: "1200" },
