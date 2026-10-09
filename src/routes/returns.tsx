@@ -34,13 +34,20 @@ function ReturnsPage() {
       </section>
 
       <section className="space-y-4">
+        <h2 className="font-display text-2xl mb-3">Return eligibility</h2>
+        <p>
+          To be eligible for a standard return, the item must be unused and in its original condition and packaging. Items that arrive damaged, defective or incorrect are handled separately (see below) and are not subject to this condition.
+        </p>
+      </section>
+
+      <section className="space-y-4">
         <h2 className="font-display text-2xl mb-3">How to start a return</h2>
         <ol className="list-decimal pl-5 space-y-2">
           <li>Email us at {email} with your order number and the item(s) you would like to return. Please contact us <strong>before</strong> sending anything back.</li>
           <li>We will review your request. If it is approved, we will send you return instructions and a return shipping label.</li>
           <li>Pack the item securely, attach the label, and send it back as instructed.</li>
         </ol>
-        <p>Items sent back without prior approval cannot be processed, so please contact us first. Keeping the original packaging until your return is approved helps the item arrive safely.</p>
+        <p>Items sent back without prior approval cannot be processed, so please contact us first. Please keep the original packaging until your return is approved, and use it when sending the item back.</p>
       </section>
 
       <section>
