@@ -23,10 +23,11 @@ function ContactPage() {
       <main className="flex-1 mx-auto max-w-3xl px-6 py-20 md:py-28 w-full">
         <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">Contact</p>
         <h1 className="font-display text-5xl md:text-6xl mb-6">Get in touch.</h1>
-        <p className="text-lg text-muted-foreground mb-12">
+        <p className="text-lg text-muted-foreground mb-4">
           Product and specification questions, order help, or questions about a project — we read every message and reply as soon as we can.
           Email us directly at <a href="mailto:info@zolvexlighting.com" target="_top" className="text-foreground underline underline-offset-4">info@zolvexlighting.com</a> or use the form below.
         </p>
+        <p className="text-sm text-muted-foreground mb-12">Based in Salem, Massachusetts.</p>
 
         <form
           onSubmit={async (e) => {
