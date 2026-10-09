@@ -43,7 +43,13 @@ const REDIRECT_HOSTS = new Set(["zolvexlighting.com", "zolvex.org", "www.zolvex.
 function canonicalRedirect(request: Request): Response | null {
   if (request.method !== "GET" && request.method !== "HEAD") return null;
   const url = new URL(request.url);
-  if (!REDIRECT_HOSTS.has(url.hostname.toLowerCase())) return null;
+  const host = url.hostname.toLowerCase();
+  const isAlias = REDIRECT_HOSTS.has(host);
+  // Shopify's "External Redirect" theme (and the Google product feed) use the standard /products/<handle>
+  // path; this storefront serves products at /product/<handle>. Redirect the alias so those URLs resolve.
+  const aliasPath = url.pathname.match(/^\/products\/([^/]+)\/?$/);
+  if (!isAlias && !(host === CANONICAL_HOST && aliasPath)) return null;
+  if (aliasPath) url.pathname = "/product/" + aliasPath[1];
   url.protocol = "https:";
   url.hostname = CANONICAL_HOST;
   url.port = "";
