@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { storefrontApiRequest } from "@/lib/shopify";
 import { PROCESSING_DAYS, transitDaysFor } from "@/lib/shipping";
+import { GOOGLE_FEED_SELECTION } from "@/lib/googleFeedSelection";
 
 // Dedicated Google Merchant Center product feed (RSS 2.0 / g: namespace).
 // - Every link is a www.zolvexlighting.com product URL (the Shopify channel feed links to myshopify.com).
@@ -62,6 +63,11 @@ export const Route = createFileRoute("/feeds/google.xml")({
         }
 
         const items: string[] = [];
+        // Priority order: while the Merchant Center account is capacity-limited, Google accepts items from the top of the file.
+        // The vetted one-variant-per-product selection is listed first; every other variant follows (nothing is removed).
+        const selectionRank = new Map<string, number>();
+        Object.entries(GOOGLE_FEED_SELECTION).forEach(([pid, vid], i) => selectionRank.set(pid + ":" + vid, i));
+        const ranks: number[] = [];
         for (const p of products) {
           const productId = num(p.id);
           const transit = transitDaysFor(p.tags);
@@ -72,6 +78,7 @@ export const Route = createFileRoute("/feeds/google.xml")({
             if (!image) continue; // Google requires an image
             const title = plain(single || /^default title$/i.test(v.title) ? p.title : `${p.title} - ${v.title}`).slice(0, 150);
             const extra = gallery.filter((u) => u !== image).slice(0, 10);
+            ranks.push(selectionRank.get(productId + ":" + num(v.id)) ?? 1_000_000);
             items.push(
               [
                 "<item>",
@@ -113,7 +120,7 @@ export const Route = createFileRoute("/feeds/google.xml")({
           `<title>Zolvex Lighting</title>`,
           `<link>${BASE_URL}</link>`,
           `<description>Zolvex Lighting product feed</description>`,
-          ...items,
+          ...items.map((_, i) => i).sort((a, b) => ranks[a] - ranks[b] || a - b).map((i) => items[i]),
           `</channel>`,
           `</rss>`,
         ].join("\n");
