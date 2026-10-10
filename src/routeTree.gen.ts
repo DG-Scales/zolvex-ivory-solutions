@@ -33,6 +33,7 @@ import { Route as CategoriesIndexRouteImport } from './routes/categories.index'
 import { Route as CategoriesSlugRouteImport } from './routes/categories.$slug'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
 import { Route as FeedsGoogleDotxmlRouteImport } from './routes/feeds.google[.]xml'
+import { Route as FeedsMicrosoftDotxmlRouteImport } from './routes/feeds.microsoft[.]xml'
 import { Route as ProductHandleRouteImport } from './routes/product.$handle'
 import { Route as ApiPublicMetaCapiRouteImport } from './routes/api/public/meta-capi'
 import { Route as ApiPublicNotifyRouteImport } from './routes/api/public/notify'
@@ -161,6 +162,11 @@ const FeedsGoogleDotxmlRoute = FeedsGoogleDotxmlRouteImport.update({
   path: '/feeds/google.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeedsMicrosoftDotxmlRoute = FeedsMicrosoftDotxmlRouteImport.update({
+  id: '/feeds/microsoft.xml',
+  path: '/feeds/microsoft.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductHandleRoute = ProductHandleRouteImport.update({
   id: '/product/$handle',
   path: '/product/$handle',
@@ -224,6 +230,7 @@ export interface FileRoutesByFullPath {
   '/categories/$slug': typeof CategoriesSlugRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/feeds/google.xml': typeof FeedsGoogleDotxmlRoute
+  '/feeds/microsoft.xml': typeof FeedsMicrosoftDotxmlRoute
   '/product/$handle': typeof ProductHandleRoute
   '/categories/': typeof CategoriesIndexRoute
   '/api/public/meta-capi': typeof ApiPublicMetaCapiRoute
@@ -257,6 +264,7 @@ export interface FileRoutesByTo {
   '/categories/$slug': typeof CategoriesSlugRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/feeds/google.xml': typeof FeedsGoogleDotxmlRoute
+  '/feeds/microsoft.xml': typeof FeedsMicrosoftDotxmlRoute
   '/product/$handle': typeof ProductHandleRoute
   '/categories': typeof CategoriesIndexRoute
   '/api/public/meta-capi': typeof ApiPublicMetaCapiRoute
@@ -291,6 +299,7 @@ export interface FileRoutesById {
   '/categories/$slug': typeof CategoriesSlugRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/feeds/google.xml': typeof FeedsGoogleDotxmlRoute
+  '/feeds/microsoft.xml': typeof FeedsMicrosoftDotxmlRoute
   '/product/$handle': typeof ProductHandleRoute
   '/categories/': typeof CategoriesIndexRoute
   '/api/public/meta-capi': typeof ApiPublicMetaCapiRoute
@@ -326,6 +335,7 @@ export interface FileRouteTypes {
     | '/categories/$slug'
     | '/email/unsubscribe'
     | '/feeds/google.xml'
+    | '/feeds/microsoft.xml'
     | '/product/$handle'
     | '/categories/'
     | '/api/public/meta-capi'
@@ -359,6 +369,7 @@ export interface FileRouteTypes {
     | '/categories/$slug'
     | '/email/unsubscribe'
     | '/feeds/google.xml'
+    | '/feeds/microsoft.xml'
     | '/product/$handle'
     | '/categories'
     | '/api/public/meta-capi'
@@ -392,6 +403,7 @@ export interface FileRouteTypes {
     | '/categories/$slug'
     | '/email/unsubscribe'
     | '/feeds/google.xml'
+    | '/feeds/microsoft.xml'
     | '/product/$handle'
     | '/categories/'
     | '/api/public/meta-capi'
@@ -426,6 +438,7 @@ export interface RootRouteChildren {
   CategoriesSlugRoute: typeof CategoriesSlugRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
   FeedsGoogleDotxmlRoute: typeof FeedsGoogleDotxmlRoute
+  FeedsMicrosoftDotxmlRoute: typeof FeedsMicrosoftDotxmlRoute
   ProductHandleRoute: typeof ProductHandleRoute
   CategoriesIndexRoute: typeof CategoriesIndexRoute
   ApiPublicMetaCapiRoute: typeof ApiPublicMetaCapiRoute
@@ -606,6 +619,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeedsGoogleDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/feeds/microsoft.xml': {
+      id: '/feeds/microsoft.xml'
+      path: '/feeds/microsoft.xml'
+      fullPath: '/feeds/microsoft.xml'
+      preLoaderRoute: typeof FeedsMicrosoftDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/product/$handle': {
       id: '/product/$handle'
       path: '/product/$handle'
@@ -682,6 +702,7 @@ const rootRouteChildren: RootRouteChildren = {
   CategoriesSlugRoute: CategoriesSlugRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
   FeedsGoogleDotxmlRoute: FeedsGoogleDotxmlRoute,
+  FeedsMicrosoftDotxmlRoute: FeedsMicrosoftDotxmlRoute,
   ProductHandleRoute: ProductHandleRoute,
   CategoriesIndexRoute: CategoriesIndexRoute,
   ApiPublicMetaCapiRoute: ApiPublicMetaCapiRoute,
