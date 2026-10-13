@@ -13,11 +13,11 @@ const BASE_URL = "https://www.zolvexlighting.com";
 
 // Product ids flagged for owner review (five 220V-listed products; nine sea-freight products with unconfirmed delivery estimates).
 const REVIEW_HOLD: Record<string, string> = {
-  "15050643997035": "voltage-220v",
-  "15050644390251": "voltage-220v",
-  "15051548688747": "voltage-220v",
-  "15051551965547": "voltage-220v",
-  "15051554521451": "voltage-220v",
+  "15050643997035": "no-us-certification",
+  "15050644390251": "not-120v-compatible",
+  "15051548688747": "no-us-certification",
+  "15051551965547": "voltage-unconfirmed",
+  "15051554521451": "no-us-certification",
   "15050645602667": "shipping-unverified",
   "15051566449003": "shipping-unverified",
   "15051565302123": "shipping-unverified",
