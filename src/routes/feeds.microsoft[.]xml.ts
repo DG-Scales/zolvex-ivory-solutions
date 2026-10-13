@@ -2,12 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { storefrontApiRequest } from "@/lib/shopify";
 import { PROCESSING_DAYS, transitDaysFor } from "@/lib/shipping";
+import { safetyTierFor } from "@/lib/safetyTiers";
 
 // Dedicated Microsoft Merchant Center product feed (Google-format RSS 2.0 / g: namespace, which Microsoft Merchant Center accepts).
 // Separate from /feeds/google.xml so the Google feed is never affected. Same live Shopify Storefront data, same www product URLs.
 // - Item ids: zolvex_<productId>_<variantId> (stable; distinct from the Google ids).
 // - Products that need an owner decision before advertising (voltage / unverified shipping) are NOT removed; they carry
 //   custom_label_0 = "hold-review" so a campaign can exclude them with a product group until the owner approves.
+// - Electrical-safety tier (lib/safetyTiers.ts): tiers 1 and 2 are labelled hold-review; custom_label_2 = safety-tier-N lets a campaign
+//   exclude any tier. A product tagged "hold-review" in Shopify is held too (reason: custom_label_1 = tag-hold) without a code change.
 // - No GTINs, ratings or other identifiers are invented (identifier_exists = no).
 const BASE_URL = "https://www.zolvexlighting.com";
 
@@ -81,6 +84,10 @@ export const Route = createFileRoute("/feeds/microsoft.xml")({
         for (const p of products) {
           const productId = num(p.id);
           const transit = transitDaysFor(p.tags);
+          const tier = safetyTierFor(productId);
+          const tagHold = (p.tags ?? []).some((t) => t.trim().toLowerCase() === "hold-review");
+          const hold = !!REVIEW_HOLD[productId] || tier <= 2 || tagHold;
+          const holdReason = REVIEW_HOLD[productId] ?? (tier <= 2 ? `electrical-safety-tier-${tier}` : tagHold ? "tag-hold" : "");
           const gallery = p.images.edges.map((e) => e.node.url);
           const single = p.variants.edges.length === 1;
           for (const { node: v } of p.variants.edges) {
@@ -103,8 +110,9 @@ export const Route = createFileRoute("/feeds/microsoft.xml")({
                 `<g:condition>new</g:condition>`,
                 `<g:brand>Zolvex</g:brand>`,
                 `<g:identifier_exists>no</g:identifier_exists>`,
-                `<g:custom_label_0>${REVIEW_HOLD[productId] ? "hold-review" : "eligible"}</g:custom_label_0>`,
-                REVIEW_HOLD[productId] ? `<g:custom_label_1>${REVIEW_HOLD[productId]}</g:custom_label_1>` : "",
+                `<g:custom_label_0>${hold ? "hold-review" : "eligible"}</g:custom_label_0>`,
+                holdReason ? `<g:custom_label_1>${holdReason}</g:custom_label_1>` : "",
+                `<g:custom_label_2>safety-tier-${tier}</g:custom_label_2>`,
                 `<g:google_product_category>Home &amp; Garden &gt; Lighting &gt; Light Fixtures</g:google_product_category>`,
                 p.productType ? `<g:product_type>${esc(p.productType)}</g:product_type>` : "",
                 "<g:shipping>",
