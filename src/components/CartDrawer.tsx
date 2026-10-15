@@ -44,6 +44,7 @@ export const CartDrawer = () => {
         currency: items[0]?.price.currencyCode || "USD",
         itemCount: totalItems,
         contentIds: items.map((i) => i.product.node.id),
+        uetIds: items.map((i) => `zolvex_${i.product.node.id.split("/").pop()}_${i.variantId.split("/").pop()}`),
         contents: items.map((i) => ({
           id: i.product.node.id,
           quantity: i.quantity,

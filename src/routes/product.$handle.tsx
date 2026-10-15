@@ -96,11 +96,16 @@ function ProductPage() {
   useEffect(() => {
     if (!product) return;
     void import("@/lib/analytics").then(({ trackProductView }) => {
+      const variantParamNow = new URLSearchParams(window.location.search).get("variant");
+      const v =
+        product.variants.edges.find((e) => e.node.id.split("/").pop() === variantParamNow)?.node ??
+        product.variants.edges[0]?.node;
       trackProductView({
         id: product.id,
         title: product.title,
         price: parseFloat(product.priceRange.minVariantPrice.amount),
         currency: product.priceRange.minVariantPrice.currencyCode,
+        variantId: v?.id,
       });
     });
   }, [product]);

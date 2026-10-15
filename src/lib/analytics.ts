@@ -111,6 +111,21 @@ function fbq(): FbqFn | null {
 
 const GA4_ID = "G-NJD4V4K981";
 
+// Microsoft Advertising UET. Item ids are the Microsoft feed ids (zolvex_<productId>_<variantId>) so events match the catalog.
+type UetQueue = { push: (...args: unknown[]) => void };
+function uet(): UetQueue | null {
+  if (!isBrowser()) return null;
+  const w = window as unknown as { uetq?: UetQueue };
+  return w.uetq && typeof w.uetq.push === "function" ? w.uetq : null;
+}
+function gidNum(gid: string): string {
+  return gid.split("/").pop() ?? gid;
+}
+export function uetItemId(productGid: string, variantGid?: string): string {
+  const p = gidNum(productGid);
+  return variantGid ? `zolvex_${p}_${gidNum(variantGid)}` : `zolvex_${p}`;
+}
+
 // Read Meta Pixel first-party cookies so CAPI can attribute the event
 // to the same browser session for higher event match quality.
 function getFbCookies(): { fbp?: string; fbc?: string } {
@@ -180,7 +195,18 @@ export function trackProductView(args: {
   title: string;
   price: number;
   currency: string;
+  variantId?: string;
 }) {
+  const u = uet();
+  if (u) {
+    u.push("event", "view_item", {
+      ecomm_prodid: [uetItemId(args.id, args.variantId)],
+      ecomm_pagetype: "product",
+      ecomm_totalvalue: args.price,
+      revenue_value: args.price,
+      currency: args.currency,
+    });
+  }
   const g = gtag();
   if (g) {
     g("event", "view_item", {
@@ -209,7 +235,18 @@ export function trackAddToCart(args: {
   price: number;
   currency: string;
   quantity: number;
+  productId?: string;
 }) {
+  const u = uet();
+  if (u) {
+    u.push("event", "add_to_cart", {
+      ecomm_prodid: [args.productId ? uetItemId(args.productId, args.id) : uetItemId(args.id)],
+      ecomm_pagetype: "cart",
+      ecomm_totalvalue: args.price * args.quantity,
+      revenue_value: args.price * args.quantity,
+      currency: args.currency,
+    });
+  }
   const g = gtag();
   if (g) {
     g("event", "add_to_cart", {
@@ -241,7 +278,18 @@ export function trackBeginCheckout(args: {
   itemCount: number;
   contentIds?: string[];
   contents?: Array<{ id: string; quantity: number; item_price: number }>;
+  uetIds?: string[];
 }) {
+  const u = uet();
+  if (u) {
+    u.push("event", "begin_checkout", {
+      ecomm_prodid: args.uetIds ?? args.contentIds ?? [],
+      ecomm_pagetype: "cart",
+      ecomm_totalvalue: args.value,
+      revenue_value: args.value,
+      currency: args.currency,
+    });
+  }
   const g = gtag();
   if (g) {
     g("event", "begin_checkout", {
@@ -276,6 +324,16 @@ export function trackPurchase(args: {
   numItems?: number;
   orderId?: string;
 }) {
+  const u = uet();
+  if (u) {
+    u.push("event", "purchase", {
+      transaction_id: args.orderId,
+      ecomm_prodid: args.contentIds,
+      ecomm_pagetype: "purchase",
+      revenue_value: args.value,
+      currency: args.currency,
+    });
+  }
   const g = gtag();
   if (g) {
     g("event", "purchase", {

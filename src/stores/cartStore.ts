@@ -185,6 +185,7 @@ export const useCartStore = create<CartStore>()(
               price: parseFloat(item.price.amount),
               currency: item.price.currencyCode,
               quantity: item.quantity,
+              productId: item.product.node.id,
             });
           });
         }
