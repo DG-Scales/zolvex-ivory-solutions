@@ -141,6 +141,7 @@ window.addEventListener('CookiebotOnConsentReady',zolvexUetConsent);
 window.addEventListener('CookiebotOnAccept',zolvexUetConsent);
 window.addEventListener('CookiebotOnDecline',zolvexUetConsent);
   `}} />
+  <meta name="msvalidate.01" content="47B29A8A5D5FB52C48B0D2478B69B5A0" />
   <HeadContent />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NJD4V4K981"></script>
   <script dangerouslySetInnerHTML={{__html: `
