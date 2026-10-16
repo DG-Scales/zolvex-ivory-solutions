@@ -3,6 +3,7 @@ import type {} from "@tanstack/react-start";
 import { storefrontApiRequest } from "@/lib/shopify";
 import { PROCESSING_DAYS, transitDaysFor } from "@/lib/shipping";
 import { safetyTierFor } from "@/lib/safetyTiers";
+import { MS_SHORTLIST } from "@/lib/msShortlist";
 
 // Dedicated Microsoft Merchant Center product feed (Google-format RSS 2.0 / g: namespace, which Microsoft Merchant Center accepts).
 // Separate from /feeds/google.xml so the Google feed is never affected. Same live Shopify Storefront data, same www product URLs.
@@ -113,6 +114,7 @@ export const Route = createFileRoute("/feeds/microsoft.xml")({
                 `<g:custom_label_0>${hold ? "hold-review" : "eligible"}</g:custom_label_0>`,
                 holdReason ? `<g:custom_label_1>${holdReason}</g:custom_label_1>` : "",
                 `<g:custom_label_2>safety-tier-${tier}</g:custom_label_2>`,
+                `<g:custom_label_3>${!hold && MS_SHORTLIST.has(productId) ? "msft-shortlist" : "not-shortlisted"}</g:custom_label_3>`,
                 `<g:google_product_category>Home &amp; Garden &gt; Lighting &gt; Light Fixtures</g:google_product_category>`,
                 p.productType ? `<g:product_type>${esc(p.productType)}</g:product_type>` : "",
                 "<g:shipping>",
