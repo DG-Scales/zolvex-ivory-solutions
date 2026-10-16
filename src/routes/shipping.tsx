@@ -12,12 +12,12 @@ export const Route = createFileRoute("/shipping")({
     <PageShell eyebrow="Support" title="Shipping Policy" lead="Everything you need to know about how and when your Zolvex order arrives.">
       <section>
         <h2 className="font-display text-2xl mb-3">Order Processing</h2>
-        <p>Orders are typically processed within 1–4 business days. Processing times may vary depending on product availability, order volume, and supplier requirements. Processing time is already included in the estimated delivery time below.</p>
+        <p>Orders are typically processed within 1–4 business days. Processing times may vary depending on product availability, order volume, and supplier requirements. Processing time is separate from, and not included in, the estimated delivery time below.</p>
       </section>
 
       <section>
         <h2 className="font-display text-2xl mb-3">Estimated Delivery Times</h2>
-        <p>Most standard orders are estimated to arrive within <strong>10–20 business days from the date of purchase</strong>, including processing and shipping.</p>
+        <p>Once your order has been processed, most standard orders are estimated to arrive within <strong>10–20 business days</strong> while in transit. This estimate begins after processing is complete and does not include the 1–4 business days of processing time.</p>
         <p>Delivery times are estimates, not guarantees, and may vary depending on the product, shipping destination, carrier operations, customs processing, and other circumstances beyond our control.</p>
       </section>
 
