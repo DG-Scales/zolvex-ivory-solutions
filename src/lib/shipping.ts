@@ -15,7 +15,78 @@ export function transitDaysFor(tags?: string[] | null) {
   return hasExtendedShipping(tags) ? EXTENDED_TRANSIT_DAYS : STANDARD_TRANSIT_DAYS;
 }
 
-export function deliveryEstimateText(tags?: string[] | null): string {
-  const t = transitDaysFor(tags);
-  return `Estimated delivery: ${t.min}–${t.max} business days after your order ships (orders are processed in ${PROCESSING_DAYS.min}–${PROCESSING_DAYS.max} business days). Delivery times are estimates, not guarantees.`;
+// ---- Customer-facing delivery messaging (display only; the feeds and structured data keep using the constants above) ----
+// Standard estimate shown across the storefront, counted from the order date.
+export const STANDARD_DISPLAY_DELIVERY = { min: 10, max: 20 };
+const STANDARD_RANGE = `${STANDARD_DISPLAY_DELIVERY.min}–${STANDARD_DISPLAY_DELIVERY.max} Business Days`;
+
+// Products whose delivery time has NOT been confirmed (oversized / sea-freight items). They never show the standard
+// 10–20 day promise; they show a "varies, confirmed before processing" message until a verified estimate exists.
+// To give one a verified estimate later, tag it `${EXTENDED_SHIPPING_TAG}` in Shopify (extended window) or remove it from this list.
+export const DELIVERY_UNCONFIRMED_PRODUCT_IDS: ReadonlySet<string> = new Set([
+  "15050645602667", "15051565302123", "15050644488555", "15051578868075",
+  "15065288311147", "15050644554091", "15050645963115", "15050645700971",
+]);
+
+export type DeliveryKind = "standard" | "extended" | "unconfirmed";
+
+export function deliveryKindFor(tags?: string[] | null, productGid?: string | null): DeliveryKind {
+  if (hasExtendedShipping(tags)) return "extended";
+  const id = productGid ? productGid.split("/").pop() ?? "" : "";
+  if (id && DELIVERY_UNCONFIRMED_PRODUCT_IDS.has(id)) return "unconfirmed";
+  return "standard";
+}
+
+export interface DeliveryMessage {
+  kind: DeliveryKind;
+  headline: string;
+  detail: string;
+}
+
+const AFFECTED = "If your order is affected, we'll contact you with an updated delivery estimate before processing it.";
+
+export function deliveryMessageFor(tags?: string[] | null, productGid?: string | null): DeliveryMessage {
+  const kind = deliveryKindFor(tags, productGid);
+  if (kind === "extended") {
+    return {
+      kind,
+      headline: `Estimated Delivery: ${EXTENDED_TRANSIT_DAYS.min}–${EXTENDED_TRANSIT_DAYS.max} Business Days`,
+      detail: "This larger or specialty fixture ships on a longer timeline. Delivery times are estimates, not guarantees.",
+    };
+  }
+  if (kind === "unconfirmed") {
+    return {
+      kind,
+      headline: "Delivery time varies for this fixture",
+      detail: `Larger or specialty lighting fixtures may require additional time. ${AFFECTED}`,
+    };
+  }
+  return {
+    kind,
+    headline: `Estimated Delivery: ${STANDARD_RANGE}`,
+    detail: `Most orders arrive within ${STANDARD_DISPLAY_DELIVERY.min}–${STANDARD_DISPLAY_DELIVERY.max} business days. Larger or specialty lighting fixtures may require additional time. ${AFFECTED}`,
+  };
+}
+
+// Bag / cart summary: the worst case among the items decides the wording.
+export function cartDeliveryMessage(
+  items: Array<{ product: { node: { id: string; tags?: string[] } } }>,
+): DeliveryMessage {
+  const kinds = items.map((i) => deliveryKindFor(i.product.node.tags, i.product.node.id));
+  const hasExt = kinds.includes("extended");
+  const hasUnc = kinds.includes("unconfirmed");
+  const hasStd = kinds.includes("standard");
+  if (!hasExt && !hasUnc) return deliveryMessageFor();
+  if (!hasStd && !hasExt) {
+    return {
+      kind: "unconfirmed",
+      headline: "Delivery time varies for the item in your bag",
+      detail: `Larger or specialty lighting fixtures may require additional time. ${AFFECTED}`,
+    };
+  }
+  return {
+    kind: hasExt ? "extended" : "unconfirmed",
+    headline: `Estimated Delivery: ${STANDARD_RANGE} for standard items`,
+    detail: `Larger or specialty fixtures in your bag may require additional time. ${AFFECTED}`,
+  };
 }
