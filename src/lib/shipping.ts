@@ -64,7 +64,7 @@ export function deliveryMessageFor(tags?: string[] | null, productGid?: string |
   return {
     kind,
     headline: `Estimated Delivery: ${STANDARD_RANGE}`,
-    detail: `Most orders arrive within ${STANDARD_DISPLAY_DELIVERY.min}–${STANDARD_DISPLAY_DELIVERY.max} business days. Larger or specialty lighting fixtures may require additional time. ${AFFECTED}`,
+    detail: `Most orders arrive within ${STANDARD_DISPLAY_DELIVERY.min}–${STANDARD_DISPLAY_DELIVERY.max} business days after processing and shipment. Certain larger or specialty lighting fixtures may require 30–60 days or longer depending on product size, type, availability, or shipping requirements.`,
   };
 }
 
@@ -81,12 +81,12 @@ export function cartDeliveryMessage(
     return {
       kind: "unconfirmed",
       headline: "Delivery time varies for the item in your bag",
-      detail: `Larger or specialty lighting fixtures may require additional time. ${AFFECTED}`,
+      detail: "Larger or specialty lighting fixtures may require additional time.",
     };
   }
   return {
     kind: hasExt ? "extended" : "unconfirmed",
     headline: `Estimated Delivery: ${STANDARD_RANGE} for standard items`,
-    detail: `Larger or specialty fixtures in your bag may require additional time. ${AFFECTED}`,
+    detail: "Delivery time varies for the specialty fixtures in your bag.",
   };
 }
