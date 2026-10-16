@@ -225,9 +225,8 @@ function CartPage() {
                 <div className="rounded-lg border border-border/60 bg-muted/30 p-3 flex gap-2.5">
                   <Truck className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" strokeWidth={1.5} />
                   <p className="text-xs leading-relaxed text-muted-foreground">
-                    <span className="text-foreground font-medium">{cartDeliveryMessage(items).headline}.</span>{" "}
-                    {cartDeliveryMessage(items).detail}{" "}
-                    You will receive a tracking number once your order ships, once available.
+                    <span className="block text-foreground font-medium">{cartDeliveryMessage(items).headline}</span>
+                    {cartDeliveryMessage(items).detail}
                   </p>
                 </div>
 

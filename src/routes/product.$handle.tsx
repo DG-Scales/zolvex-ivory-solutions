@@ -324,10 +324,8 @@ function ProductPage() {
                       Free US Shipping • Secure Checkout • Free 30-Day Returns
                     </span>
                   </div>
-                  <p className="mb-8 text-sm max-md:order-5 text-muted-foreground" data-testid="delivery-estimate">
-                    <span className="text-foreground font-medium">{deliveryMessageFor(product?.tags, product?.id).headline}</span>
-                    <br />
-                    {deliveryMessageFor(product?.tags, product?.id).detail}
+                  <p className="mb-6 text-sm max-md:order-5 text-foreground font-medium" data-testid="delivery-estimate">
+                    {deliveryMessageFor(product?.tags, product?.id).headline}
                   </p>
 
                   <div className="prose prose-sm text-muted-foreground mb-10 whitespace-pre-line leading-relaxed max-md:order-6">
