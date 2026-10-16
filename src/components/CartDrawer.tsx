@@ -154,7 +154,7 @@ export const CartDrawer = () => {
                   </div>
                   <div className="flex flex-col items-center gap-1 rounded-md border bg-muted/30 px-2 py-2 text-center">
                     <Truck className="w-4 h-4" />
-                    <span className="text-[10px] leading-tight text-muted-foreground">Fast Delivery</span>
+                    <span className="text-[10px] leading-tight text-muted-foreground">Free U.S. Shipping</span>
                   </div>
                   <div className="flex flex-col items-center gap-1 rounded-md border bg-muted/30 px-2 py-2 text-center">
                     <PackageCheck className="w-4 h-4" />

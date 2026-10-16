@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ShoppingBag, X, Lock, Loader2, ShieldCheck, Truck, PackageCheck, ArrowLeft } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
+import { cartDeliveryMessage } from "@/lib/shipping";
 import { formatVariantTitle } from "@/lib/variantTitle";
 import { getBeforePrice } from "@/lib/utils";
 import { QuantityControl } from "@/components/QuantityControl";
@@ -224,7 +225,8 @@ function CartPage() {
                 <div className="rounded-lg border border-border/60 bg-muted/30 p-3 flex gap-2.5">
                   <Truck className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" strokeWidth={1.5} />
                   <p className="text-xs leading-relaxed text-muted-foreground">
-                    <span className="text-foreground font-medium">Estimated delivery: 7–25 business days.</span>{" "}
+                    <span className="text-foreground font-medium">{cartDeliveryMessage(items).headline}.</span>{" "}
+                    {cartDeliveryMessage(items).detail}{" "}
                     You will receive a tracking number once your order ships, once available.
                   </p>
                 </div>
@@ -253,7 +255,7 @@ function CartPage() {
               <div className="grid grid-cols-3 gap-2 mt-4">
                 {[
                   { Icon: ShieldCheck, label: "Insured Shipping" },
-                  { Icon: Truck, label: "Fast Delivery" },
+                  { Icon: Truck, label: "Free U.S. Shipping" },
                   { Icon: PackageCheck, label: "Buyer Protection" },
                 ].map(({ Icon, label }) => (
                   <div
