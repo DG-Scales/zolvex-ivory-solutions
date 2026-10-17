@@ -18,7 +18,8 @@ export function transitDaysFor(tags?: string[] | null) {
 // ---- Customer-facing delivery messaging (display only; the feeds and structured data keep using the constants above) ----
 // Standard estimate shown across the storefront, counted from the order date.
 export const STANDARD_DISPLAY_DELIVERY = { min: 10, max: 20 };
-const STANDARD_RANGE = `${STANDARD_DISPLAY_DELIVERY.min}–${STANDARD_DISPLAY_DELIVERY.max} Business Days`;
+// The 10–20 business days are transit time AFTER the 1–4 business day processing period, so every label says so.
+const STANDARD_RANGE = `${STANDARD_DISPLAY_DELIVERY.min}–${STANDARD_DISPLAY_DELIVERY.max} Business Days After Processing`;
 
 // Products whose delivery time has NOT been confirmed (oversized / sea-freight items). They never show the standard
 // 10–20 day promise; they show a "varies, confirmed before processing" message until a verified estimate exists.
@@ -50,7 +51,7 @@ export function deliveryMessageFor(tags?: string[] | null, productGid?: string |
   if (kind === "extended") {
     return {
       kind,
-      headline: `Estimated Delivery: ${EXTENDED_TRANSIT_DAYS.min}–${EXTENDED_TRANSIT_DAYS.max} Business Days`,
+      headline: `Estimated Transit Time: ${EXTENDED_TRANSIT_DAYS.min}–${EXTENDED_TRANSIT_DAYS.max} Days After Processing`,
       detail: "This larger or specialty fixture ships on a longer timeline. Delivery times are estimates, not guarantees.",
     };
   }
@@ -63,8 +64,8 @@ export function deliveryMessageFor(tags?: string[] | null, productGid?: string |
   }
   return {
     kind,
-    headline: `Estimated Delivery: ${STANDARD_RANGE}`,
-    detail: `Most orders arrive within ${STANDARD_DISPLAY_DELIVERY.min}–${STANDARD_DISPLAY_DELIVERY.max} business days after processing and shipment. Certain larger or specialty lighting fixtures may require 30–60 days or longer depending on product size, type, availability, or shipping requirements.`,
+    headline: `Estimated Transit Time: ${STANDARD_RANGE}`,
+    detail: `Standard shipping takes approximately ${STANDARD_DISPLAY_DELIVERY.min}–${STANDARD_DISPLAY_DELIVERY.max} business days after processing. Certain products may require 30–60 days or longer depending on size, type, availability, or shipping requirements.`,
   };
 }
 
@@ -77,7 +78,14 @@ export function cartDeliveryMessage(
   const hasUnc = kinds.includes("unconfirmed");
   const hasStd = kinds.includes("standard");
   if (!hasExt && !hasUnc) return deliveryMessageFor();
-  if (!hasStd && !hasExt) {
+  if (!hasStd && !hasUnc) {
+    return {
+      kind: "extended",
+      headline: `Estimated Transit Time: ${EXTENDED_TRANSIT_DAYS.min}–${EXTENDED_TRANSIT_DAYS.max} Days After Processing`,
+      detail: "The larger or specialty fixtures in your bag ship on a longer timeline. Delivery times are estimates, not guarantees.",
+    };
+  }
+  if (!hasStd) {
     return {
       kind: "unconfirmed",
       headline: "Delivery time varies for the item in your bag",
@@ -86,7 +94,9 @@ export function cartDeliveryMessage(
   }
   return {
     kind: hasExt ? "extended" : "unconfirmed",
-    headline: `Estimated Delivery: ${STANDARD_RANGE} for standard items`,
-    detail: "Delivery time varies for the specialty fixtures in your bag.",
+    headline: `Estimated Transit Time: ${STANDARD_RANGE} for standard items`,
+    detail: hasExt
+      ? `Specialty items in your bag ship on a longer timeline (${EXTENDED_TRANSIT_DAYS.min}–${EXTENDED_TRANSIT_DAYS.max} days after processing).`
+      : "Delivery time varies for the specialty fixtures in your bag.",
   };
 }

@@ -1,11 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef } from "react";
-import { toast } from "sonner";
 import type { ShopifyProduct } from "@/lib/shopify";
-import { useCartStore } from "@/stores/cartStore";
+import { QuickAddButton } from "@/components/QuickAddButton";
 import { getBeforePrice } from "@/lib/utils";
 
 interface ProductCardProps {
@@ -17,12 +15,8 @@ interface ProductCardProps {
 
 export function ProductCard({ product, variant = "default", fromCategory, smallBadge }: ProductCardProps) {
   const node = product.node;
-  const selectedVariant = node.variants.edges[0]?.node;
   const images = node.images.edges;
   const price = node.priceRange.minVariantPrice;
-
-  const addItem = useCartStore((s) => s.addItem);
-  const isLoading = useCartStore((s) => s.isLoading);
 
   const beforePrice = getBeforePrice(parseFloat(price.amount));
 
@@ -33,22 +27,6 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
   const trackWidth = useRef<number>(0);
   const [drag, setDrag] = useState(0);
   const [dragging, setDragging] = useState(false);
-
-  const handleAddToCart = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!selectedVariant) return;
-    await addItem({
-      product,
-      variantId: selectedVariant.id,
-      variantTitle: selectedVariant.title,
-      price: selectedVariant.price,
-      quantity: 1,
-      selectedOptions: selectedVariant.selectedOptions || [],
-      variantImage: selectedVariant.image ?? null,
-    });
-    toast.success("Added to bag", { description: node.title });
-  };
 
   const stop = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -124,8 +102,8 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
         onTouchEnd={onTouchEnd}
         onTouchCancel={onTouchEnd}
       >
-        <div className="absolute top-3 left-3 right-3 max-sm:left-2 max-sm:right-2 z-20 pointer-events-none flex flex-col gap-1.5 items-start">
-          <span className={`bg-black text-white font-bold tracking-wider rounded-sm uppercase leading-none whitespace-nowrap max-sm:text-[9px] max-sm:tracking-normal max-sm:px-1.5 ${smallBadge ? "text-[10px] px-2 py-1" : "text-[11px] px-2.5 py-1"}`}>
+        <div className="absolute top-3 left-3 right-14 max-sm:left-2 max-sm:right-12 z-20 pointer-events-none flex flex-col gap-1.5 items-start">
+          <span className={`bg-black text-white font-bold tracking-wider rounded-sm uppercase leading-none whitespace-nowrap max-sm:whitespace-normal max-sm:text-[9px] max-sm:leading-tight max-sm:tracking-normal max-sm:px-1.5 ${smallBadge ? "text-[10px] px-2 py-1" : "text-[11px] px-2.5 py-1"}`}>
             FREE U.S. SHIPPING
           </span>
           {isSoldOut && (
@@ -200,20 +178,7 @@ export function ProductCard({ product, variant = "default", fromCategory, smallB
           </>
         )}
 
-        <div className="absolute inset-x-3 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity space-y-2 pointer-events-none group-hover:pointer-events-auto">
-          <Button
-            onClick={handleAddToCart}
-            disabled={!selectedVariant || isLoading}
-            className={
-              isFeatured
-                ? "w-full rounded-none bg-black text-[#F5F1E8] hover:bg-black/85"
-                : "w-full rounded-full"
-            }
-            size="sm"
-          >
-            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Add To Bag"}
-          </Button>
-        </div>
+        <QuickAddButton product={product} />
       </div>
       <div className="flex flex-col gap-1.5 pb-1">
         <h3
