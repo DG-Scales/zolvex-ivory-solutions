@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { fetchCollectionProducts, type ShopifyProduct } from "@/lib/shopify";
 import { useCartSync } from "@/hooks/useCartSync";
+import { QuickAddButton } from "@/components/QuickAddButton";
 
 const NEW_ARRIVALS_HANDLE = "new-arrivals";
 
@@ -241,6 +242,8 @@ function EditorialCard({ product, index }: { product: ShopifyProduct; index: num
         <span className="absolute top-3 left-3 bg-[#C9A84C] text-[#1A1A1A] text-[9px] tracking-[0.3em] uppercase font-semibold px-2.5 py-1 rounded-full z-20">
           New
         </span>
+
+        <QuickAddButton product={product} />
 
         {images.length > 1 && (
           <>
